@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/schema"
-	"github.com/pdcgo/shared/interfaces/authorization_iface"
 	"github.com/pdcgo/v2_gots_sdk"
 	"github.com/pdcgo/v2_gots_sdk/pdc_api"
 	"github.com/stretchr/testify/assert"
@@ -54,6 +54,22 @@ type ConvertableToken interface {
 	GetUserID() uint
 }
 
+type MockJwtIdentity struct {
+	jwt.StandardClaims
+	UserID     uint
+	SuperUser  bool
+	ValidUntil int64
+	CreatedAt  int64
+}
+
+func (j *MockJwtIdentity) Serialize(passphrase string) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, j)
+
+	tokenstring, err := token.SignedString([]byte(passphrase))
+
+	return tokenstring, err
+}
+
 func SetupAuthApiRequester(user ConvertableToken, group *v2_gots_sdk.SdkGroup, handler *RequesterFunc) SetupFunc {
 	return func(t *testing.T) func() error {
 
@@ -77,7 +93,7 @@ func SetupAuthApiRequester(user ConvertableToken, group *v2_gots_sdk.SdkGroup, h
 
 			now := time.Now().Add(time.Hour * 24)
 			// setting authorization
-			jwt := &authorization_iface.JwtIdentity{
+			jwt := &MockJwtIdentity{
 				UserID:     user.GetUserID(),
 				ValidUntil: now.UnixMicro(),
 			}
