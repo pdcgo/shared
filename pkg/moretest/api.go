@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/gorilla/schema"
-	"github.com/pdcgo/gudang/services/authorization_iface"
+	"github.com/pdcgo/shared/interfaces/authorization_iface"
 	"github.com/pdcgo/v2_gots_sdk"
 	"github.com/pdcgo/v2_gots_sdk/pdc_api"
 	"github.com/stretchr/testify/assert"
