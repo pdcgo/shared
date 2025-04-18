@@ -108,6 +108,29 @@ func Map[T any, R any](input <-chan T, handle func(item T) R) <-chan R {
 	return retc
 }
 
+func MapConcurent[T any, R any](size int, input <-chan T, handle func(item T) R) <-chan R {
+	retc := make(chan R, 3)
+	limit := make(chan int8, size)
+	release := func() {
+		<-limit
+	}
+
+	process := func(item T) {
+		defer release()
+		retc <- handle(item)
+	}
+
+	go func() {
+		defer close(retc)
+		for item := range input {
+			limit <- 1
+			go process(item)
+		}
+	}()
+
+	return retc
+}
+
 func UnSlice[T any](input <-chan []T) <-chan T {
 	retc := make(chan T, 3)
 	go func() {
