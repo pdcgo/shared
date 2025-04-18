@@ -42,14 +42,7 @@ func (k *ApiKey) Key() string {
 	return k.keys[newc]
 }
 
-var listKey *ApiKey = NewApiKey([]string{
-	"SvBkrUDJea2d2a9d5335a437YkEJI7lI",
-	// "Uv8289BQ6846a346a941aafdRiWL1fE5",
-	// "de1b8d5b9709535c68fad031d4b2ecf8",
-	// "aUo8IAeca6553352a3afa1c4k540L74q",
-})
-
-func KomerceTrack(receipt, courrier string) (*KWaybillRes, error) {
+func KomerceTrack(listKey *ApiKey, receipt, courrier string) (*KWaybillRes, error) {
 	hasil := KWaybillRes{}
 	url := fmt.Sprintf("https://rajaongkir.komerce.id/api/v1/track/waybill?awb=%s&courier=%s", receipt, courrier)
 	req, err := http.NewRequest(http.MethodPost, url, nil)
@@ -79,7 +72,7 @@ func KomerceTrack(receipt, courrier string) (*KWaybillRes, error) {
 
 }
 
-func Track(courrier string, receipt string) (*WaybillRes, error) {
+func Track(listKey *ApiKey, courrier string, receipt string) (*WaybillRes, error) {
 	hasil := WaybillRes{}
 
 	url := "https://pro.rajaongkir.com/api/waybill"
