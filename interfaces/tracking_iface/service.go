@@ -43,7 +43,7 @@ type ThirdParty interface {
 }
 
 type TrackingService interface {
-	Track(shippingID uint, receipt string) (*db_models.TrackInfo, error)
+	Track(shippingID uint, receipt string, updated bool) (*db_models.TrackInfo, error)
 }
 
 type TrackingApi interface {
