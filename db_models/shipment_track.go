@@ -13,6 +13,7 @@ type ThirdPartyKey uint
 const (
 	RajaOngkir ThirdPartyKey = iota
 	SpxUnderGround
+	ToniUnderGround
 )
 
 type TrackStatus string
