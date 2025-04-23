@@ -44,6 +44,7 @@ type ThirdParty interface {
 
 type TrackingService interface {
 	Track(shippingID uint, receipt string, updated bool) (*db_models.TrackInfo, error)
+	SendToScheduler(shippingID uint, receipt string) error
 }
 
 type TrackingApi interface {
