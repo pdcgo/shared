@@ -1,13 +1,27 @@
 package streampipe
 
-import "log/slog"
+import (
+	"log/slog"
+)
 
 type Event interface {
 	EventPath() string
 }
 
+type PullEvent interface {
+	EventPath() string
+	Ack()
+	Decode(v any) error
+}
+
 type PublishProvider interface {
 	Send(topic string, event Event) error
+	Close() error
+}
+
+type PullProvider interface {
+	Receive(handler func(event PullEvent)) error
+	Close() error
 }
 
 func PublishStream[T Event](
@@ -36,4 +50,9 @@ func PublishStream[T Event](
 	return hasil
 }
 
-func ListenStream() {}
+func PullStream(topic string, size int) <-chan PullEvent {
+	hasil := make(chan PullEvent, size)
+
+	return hasil
+
+}

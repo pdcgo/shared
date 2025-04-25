@@ -17,6 +17,10 @@ func SetProjectID(projID string) {
 	projectID = projID
 }
 
+func GetProjectID() string {
+	return projectID
+}
+
 type Secret struct {
 	data []byte
 }
