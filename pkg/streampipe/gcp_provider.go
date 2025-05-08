@@ -8,6 +8,8 @@ import (
 	"github.com/pdcgo/shared/pkg/secret"
 )
 
+var DEFAULT_TOPIC = "common-topic"
+
 type gcpPubsubImpl struct {
 	ctx    context.Context
 	client *pubsub.Client

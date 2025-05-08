@@ -108,6 +108,23 @@ func Map[T any, R any](input <-chan T, handle func(item T) R) <-chan R {
 	return retc
 }
 
+func MapFilter[T any, R any](input <-chan T, handle func(item T) (R, bool)) <-chan R {
+	retc := make(chan R, 3)
+	go func() {
+		defer close(retc)
+		for dd := range input {
+
+			item, ok := handle(dd)
+			if ok {
+				retc <- item
+			}
+
+		}
+	}()
+
+	return retc
+}
+
 func MapConcurent[T any, R any](size int, input <-chan T, handle func(item T) R) <-chan R {
 	retc := make(chan R, 3)
 	limit := make(chan int8, size)
