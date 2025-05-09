@@ -156,3 +156,45 @@ type Rack struct {
 	Deleted   bool      `json:"deleted" gorm:"index"`
 	// Warehouse *Warehouse `json:"warehouse"`
 }
+
+type Placement struct {
+	ID     uint  `json:"id" gorm:"primarykey"`
+	RackID uint  `json:"rack_id" gorm:"index:sku_rack_id,unique"`
+	SkuID  SkuID `json:"sku_id" gorm:"index:sku_rack_id,unique"`
+	Count  int   `json:"count"`
+
+	Rack *Rack `json:"rack"`
+	Sku  *Sku  `json:"sku"`
+}
+
+func (Placement) GetEntityID() string {
+	return "placement"
+}
+
+// bakalan remove
+type PlacementHistory struct {
+	ID          uint      `json:"id" gorm:"primarykey"`
+	PlacementID uint      `json:"placement_id"`
+	SkuID       SkuID     `json:"sku_id"`
+	ByUserID    uint      `json:"by_user_id"`
+	InvTxID     uint      `json:"inv_tx_id"`
+	Type        InvTxType `json:"type"`
+
+	Count int `json:"count"`
+
+	InvTx     *InvTxItem `json:"inv_tx"`
+	ByUser    *User      `json:"user"`
+	Sku       *Sku       `json:"sku"`
+	Placement *Placement `json:"placement"`
+	CreateAt  time.Time  `json:"create_at"`
+}
+
+type WarehouseProduct struct {
+	ID          uint `json:"id" gorm:"primarykey"`
+	WarehouseID uint `json:"warehouse_id" gorm:"index:ware_product,unique"`
+	ProductID   uint `json:"product_id" gorm:"index:ware_product,unique"`
+	Stock       uint `json:"stock"`
+
+	Product   *Product   `json:"product"`
+	Warehouse *Warehouse `json:"warehouse"`
+}
