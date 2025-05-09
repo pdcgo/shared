@@ -46,7 +46,7 @@ func TestMergeAndSplitPipeline(t *testing.T) {
 func TestSinkPipeline(t *testing.T) {
 
 	dump := chanDumpInt()
-	endprocess := pipeline.Sink(dump, func(d int) {})
+	endprocess := pipeline.Sink(dump, func(d int) error { return nil })
 	pipeline.Release(endprocess)
 
 }

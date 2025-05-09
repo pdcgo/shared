@@ -1,6 +1,7 @@
 package streampipe
 
 import (
+	"log/slog"
 	"sync"
 	"time"
 )
@@ -68,12 +69,17 @@ func Release[T any](input <-chan T) {
 	}
 }
 
-func Sink[T any](input <-chan T, handle func(item T)) <-chan T {
+func Sink[T any](input <-chan T, handle func(item T) error) <-chan T {
 	retc := make(chan T, 3)
 	go func() {
+		var err error
 		defer close(retc)
 		for item := range input {
-			handle(item)
+			err = handle(item)
+			if err != nil {
+				slog.Error(err.Error(), slog.String("lib", "streampipe"), slog.String("method", "sink"))
+				continue
+			}
 			retc <- item
 		}
 	}()
