@@ -2,7 +2,10 @@ package db_models
 
 import (
 	"errors"
+	"sort"
 	"time"
+
+	"github.com/pdcgo/shared/interfaces/identity_iface"
 )
 
 type TransactionType string
@@ -351,4 +354,70 @@ func (i *InvertoryHistory) GetFullPrice() float64 {
 // GetEntityID implements authorization.Entity.
 func (i *InvertoryHistory) GetEntityID() string {
 	return "invertory_history"
+}
+
+func InvHistorySort(histories []*InvertoryHistory) []*InvertoryHistory {
+	hasil := make([]*InvertoryHistory, len(histories))
+	mapHist := map[uint][]*InvertoryHistory{}
+	mapCount := map[uint]int{}
+
+	for _, dd := range histories {
+		item := dd
+
+		if mapHist[item.RackID] == nil { // group by rack
+			mapHist[item.RackID] = []*InvertoryHistory{}
+		}
+
+		mapHist[item.RackID] = append(mapHist[item.RackID], item)
+		mapCount[item.RackID] += item.Count
+	}
+
+	listRack := []uint{}
+	for rackID, histlist := range mapHist {
+
+		sort.Slice(histlist, func(i, j int) bool {
+			return histlist[i].Count > histlist[j].Count
+		})
+
+		listRack = append(listRack, rackID)
+	}
+
+	sort.Slice(listRack, func(i, j int) bool {
+		return mapCount[listRack[i]] > mapCount[listRack[j]]
+	})
+
+	c := 0
+	for _, rackID := range listRack {
+		histlist := mapHist[rackID]
+
+		for _, dd := range histlist {
+			item := dd
+			hasil[c] = item
+			c += 1
+		}
+	}
+
+	return hasil
+
+}
+
+type ActionType string
+
+const (
+	ActionEditPrice    ActionType = "edit_price"
+	ActionChangeStatus ActionType = "change_status"
+)
+
+type InvTimestamp struct {
+	ID     uint `json:"id" gorm:"primarykey"`
+	TxID   uint `json:"tx_id"`
+	UserID uint `json:"user_id"`
+
+	ActionType ActionType               `json:"action_type"`
+	Status     InvTxStatus              `json:"status"`
+	Timestamp  time.Time                `json:"timestamp" gorm:"index"`
+	From       identity_iface.AgentType `json:"from"`
+
+	Tx   *InvTransaction `json:"-"`
+	User *User           `json:"-"`
 }
