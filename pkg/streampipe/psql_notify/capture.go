@@ -35,7 +35,13 @@ func NewCapturePostgres(driverType DBType, dsn string) *CapturePostgres {
 	}
 }
 
-func (cdc *CapturePostgres) Listen(ctx context.Context, channel string, routineMode bool, handle func(raw string)) *CapturePostgres {
+func (cdc *CapturePostgres) Listen(
+	ctx context.Context,
+	channel string,
+	routineMode bool,
+	handle func(raw string),
+	tearDown func(),
+) *CapturePostgres {
 	if cdc.err != nil {
 		return cdc
 	}
@@ -56,6 +62,9 @@ func (cdc *CapturePostgres) Listen(ctx context.Context, channel string, routineM
 	runner := func() {
 		fmt.Printf("Listening for %s changes...\n", channel)
 		defer listener.Close()
+		if tearDown != nil {
+			defer tearDown()
+		}
 
 		for {
 			select {

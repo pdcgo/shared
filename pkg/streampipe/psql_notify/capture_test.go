@@ -46,7 +46,7 @@ func TestCapture(t *testing.T) {
 				Listen(ctx, "log_stocks_channel", true, func(raw string) {
 					datas <- raw
 					cancel()
-				}).
+				}, nil).
 				Err()
 
 			assert.Nil(t, err)
