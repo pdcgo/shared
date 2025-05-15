@@ -5,6 +5,6 @@ import (
 )
 
 func TestMarkup(t *testing.T) {
-	// var mark ware_db.MarkupValue = 7.0
+	// var mark db_models.MarkupValue = 7.0
 	// t.Error(mark.Markup(33585.00))
 }

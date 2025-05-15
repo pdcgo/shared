@@ -69,6 +69,16 @@ func Release[T any](input <-chan T) {
 	}
 }
 
+func ReleaseToSyncGroup[T any](wg *sync.WaitGroup, input <-chan T) {
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for range input {
+		}
+	}()
+
+}
+
 func Sink[T any](input <-chan T, handle func(item T) error) <-chan T {
 	retc := make(chan T, 3)
 	go func() {
