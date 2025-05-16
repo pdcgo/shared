@@ -25,15 +25,33 @@ type Wallet struct {
 	Team db_models.Team
 }
 
-type WalletTransaction struct {
-	// 	id	UUID / INT	Primary key
-	// wallet_id	UUID / INT	FK to Wallets
-	// type	ENUM	"credit", "debit"
-	// amount	DECIMAL(12,2)	Always positive
-	// description	TEXT	Optional note or reference
-	// reference_id	VARCHAR	External ref (e.g., order ID, payment ID)
-	// created_at	TIMESTAMP	Time of transaction
+type TransactionType string
 
+const (
+	TransactionCredit TransactionType = "credit"
+	TransactionDebit  TransactionType = "debit"
+)
+
+type TxType string
+
+const (
+	TxTypeBrokenGood      TxType = "broken_good"
+	TxTypeBrokenGoodFound TxType = "broken_good_found"
+	TxTypeUnknown         TxType = "unknown"
+)
+
+type WalletTransaction struct {
+	ID          uint            `json:"id" gorm:"primarykey"`
+	WalletID    uint            `json:"wallet_id"`
+	Type        TransactionType `json:"type"`
+	TxType      TxType          `json:"tx_type"`
+	ReferenceID string          `json:"reference_id"`
+
+	Amount      float64   `json:"amount"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"created_at"`
+
+	Wallet Wallet `json:"wallet"`
 }
 
 type WalletTransactionLog struct {

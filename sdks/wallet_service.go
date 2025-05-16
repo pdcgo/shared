@@ -9,13 +9,18 @@ type httpWalletImpl struct {
 	endpoint string
 }
 
-// CreateWallet implements wallet_iface.WalletService.
-func (h *httpWalletImpl) CreateWallet(agent identity_iface.Agent, teamID uint) *wallet_iface.WalletInfoRes {
+// CreateTransaction implements wallet_iface.WalletService.
+func (h *httpWalletImpl) CreateTransaction(agent identity_iface.Agent, payload *wallet_iface.CreateTransactionPayload) wallet_iface.CreateTransactionRes {
 	panic("unimplemented")
 }
 
-// GetWallet implements wallet_iface.WalletService.
-func (h *httpWalletImpl) GetWallet(agent identity_iface.Agent, teamID uint) wallet_iface.WalletInfoRes {
+// TeamWallet implements wallet_iface.WalletService.
+func (h *httpWalletImpl) TeamWallet(agent identity_iface.Agent, teamID uint) wallet_iface.TeamWallet {
+	panic("unimplemented")
+}
+
+// CreateWallet implements wallet_iface.WalletService.
+func (h *httpWalletImpl) CreateWallet(agent identity_iface.Agent, teamID uint) *wallet_iface.WalletInfoRes {
 	panic("unimplemented")
 }
 
@@ -26,11 +31,6 @@ func (h *httpWalletImpl) CancelPayment(agent identity_iface.Agent) wallet_iface.
 
 // CreatePayment implements wallet_iface.WalletService.
 func (h *httpWalletImpl) CreatePayment(agent identity_iface.Agent) wallet_iface.CreatePaymentRes {
-	panic("unimplemented")
-}
-
-// CreateTransaction implements wallet_iface.WalletService.
-func (h *httpWalletImpl) CreateTransaction(agent identity_iface.Agent) wallet_iface.CreateTransactionRes {
 	panic("unimplemented")
 }
 
