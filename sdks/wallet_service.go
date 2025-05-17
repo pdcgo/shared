@@ -9,21 +9,6 @@ type httpWalletImpl struct {
 	endpoint string
 }
 
-// CreateTransaction implements wallet_iface.WalletService.
-func (h *httpWalletImpl) CreateTransaction(agent identity_iface.Agent, payload *wallet_iface.CreateTransactionPayload) wallet_iface.CreateTransactionRes {
-	panic("unimplemented")
-}
-
-// TeamWallet implements wallet_iface.WalletService.
-func (h *httpWalletImpl) TeamWallet(agent identity_iface.Agent, teamID uint) wallet_iface.TeamWallet {
-	panic("unimplemented")
-}
-
-// CreateWallet implements wallet_iface.WalletService.
-func (h *httpWalletImpl) CreateWallet(agent identity_iface.Agent, teamID uint) *wallet_iface.WalletInfoRes {
-	panic("unimplemented")
-}
-
 // CancelPayment implements wallet_iface.WalletService.
 func (h *httpWalletImpl) CancelPayment(agent identity_iface.Agent) wallet_iface.CancelPaymentRes {
 	panic("unimplemented")
@@ -31,6 +16,11 @@ func (h *httpWalletImpl) CancelPayment(agent identity_iface.Agent) wallet_iface.
 
 // CreatePayment implements wallet_iface.WalletService.
 func (h *httpWalletImpl) CreatePayment(agent identity_iface.Agent) wallet_iface.CreatePaymentRes {
+	panic("unimplemented")
+}
+
+// CreateWallet implements wallet_iface.WalletService.
+func (h *httpWalletImpl) CreateWallet(agent identity_iface.Agent, teamID uint) *wallet_iface.WalletInfoRes {
 	panic("unimplemented")
 }
 
@@ -46,6 +36,16 @@ func (h *httpWalletImpl) GetTransactions(agent identity_iface.Agent) wallet_ifac
 
 // ListPayment implements wallet_iface.WalletService.
 func (h *httpWalletImpl) ListPayment(agent identity_iface.Agent) wallet_iface.ListPaymentRes {
+	panic("unimplemented")
+}
+
+// TeamWallet implements wallet_iface.WalletService.
+func (h *httpWalletImpl) TeamWallet(agent identity_iface.Agent, teamID uint, tipe wallet_iface.BalanceType) wallet_iface.TeamWallet {
+	panic("unimplemented")
+}
+
+// TransactionCreate implements wallet_iface.WalletService.
+func (h *httpWalletImpl) TransactionCreate(agent identity_iface.Agent, payload *wallet_iface.TransactionCreatePayload) wallet_iface.CreateTransactionRes {
 	panic("unimplemented")
 }
 

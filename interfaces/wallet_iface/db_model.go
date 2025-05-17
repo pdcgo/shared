@@ -13,11 +13,19 @@ const (
 	WalletSuspended WalletStatus = "suspended"
 )
 
+type BalanceType string
+
+const (
+	StockBalance BalanceType = "stock_balance"
+	OpsBalance   BalanceType = "ops_balance"
+)
+
 type Wallet struct {
-	ID      uint         `json:"id" gorm:"primarykey"`
-	TeamID  uint         `json:"team_id" gorm:"unique"`
-	Balance float64      `json:"balance"`
-	Status  WalletStatus `json:"status"`
+	ID          uint         `json:"id" gorm:"primarykey"`
+	TeamID      uint         `json:"team_id" gorm:"index:id_balance_type,unique"`
+	BalanceType BalanceType  `json:"balance_type" gorm:"index:id_balance_type,unique"`
+	Balance     float64      `json:"balance"`
+	Status      WalletStatus `json:"status"`
 
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -40,11 +48,19 @@ const (
 	TxTypeUnknown         TxType = "unknown"
 )
 
+type TxStatus string
+
+const (
+	TxCompleted TxStatus = "completed"
+)
+
 type WalletTransaction struct {
 	ID          uint            `json:"id" gorm:"primarykey"`
+	TxID        string          `json:"tx_id" gorm:"index"`
 	WalletID    uint            `json:"wallet_id"`
 	Type        TransactionType `json:"type"`
 	TxType      TxType          `json:"tx_type"`
+	Status      TxStatus        `json:"status"`
 	ReferenceID string          `json:"reference_id"`
 
 	Amount      float64   `json:"amount"`

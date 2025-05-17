@@ -35,17 +35,16 @@ type CancelPaymentRes struct {
 type GetTransactionsRes struct {
 }
 
-type CreateTransactionPayload struct {
-	TeamID uint `json:"team_id"`
-
-	Type   TransactionType `json:"type"`
-	TxType TxType          `json:"tx_type"`
-	Amount float64         `json:"amount"`
-	Note   string          `json:"note"`
+type TransactionCreatePayload struct {
+	TeamID   uint    `json:"team_id"`
+	ToTeamID uint    `json:"to_team_id"`
+	TxType   TxType  `json:"tx_type"`
+	Amount   float64 `json:"amount"`
+	Note     string  `json:"note"`
 }
 type CreateTransactionRes struct {
-	Err  *ResultErr        `json:"err"`
-	Data WalletTransaction `json:"data"`
+	Err   *ResultErr           `json:"err"`
+	Datas []*WalletTransaction `json:"data"`
 }
 type UpdateTransactionRes struct {
 }
@@ -67,7 +66,7 @@ type TeamWallet interface {
 type WalletService interface {
 	// kaitan wallet
 	CreateWallet(agent identity_iface.Agent, teamID uint) *WalletInfoRes
-	TeamWallet(agent identity_iface.Agent, teamID uint) TeamWallet
+	TeamWallet(agent identity_iface.Agent, teamID uint, tipe BalanceType) TeamWallet
 	// kaitan payment
 	GetPayment(agent identity_iface.Agent) PaymentDetailRes
 	ListPayment(agent identity_iface.Agent) ListPaymentRes
@@ -75,7 +74,9 @@ type WalletService interface {
 	CancelPayment(agent identity_iface.Agent) CancelPaymentRes
 
 	// kaitan transaksi
+	TransactionCreate(agent identity_iface.Agent, payload *TransactionCreatePayload) CreateTransactionRes
+
 	GetTransactions(agent identity_iface.Agent) GetTransactionsRes
-	CreateTransaction(agent identity_iface.Agent, payload *CreateTransactionPayload) CreateTransactionRes
+
 	UpdateTransaction(agent identity_iface.Agent) UpdateTransactionRes
 }
