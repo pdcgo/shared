@@ -306,9 +306,19 @@ type OrderTag struct {
 	Name string `json:"name" gorm:"index:order_tag_unique,unique" binding:"required,lte=100"`
 }
 
+type RelationFrom string
+
+const (
+	RelationFromWarehouse RelationFrom = "warehouse"
+	RelationFromTracking  RelationFrom = "tracking"
+	RelationFromUser      RelationFrom = "user"
+	RelationFromUnknown   RelationFrom = ""
+)
+
 type OrderTagRelation struct {
-	OrderID    uint `json:"order_id" gorm:"primaryKey"`
-	OrderTagID uint `json:"order_tag_id" gorm:"primaryKey"`
+	OrderID      uint         `json:"order_id" gorm:"primaryKey"`
+	OrderTagID   uint         `json:"order_tag_id" gorm:"primaryKey"`
+	RelationFrom RelationFrom `json:"relation_from"`
 
 	Order    *Order    `json:"product"`
 	OrderTag *OrderTag `json:"tag"`
