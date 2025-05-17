@@ -1,6 +1,7 @@
 package wallet_iface
 
 import (
+	"context"
 	"encoding/json"
 
 	"github.com/pdcgo/shared/interfaces/identity_iface"
@@ -58,25 +59,30 @@ type SendPayload struct {
 }
 
 type TeamWallet interface {
-	Info() *WalletInfoRes
+	Detail() *WalletInfoRes
 	SendAmount(payload *SendPayload) *CreateTransactionRes
 	Err() error
 }
 
+type WalletServiceConfig struct {
+	AppSecret string `yaml:"app_secret"`
+	Endpoint  string `yaml:"endpoint"`
+}
+
 type WalletService interface {
 	// kaitan wallet
-	CreateWallet(agent identity_iface.Agent, teamID uint) *WalletInfoRes
-	TeamWallet(agent identity_iface.Agent, teamID uint, tipe BalanceType) TeamWallet
+	CreateWallet(ctx context.Context, agent identity_iface.Agent, teamID uint) *WalletInfoRes
+	TeamWallet(ctx context.Context, agent identity_iface.Agent, teamID uint, tipe BalanceType) TeamWallet
 	// kaitan payment
-	GetPayment(agent identity_iface.Agent) PaymentDetailRes
-	ListPayment(agent identity_iface.Agent) ListPaymentRes
-	CreatePayment(agent identity_iface.Agent) CreatePaymentRes
-	CancelPayment(agent identity_iface.Agent) CancelPaymentRes
+	GetPayment(ctx context.Context, agent identity_iface.Agent) PaymentDetailRes
+	ListPayment(ctx context.Context, agent identity_iface.Agent) ListPaymentRes
+	CreatePayment(ctx context.Context, agent identity_iface.Agent) CreatePaymentRes
+	CancelPayment(ctx context.Context, agent identity_iface.Agent) CancelPaymentRes
 
 	// kaitan transaksi
-	TransactionCreate(agent identity_iface.Agent, payload *TransactionCreatePayload) CreateTransactionRes
+	TransactionCreate(ctx context.Context, agent identity_iface.Agent, payload *TransactionCreatePayload) CreateTransactionRes
 
-	GetTransactions(agent identity_iface.Agent) GetTransactionsRes
+	GetTransactions(ctx context.Context, agent identity_iface.Agent) GetTransactionsRes
 
-	UpdateTransaction(agent identity_iface.Agent) UpdateTransactionRes
+	UpdateTransaction(ctx context.Context, agent identity_iface.Agent) UpdateTransactionRes
 }

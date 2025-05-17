@@ -1,6 +1,7 @@
 package db_models
 
 import (
+	"errors"
 	"time"
 
 	"github.com/pdcgo/shared/interfaces/authorization_iface"
@@ -32,6 +33,11 @@ type User struct {
 	LastPasswordReset time.Time `json:"last_password_reset"`
 	InvitationCode    string    `json:"-"`
 	CreatedAt         time.Time `json:"created"`
+}
+
+// GetToken implements authorization_iface.Identity.
+func (u *User) GetToken(appname string, secret string) (string, error) {
+	return "", errors.New("cannot create token in plain db model")
 }
 
 type AppKey struct {

@@ -16,6 +16,7 @@ type ExpiredToken struct {
 }
 
 type Identity interface {
+	GetToken(appname, secret string) (string, error)
 	GetAgentType() identity_iface.AgentType
 	IsSuperUser() bool
 	IdentityID() uint

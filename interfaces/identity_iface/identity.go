@@ -13,4 +13,5 @@ const (
 type Agent interface {
 	GetAgentType() AgentType
 	GetUserID() uint
+	GetToken(appname, secret string) (string, error)
 }

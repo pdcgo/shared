@@ -1,10 +1,15 @@
 package configs
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/pdcgo/shared/interfaces/wallet_iface"
+)
 
 type AppConfig struct {
-	Database    DatabaseConfig `yaml:"database"`
-	StatService StatService    `yaml:"stat_service"`
+	Database      DatabaseConfig                   `yaml:"database"`
+	StatService   StatService                      `yaml:"stat_service"`
+	WalletService wallet_iface.WalletServiceConfig `yaml:"wallet_service"`
 }
 
 type DatabaseConfig struct {
