@@ -1,15 +1,9 @@
 package order_iface
 
-type RelationFrom string
-
-const (
-	RelationFromWarehouse RelationFrom = "warehouse"
-	RelationFromUser      RelationFrom = "user"
-	RelationFromTracking  RelationFrom = "tracking"
-)
+import "github.com/pdcgo/shared/db_models"
 
 type OrderTagMutation interface {
-	Add(from RelationFrom, orderIDs []uint, tags []string) error
-	Remove(orderIDs []uint, tags []string) error
-	RemoveAllFrom(from RelationFrom) error
+	Add(from db_models.RelationFrom, orderIDs []uint, tags []string) error
+	Remove(from db_models.RelationFrom, orderIDs []uint, tags []string) error
+	RemoveAllFrom(from db_models.RelationFrom, orderIDs []uint) error
 }
