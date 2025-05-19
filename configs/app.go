@@ -10,6 +10,7 @@ type AppConfig struct {
 	Database      DatabaseConfig                   `yaml:"database"`
 	StatService   StatService                      `yaml:"stat_service"`
 	WalletService wallet_iface.WalletServiceConfig `yaml:"wallet_service"`
+	TrackService  TrackService                     `yaml:"track_service"`
 }
 
 type DatabaseConfig struct {
@@ -25,5 +26,9 @@ func (cfg *DatabaseConfig) ToDsn() string {
 }
 
 type StatService struct {
+	SubID string `yaml:"sub_id"`
+}
+
+type TrackService struct {
 	SubID string `yaml:"sub_id"`
 }
