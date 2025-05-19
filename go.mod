@@ -11,7 +11,6 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/schema v1.4.1
 	github.com/lib/pq v1.10.9
-	github.com/pdcgo/gudang v1.0.0
 	github.com/pdcgo/v2_gots_sdk v1.3.10
 	github.com/stretchr/testify v1.10.0
 	gorm.io/datatypes v1.2.5

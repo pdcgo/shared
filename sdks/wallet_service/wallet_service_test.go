@@ -3,7 +3,7 @@ package wallet_service_test
 import (
 	"testing"
 
-	"github.com/pdcgo/gudang/src/identity/mock_identity"
+	"github.com/pdcgo/shared/identity/mock_identity"
 	"github.com/pdcgo/shared/interfaces/wallet_iface"
 	"github.com/pdcgo/shared/sdks/wallet_service"
 	"github.com/stretchr/testify/assert"
