@@ -20,9 +20,16 @@ type DatabaseConfig struct {
 	DBInstance string `yaml:"DB_INSTANCE"`
 }
 
-func (cfg *DatabaseConfig) ToDsn() string {
+func (cfg *DatabaseConfig) ToDsn(appName string) string {
 	// dsn := "user=postgres password=postgres dbname=postgres host=postgres sslmode=disable"
-	return fmt.Sprintf("user=%s password=%s dbname=%s host=%s sslmode=disable", cfg.DBUser, cfg.DBPass, cfg.DBName, cfg.DBInstance)
+	return fmt.Sprintf(
+		"user=%s password=%s dbname=%s host=%s application_name=%s sslmode=disable",
+		cfg.DBUser,
+		cfg.DBPass,
+		cfg.DBName,
+		cfg.DBInstance,
+		appName,
+	)
 }
 
 type StatService struct {
