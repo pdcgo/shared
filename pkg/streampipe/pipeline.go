@@ -1,6 +1,7 @@
 package streampipe
 
 import (
+	"errors"
 	"log/slog"
 	"sync"
 	"time"
@@ -141,7 +142,7 @@ func MapFilter[T any, R any](input <-chan T, handle func(item T) (R, bool)) <-ch
 	return retc
 }
 
-func MapConcurent[T any, R any](size int, input <-chan T, handle func(item T) R) <-chan R {
+func MapConcurent[T any, R any](size int, input <-chan T, handle func(item T) (R, error)) <-chan R {
 	retc := make(chan R, 3)
 	limit := make(chan int8, size)
 	release := func() {
@@ -150,7 +151,16 @@ func MapConcurent[T any, R any](size int, input <-chan T, handle func(item T) R)
 
 	process := func(item T) {
 		defer release()
-		retc <- handle(item)
+		res, err := handle(item)
+		if err != nil {
+			if errors.Is(err, ErrDropFromStream) {
+				return
+			}
+			slog.Error(err.Error(), slog.String("pipe", "map_concurent"))
+			return
+		}
+
+		retc <- res
 	}
 
 	go func() {
