@@ -44,7 +44,7 @@ func (l *localCacheImpl) Add(ctx context.Context, item *CacheItem) error {
 
 // Get implements Cache.
 func (l *localCacheImpl) Get(ctx context.Context, key string, data any) error {
-	log.Println("get cache", l.data, key)
+	// log.Println("get cache", l.data, key)
 
 	item := l.data[key]
 	if item == nil {

@@ -161,14 +161,14 @@ func (check CheckPermissionGroup) GetActions() []Action {
 	return hasil
 }
 
-func (li CheckPermissionGroup) GetID() (string, error) {
+func (li CheckPermissionGroup) GetID(userID uint) (string, error) {
 	data, err := json.Marshal(li.Permission())
 	if err != nil {
 		return "", err
 	}
 	idstr := fmt.Sprintf("%x", md5.Sum(data))
 	index := len(idstr) - 1
-	return idstr[index-8 : index], nil
+	return fmt.Sprintf("auth_%d", userID) + idstr[index-8:index], nil
 }
 
 type PermissionQuery interface {

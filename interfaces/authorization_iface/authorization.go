@@ -1,6 +1,7 @@
 package authorization_iface
 
 type Authorization interface {
+	HasPermission(identity Identity, perms CheckPermissionGroup) error
 	ApiQueryCheckPermission(identity Identity, query PermissionQuery) (bool, error)
 }
 

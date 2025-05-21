@@ -12,7 +12,7 @@ type memcacheImpl struct{}
 
 // Flush implements Cache.
 func (m *memcacheImpl) Flush(ctx context.Context) error {
-	panic("unimplemented")
+	return memcache.Flush(ctx)
 }
 
 // Delete implements Cache.
