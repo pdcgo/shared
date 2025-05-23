@@ -168,7 +168,7 @@ func (li CheckPermissionGroup) GetID(userID uint) (string, error) {
 	}
 	idstr := fmt.Sprintf("%x", md5.Sum(data))
 	index := len(idstr) - 1
-	return fmt.Sprintf("auth_%d", userID) + idstr[index-8:index], nil
+	return fmt.Sprintf("auth:%d", userID) + idstr[index-8:index], nil
 }
 
 type PermissionQuery interface {

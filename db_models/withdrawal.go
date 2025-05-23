@@ -28,11 +28,12 @@ type OrderAdjustment struct {
 	OrderID uint `json:"order_id"`
 	MpID    uint `json:"mp_id"`
 
-	At     time.Time      `json:"at" gorm:"index"`
-	FundAt time.Time      `json:"fund_at" gorm:"index"`
-	Type   AdjustmentType `json:"type"`
-	Amount float64        `json:"amount"`
-	Desc   string         `json:"desc"`
+	At      time.Time      `json:"at" gorm:"index"`
+	FundAt  time.Time      `json:"fund_at" gorm:"index"`
+	Type    AdjustmentType `json:"type"`
+	Amount  float64        `json:"amount"`
+	Desc    string         `json:"desc"`
+	Deleted bool           `json:"deleted" gorm:"index"`
 
 	Order *Order       `json:"order"`
 	Mp    *Marketplace `json:"mp"`
@@ -47,6 +48,7 @@ type OrderAdjLogType string
 const (
 	AdjLogCreated OrderAdjLogType = "created"
 	AdjLogUpdated OrderAdjLogType = "updated"
+	AdjLogDeleted OrderAdjLogType = "deleted"
 )
 
 type OrderAdjustmentLog struct {
