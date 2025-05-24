@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/pdcgo/shared/interfaces/identity_iface"
+	"gorm.io/datatypes"
 )
 
 type Withdrawal struct {
@@ -52,13 +53,14 @@ const (
 )
 
 type OrderAdjustmentLog struct {
-	ID        uint                     `json:"id" gorm:"primarykey"`
-	AdjID     uint                     `json:"adj_id"`
-	OrderID   uint                     `json:"order_id"`
-	UserID    uint                     `json:"user_id"`
-	From      identity_iface.AgentType `json:"from"`
-	LogType   OrderAdjLogType          `json:"log_type"`
-	Timestamp time.Time                `json:"timestamp" gorm:"index"`
+	ID        uint                                 `json:"id" gorm:"primarykey"`
+	AdjID     uint                                 `json:"adj_id"`
+	OrderID   uint                                 `json:"order_id"`
+	UserID    uint                                 `json:"user_id"`
+	From      identity_iface.AgentType             `json:"from"`
+	LogType   OrderAdjLogType                      `json:"log_type"`
+	Data      datatypes.JSONType[*OrderAdjustment] `json:"data"`
+	Timestamp time.Time                            `json:"timestamp" gorm:"index"`
 
 	Adj   *OrderAdjustment `json:"-"`
 	User  *User            `json:"-"`

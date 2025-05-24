@@ -88,6 +88,9 @@ func Sink[T any](input <-chan T, handle func(item T) error) <-chan T {
 		for item := range input {
 			err = handle(item)
 			if err != nil {
+				if errors.Is(err, ErrDropFromStream) {
+					continue
+				}
 				slog.Error(err.Error(), slog.String("lib", "streampipe"), slog.String("method", "sink"))
 				continue
 			}

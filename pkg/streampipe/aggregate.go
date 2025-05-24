@@ -1,6 +1,7 @@
 package streampipe
 
 import (
+	"errors"
 	"log/slog"
 	"time"
 )
@@ -20,7 +21,7 @@ func WindowAggregate[T any, Ag any](
 	getKey func(item T) any,
 	handler func(ag Ag, item T) (Ag, error),
 ) <-chan Ag {
-	retc := make(chan Ag, 1)
+	retc := make(chan Ag, 3)
 
 	go func() {
 		var err error
@@ -38,7 +39,8 @@ func WindowAggregate[T any, Ag any](
 				}
 
 				for _, d := range bulk {
-					retc <- d
+					cc := d
+					retc <- cc
 				}
 
 				bulk = make(map[any]Ag)
@@ -47,7 +49,8 @@ func WindowAggregate[T any, Ag any](
 			case item, ok := <-input:
 				if !ok {
 					for _, d := range bulk {
-						retc <- d
+						cc := d
+						retc <- cc
 					}
 					return
 				}
@@ -56,6 +59,9 @@ func WindowAggregate[T any, Ag any](
 				var ag Ag
 				ag, err = handler(bulk[key], item)
 				if err != nil {
+					if errors.Is(err, ErrDropFromStream) {
+						continue
+					}
 					slog.Error(err.Error(), slog.String("streampipe", "window aggregate"))
 					continue
 				}
