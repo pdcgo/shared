@@ -54,13 +54,15 @@ const (
 type OrderAdjustmentLog struct {
 	ID        uint                     `json:"id" gorm:"primarykey"`
 	AdjID     uint                     `json:"adj_id"`
+	OrderID   uint                     `json:"order_id"`
 	UserID    uint                     `json:"user_id"`
 	From      identity_iface.AgentType `json:"from"`
 	LogType   OrderAdjLogType          `json:"log_type"`
 	Timestamp time.Time                `json:"timestamp" gorm:"index"`
 
-	Adj  *OrderAdjustment `json:"-"`
-	User *User            `json:"-"`
+	Adj   *OrderAdjustment `json:"-"`
+	User  *User            `json:"-"`
+	Order *Order           `json:"-"`
 }
 
 type WdValid struct {
