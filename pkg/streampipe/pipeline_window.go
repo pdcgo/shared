@@ -12,7 +12,7 @@ type TsGroup[T any] struct {
 }
 
 func FirstEventInTime[T any](dur time.Duration, groupKey func(item T) (string, time.Time), input <-chan T) <-chan T {
-	retc := make(chan T, 3)
+	retc := make(chan T, ChannelSize)
 
 	go func() {
 		tick := time.NewTicker(dur)
@@ -65,7 +65,7 @@ func FirstEventInTime[T any](dur time.Duration, groupKey func(item T) (string, t
 }
 
 func LastEventInTime[T ID](dur time.Duration, input <-chan T) <-chan map[string]T {
-	retc := make(chan map[string]T, 3)
+	retc := make(chan map[string]T, ChannelSize)
 
 	go func() {
 		tick := time.NewTicker(dur)

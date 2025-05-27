@@ -10,7 +10,7 @@ func SplitMap[T any, K ~string](input <-chan T, keys []K, handle func(item T) ([
 	// for key := range cha
 	mappers := make(map[K]chan T)
 	for _, key := range keys {
-		chanitem := make(chan T, 1)
+		chanitem := make(chan T, ChannelSize)
 		mappers[key] = chanitem
 	}
 

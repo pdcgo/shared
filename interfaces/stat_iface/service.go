@@ -2,6 +2,7 @@ package stat_iface
 
 import (
 	"context"
+	"errors"
 	"time"
 )
 
@@ -9,6 +10,13 @@ type ExecRes struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
 	Err     error  `json:"-"`
+}
+
+func (e *ExecRes) DetectError() *ExecRes {
+	if e.Message != "" {
+		e.Err = errors.New(e.Message)
+	}
+	return e
 }
 
 func (e *ExecRes) SetError(err error) *ExecRes {

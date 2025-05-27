@@ -21,7 +21,7 @@ func WindowAggregate[T any, Ag any](
 	getKey func(item T) any,
 	handler func(ag Ag, item T) (Ag, error),
 ) <-chan Ag {
-	retc := make(chan Ag, 3)
+	retc := make(chan Ag, ChannelSize)
 
 	go func() {
 		var err error

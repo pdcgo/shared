@@ -8,7 +8,7 @@ import (
 )
 
 func Merge[T any](inputs ...<-chan T) <-chan T {
-	retc := make(chan T, 9)
+	retc := make(chan T, ChannelSize)
 
 	var wg sync.WaitGroup
 
@@ -36,7 +36,7 @@ func Split[T any](input <-chan T, splitSize int) []<-chan T {
 	retc := make([]chan T, splitSize)
 	i := 0
 	for {
-		retc[i] = make(chan T, 5)
+		retc[i] = make(chan T, ChannelSize)
 
 		i += 1
 		if i == splitSize {
@@ -81,7 +81,7 @@ func ReleaseToSyncGroup[T any](wg *sync.WaitGroup, input <-chan T) {
 }
 
 func Sink[T any](input <-chan T, handle func(item T) error) <-chan T {
-	retc := make(chan T, 3)
+	retc := make(chan T, ChannelSize)
 	go func() {
 		var err error
 		defer close(retc)
@@ -102,7 +102,7 @@ func Sink[T any](input <-chan T, handle func(item T) error) <-chan T {
 }
 
 func Filter[T any](input <-chan T, handle func(item T) bool) <-chan T {
-	retc := make(chan T, 3)
+	retc := make(chan T, ChannelSize)
 	go func() {
 		defer close(retc)
 		for item := range input {
@@ -116,7 +116,7 @@ func Filter[T any](input <-chan T, handle func(item T) bool) <-chan T {
 	return retc
 }
 func Map[T any, R any](input <-chan T, handle func(item T) R) <-chan R {
-	retc := make(chan R, 3)
+	retc := make(chan R, ChannelSize)
 	go func() {
 		defer close(retc)
 		for dd := range input {
@@ -129,7 +129,7 @@ func Map[T any, R any](input <-chan T, handle func(item T) R) <-chan R {
 }
 
 func MapFilter[T any, R any](input <-chan T, handle func(item T) (R, error)) <-chan R {
-	retc := make(chan R, 1)
+	retc := make(chan R, ChannelSize)
 	go func() {
 		defer close(retc)
 		for dd := range input {
@@ -150,7 +150,7 @@ func MapFilter[T any, R any](input <-chan T, handle func(item T) (R, error)) <-c
 }
 
 func MapConcurent[T any, R any](size int, input <-chan T, handle func(item T) (R, error)) <-chan R {
-	retc := make(chan R, 3)
+	retc := make(chan R, ChannelSize)
 	limit := make(chan int8, size)
 	release := func() {
 		<-limit
@@ -182,7 +182,7 @@ func MapConcurent[T any, R any](size int, input <-chan T, handle func(item T) (R
 }
 
 func UnSlice[T any](input <-chan []T) <-chan T {
-	retc := make(chan T, 3)
+	retc := make(chan T, ChannelSize)
 	go func() {
 		defer close(retc)
 		for items := range input {
@@ -197,7 +197,7 @@ func UnSlice[T any](input <-chan []T) <-chan T {
 }
 
 func Unique[T any](input <-chan []T, handle func(item T) string) <-chan []T {
-	retc := make(chan []T, 3)
+	retc := make(chan []T, ChannelSize)
 
 	go func() {
 		defer close(retc)
@@ -229,7 +229,7 @@ func Unique[T any](input <-chan []T, handle func(item T) string) <-chan []T {
 }
 
 func TimeWindow[T any](dur time.Duration, input <-chan T) <-chan []T {
-	retc := make(chan []T, 3)
+	retc := make(chan []T, ChannelSize)
 
 	go func() {
 		tick := time.NewTicker(dur)

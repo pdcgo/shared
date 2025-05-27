@@ -6,7 +6,7 @@ import (
 )
 
 func WithPrevious[T any](input <-chan T, handle func(prev T, item T) error) <-chan T {
-	retc := make(chan T, 3)
+	retc := make(chan T, ChannelSize)
 	go func() {
 		var err error
 		defer close(retc)

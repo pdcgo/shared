@@ -6,7 +6,7 @@ import (
 )
 
 func MapExtend[T any, R any](input <-chan T, handle func(item T) ([]R, error)) <-chan R {
-	retc := make(chan R, 1)
+	retc := make(chan R, ChannelSize)
 
 	go func() {
 		defer close(retc)
@@ -32,7 +32,7 @@ func MapExtend[T any, R any](input <-chan T, handle func(item T) ([]R, error)) <
 }
 
 func MapFilterddd[T any, R any](input <-chan T, handle func(item T) (R, error)) <-chan R {
-	retc := make(chan R, 1)
+	retc := make(chan R, ChannelSize)
 	go func() {
 		defer close(retc)
 		for dd := range input {
