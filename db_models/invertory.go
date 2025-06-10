@@ -91,6 +91,7 @@ func (InvTxStatus) EnumList() []string {
 		"cancel",
 		"completed",
 		"picking",
+		"picked",
 		"packing",
 		"packing_completed",
 	}
@@ -105,6 +106,7 @@ const (
 
 	// untuk order dan return
 	InvTxProductPick      InvTxStatus = "picking"           // barang proses pengambilan
+	InvTxProductPicked    InvTxStatus = "picked"            // barang sudah diambil
 	InvTxReadyForPacking  InvTxStatus = "packing"           // siap di packing
 	InvTxReadyForCourrier InvTxStatus = "packing_completed" // siap diambil kurir
 
