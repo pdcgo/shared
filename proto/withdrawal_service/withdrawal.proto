@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package withdrawal_iface;
+
+option go_package = "./withdrawal_iface;withdrawal_iface";
+
+service WithdrawalService {
+    rpc SubmitWithdrawal(SubmitWdRequest) returns (CommonResponse);
+}
+
+message SubmitWdRequest {
+    string filename = 1;
+    bytes content = 2;
+}
+
+message CommonResponse {
+    string message = 1;
+}
