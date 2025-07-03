@@ -13,6 +13,11 @@ type MockWdServer struct {
 	withdrawal_iface.UnimplementedWithdrawalServiceServer
 }
 
+// GetTaskList implements withdrawal_iface.WithdrawalServiceServer.
+func (m *MockWdServer) GetTaskList(context.Context, *withdrawal_iface.TaskListRequest) (*withdrawal_iface.TaskListResponse, error) {
+	panic("unimplemented")
+}
+
 // SubmitWithdrawal implements withdrawal_iface.WithdrawalServiceServer.
 func (m *MockWdServer) SubmitWithdrawal(context.Context, *withdrawal_iface.SubmitWdRequest) (*withdrawal_iface.CommonResponse, error) {
 	data := withdrawal_iface.CommonResponse{

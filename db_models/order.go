@@ -176,7 +176,7 @@ type Order struct {
 	ID                  uint  `json:"id" gorm:"primarykey"`
 	TeamID              uint  `json:"team_id"`
 	CreatedByID         uint  `json:"created_by_id"`
-	InvertoryTxID       uint  `json:"invertory_tx_id"`
+	InvertoryTxID       *uint `json:"invertory_tx_id"`
 	InvertoryReturnTxID *uint `json:"invertory_ret_tx_id"`
 	DoubleOrder         bool  `json:"double_order"`
 

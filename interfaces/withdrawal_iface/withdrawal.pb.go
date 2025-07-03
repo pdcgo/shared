@@ -21,6 +21,154 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type TaskListRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TeamId        uint64                 `protobuf:"varint,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaskListRequest) Reset() {
+	*x = TaskListRequest{}
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaskListRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaskListRequest) ProtoMessage() {}
+
+func (x *TaskListRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaskListRequest.ProtoReflect.Descriptor instead.
+func (*TaskListRequest) Descriptor() ([]byte, []int) {
+	return file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *TaskListRequest) GetTeamId() uint64 {
+	if x != nil {
+		return x.TeamId
+	}
+	return 0
+}
+
+func (x *TaskListRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+type TaskListResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*TaskItem            `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaskListResponse) Reset() {
+	*x = TaskListResponse{}
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaskListResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaskListResponse) ProtoMessage() {}
+
+func (x *TaskListResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaskListResponse.ProtoReflect.Descriptor instead.
+func (*TaskListResponse) Descriptor() ([]byte, []int) {
+	return file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TaskListResponse) GetItems() []*TaskItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type TaskItem struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Filename      string                 `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
+	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaskItem) Reset() {
+	*x = TaskItem{}
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaskItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaskItem) ProtoMessage() {}
+
+func (x *TaskItem) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaskItem.ProtoReflect.Descriptor instead.
+func (*TaskItem) Descriptor() ([]byte, []int) {
+	return file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TaskItem) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *TaskItem) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
 type SubmitWdRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Filename      string                 `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
@@ -31,7 +179,7 @@ type SubmitWdRequest struct {
 
 func (x *SubmitWdRequest) Reset() {
 	*x = SubmitWdRequest{}
-	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[0]
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +191,7 @@ func (x *SubmitWdRequest) String() string {
 func (*SubmitWdRequest) ProtoMessage() {}
 
 func (x *SubmitWdRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[0]
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +204,7 @@ func (x *SubmitWdRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitWdRequest.ProtoReflect.Descriptor instead.
 func (*SubmitWdRequest) Descriptor() ([]byte, []int) {
-	return file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP(), []int{0}
+	return file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SubmitWdRequest) GetFilename() string {
@@ -82,7 +230,7 @@ type CommonResponse struct {
 
 func (x *CommonResponse) Reset() {
 	*x = CommonResponse{}
-	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[1]
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +242,7 @@ func (x *CommonResponse) String() string {
 func (*CommonResponse) ProtoMessage() {}
 
 func (x *CommonResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[1]
+	mi := &file_proto_withdrawal_service_withdrawal_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +255,7 @@ func (x *CommonResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommonResponse.ProtoReflect.Descriptor instead.
 func (*CommonResponse) Descriptor() ([]byte, []int) {
-	return file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP(), []int{1}
+	return file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *CommonResponse) GetMessage() string {
@@ -121,14 +269,23 @@ var File_proto_withdrawal_service_withdrawal_proto protoreflect.FileDescriptor
 
 const file_proto_withdrawal_service_withdrawal_proto_rawDesc = "" +
 	"\n" +
-	")proto/withdrawal_service/withdrawal.proto\x12\x10withdrawal_iface\"G\n" +
+	")proto/withdrawal_service/withdrawal.proto\x12\x10withdrawal_iface\"B\n" +
+	"\x0fTaskListRequest\x12\x17\n" +
+	"\ateam_id\x18\x01 \x01(\x04R\x06teamId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"D\n" +
+	"\x10TaskListResponse\x120\n" +
+	"\x05items\x18\x01 \x03(\v2\x1a.withdrawal_iface.TaskItemR\x05items\">\n" +
+	"\bTaskItem\x12\x1a\n" +
+	"\bfilename\x18\x01 \x01(\tR\bfilename\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"G\n" +
 	"\x0fSubmitWdRequest\x12\x1a\n" +
 	"\bfilename\x18\x01 \x01(\tR\bfilename\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\fR\acontent\"*\n" +
 	"\x0eCommonResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2l\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xc2\x01\n" +
 	"\x11WithdrawalService\x12W\n" +
-	"\x10SubmitWithdrawal\x12!.withdrawal_iface.SubmitWdRequest\x1a .withdrawal_iface.CommonResponseB%Z#./withdrawal_iface;withdrawal_ifaceb\x06proto3"
+	"\x10SubmitWithdrawal\x12!.withdrawal_iface.SubmitWdRequest\x1a .withdrawal_iface.CommonResponse\x12T\n" +
+	"\vGetTaskList\x12!.withdrawal_iface.TaskListRequest\x1a\".withdrawal_iface.TaskListResponseB%Z#./withdrawal_iface;withdrawal_ifaceb\x06proto3"
 
 var (
 	file_proto_withdrawal_service_withdrawal_proto_rawDescOnce sync.Once
@@ -142,19 +299,25 @@ func file_proto_withdrawal_service_withdrawal_proto_rawDescGZIP() []byte {
 	return file_proto_withdrawal_service_withdrawal_proto_rawDescData
 }
 
-var file_proto_withdrawal_service_withdrawal_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_proto_withdrawal_service_withdrawal_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_proto_withdrawal_service_withdrawal_proto_goTypes = []any{
-	(*SubmitWdRequest)(nil), // 0: withdrawal_iface.SubmitWdRequest
-	(*CommonResponse)(nil),  // 1: withdrawal_iface.CommonResponse
+	(*TaskListRequest)(nil),  // 0: withdrawal_iface.TaskListRequest
+	(*TaskListResponse)(nil), // 1: withdrawal_iface.TaskListResponse
+	(*TaskItem)(nil),         // 2: withdrawal_iface.TaskItem
+	(*SubmitWdRequest)(nil),  // 3: withdrawal_iface.SubmitWdRequest
+	(*CommonResponse)(nil),   // 4: withdrawal_iface.CommonResponse
 }
 var file_proto_withdrawal_service_withdrawal_proto_depIdxs = []int32{
-	0, // 0: withdrawal_iface.WithdrawalService.SubmitWithdrawal:input_type -> withdrawal_iface.SubmitWdRequest
-	1, // 1: withdrawal_iface.WithdrawalService.SubmitWithdrawal:output_type -> withdrawal_iface.CommonResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: withdrawal_iface.TaskListResponse.items:type_name -> withdrawal_iface.TaskItem
+	3, // 1: withdrawal_iface.WithdrawalService.SubmitWithdrawal:input_type -> withdrawal_iface.SubmitWdRequest
+	0, // 2: withdrawal_iface.WithdrawalService.GetTaskList:input_type -> withdrawal_iface.TaskListRequest
+	4, // 3: withdrawal_iface.WithdrawalService.SubmitWithdrawal:output_type -> withdrawal_iface.CommonResponse
+	1, // 4: withdrawal_iface.WithdrawalService.GetTaskList:output_type -> withdrawal_iface.TaskListResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_proto_withdrawal_service_withdrawal_proto_init() }
@@ -168,7 +331,7 @@ func file_proto_withdrawal_service_withdrawal_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_withdrawal_service_withdrawal_proto_rawDesc), len(file_proto_withdrawal_service_withdrawal_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

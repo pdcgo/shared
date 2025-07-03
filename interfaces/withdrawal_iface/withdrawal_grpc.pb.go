@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	WithdrawalService_SubmitWithdrawal_FullMethodName = "/withdrawal_iface.WithdrawalService/SubmitWithdrawal"
+	WithdrawalService_GetTaskList_FullMethodName      = "/withdrawal_iface.WithdrawalService/GetTaskList"
 )
 
 // WithdrawalServiceClient is the client API for WithdrawalService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WithdrawalServiceClient interface {
 	SubmitWithdrawal(ctx context.Context, in *SubmitWdRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+	GetTaskList(ctx context.Context, in *TaskListRequest, opts ...grpc.CallOption) (*TaskListResponse, error)
 }
 
 type withdrawalServiceClient struct {
@@ -47,11 +49,22 @@ func (c *withdrawalServiceClient) SubmitWithdrawal(ctx context.Context, in *Subm
 	return out, nil
 }
 
+func (c *withdrawalServiceClient) GetTaskList(ctx context.Context, in *TaskListRequest, opts ...grpc.CallOption) (*TaskListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TaskListResponse)
+	err := c.cc.Invoke(ctx, WithdrawalService_GetTaskList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WithdrawalServiceServer is the server API for WithdrawalService service.
 // All implementations must embed UnimplementedWithdrawalServiceServer
 // for forward compatibility.
 type WithdrawalServiceServer interface {
 	SubmitWithdrawal(context.Context, *SubmitWdRequest) (*CommonResponse, error)
+	GetTaskList(context.Context, *TaskListRequest) (*TaskListResponse, error)
 	mustEmbedUnimplementedWithdrawalServiceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedWithdrawalServiceServer struct{}
 
 func (UnimplementedWithdrawalServiceServer) SubmitWithdrawal(context.Context, *SubmitWdRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubmitWithdrawal not implemented")
+}
+func (UnimplementedWithdrawalServiceServer) GetTaskList(context.Context, *TaskListRequest) (*TaskListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTaskList not implemented")
 }
 func (UnimplementedWithdrawalServiceServer) mustEmbedUnimplementedWithdrawalServiceServer() {}
 func (UnimplementedWithdrawalServiceServer) testEmbeddedByValue()                           {}
@@ -104,6 +120,24 @@ func _WithdrawalService_SubmitWithdrawal_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WithdrawalService_GetTaskList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WithdrawalServiceServer).GetTaskList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WithdrawalService_GetTaskList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WithdrawalServiceServer).GetTaskList(ctx, req.(*TaskListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WithdrawalService_ServiceDesc is the grpc.ServiceDesc for WithdrawalService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var WithdrawalService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SubmitWithdrawal",
 			Handler:    _WithdrawalService_SubmitWithdrawal_Handler,
+		},
+		{
+			MethodName: "GetTaskList",
+			Handler:    _WithdrawalService_GetTaskList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

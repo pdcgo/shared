@@ -6,7 +6,24 @@ option go_package = "./withdrawal_iface;withdrawal_iface";
 
 service WithdrawalService {
     rpc SubmitWithdrawal(SubmitWdRequest) returns (CommonResponse);
+    rpc GetTaskList(TaskListRequest) returns (TaskListResponse);
 }
+
+message TaskListRequest {
+    uint64 team_id = 1;
+    string status = 2;
+}
+
+message TaskListResponse {
+    repeated TaskItem items = 1;
+}
+
+message TaskItem {
+    string filename = 1;
+    string status = 2;
+    
+}
+
 
 message SubmitWdRequest {
     string filename = 1;

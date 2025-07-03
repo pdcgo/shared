@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package warehouse_iface;
+
+option go_package = "./warehouse_iface;warehouse_iface";
+
+service WarehouseService {};
