@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package invoice_iface;
+import "google/api/annotations.proto";
+
+option go_package = "./invoice_iface;invoice_iface";
+
+service InvoiceService {
+    rpc GetLimitInvoice(TeamLimitInvoiceReq) returns (TeamLimitInvoiceRes) {
+        option (google.api.http) = {
+            post: "/v1/get_limit_invoice"
+            body: "*"
+        };
+    };
+    rpc SetLimitInvoice(SetLimitInvoiceReq) returns (SetLimitInvoiceRes) {
+        option (google.api.http) = {
+            post: "/v1/set_limit_invoice"
+            body: "*"
+        };
+    };
+};
+
+enum LimitType {
+    UNKNOWN = 0;
+    DEFAULT = 1;
+    TEAM = 2;
+}
+
+message SetLimitInvoiceReq {
+    int64 team_id = 1;
+    optional int64 for_team_id = 2;
+    double threshold = 3;
+}
+
+message SetLimitInvoiceRes {
+    string message = 1;
+}
+
+message TeamLimitInvoiceReq {
+    int64 to_team_id = 1;
+    int64 from_team_id = 2;
+}
+
+message TeamLimitInvoiceRes {
+    int64 team_id = 1;
+    int64 for_team_id = 2;
+    LimitType limit_type = 3; 
+
+    bool can_create_order = 4;
+    double limit_thresshold_amount = 5;
+    double unpaid_invoice_amount = 6;
+}
+

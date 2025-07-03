@@ -1,0 +1,10 @@
+version: v1
+plugins:
+  - plugin: go
+    out: interfaces
+  - plugin: go-grpc
+    out: interfaces
+  - plugin: grpc-gateway
+    out: interfaces
+  - plugin: openapiv2
+    out: interfaces

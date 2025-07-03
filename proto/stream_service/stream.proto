@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package stream_iface;
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./stream_iface;stream_iface";
+
+service StreamService {
+    rpc RevalidateFrom(RevalidateRequest) returns (RevalidateRes);
+    rpc Start(CommonReq) returns (CommonRes);
+    rpc Stop(CommonReq) returns (CommonRes);
+};
+
+message RevalidateRequest {
+    google.protobuf.Timestamp start_time = 1;
+}
+
+message CommonReq {}
+
+
+message CommonRes {
+    string message = 1;
+}
+
+message RevalidateRes {
+    string message = 1;
+}
