@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package infra_iface;
+
+option go_package = "./infra_iface;infra_iface";
+
+service InfraService {
+    rpc GetVersion(VersionRequest) returns (VersionResponse);
+};
+
+message VersionRequest {
+    uint64 team_id = 1;
+}
+
+message VersionResponse {
+    string version = 1;
+    
+}
