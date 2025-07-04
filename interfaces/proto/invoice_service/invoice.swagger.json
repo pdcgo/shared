@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "User Service",
+    "title": "Invoice Service",
     "version": "1.0"
   },
   "tags": [
@@ -40,6 +40,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/invoice_ifaceTeamLimitInvoiceReq"
+            }
+          }
+        ],
+        "tags": [
+          "InvoiceService"
+        ]
+      }
+    },
+    "/v1/limit_invoice/delete": {
+      "post": {
+        "operationId": "InvoiceService_LimitInvoiceDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/invoice_ifaceCommonRes"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/invoice_ifaceLimitInvoiceDeleteReq"
             }
           }
         ],
@@ -114,6 +146,14 @@
     }
   },
   "definitions": {
+    "invoice_ifaceCommonRes": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
     "invoice_ifaceConfigItem": {
       "type": "object",
       "properties": {
@@ -136,8 +176,11 @@
           "type": "number",
           "format": "double"
         },
-        "teamName": {
-          "type": "string"
+        "team": {
+          "$ref": "#/definitions/invoice_ifaceTeamInfo"
+        },
+        "forTeam": {
+          "$ref": "#/definitions/invoice_ifaceTeamInfo"
         }
       }
     },
@@ -159,6 +202,19 @@
             "type": "object",
             "$ref": "#/definitions/invoice_ifaceConfigItem"
           }
+        }
+      }
+    },
+    "invoice_ifaceLimitInvoiceDeleteReq": {
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "forTeamId": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -196,14 +252,29 @@
         }
       }
     },
-    "invoice_ifaceTeamLimitInvoiceReq": {
+    "invoice_ifaceTeamInfo": {
       "type": "object",
       "properties": {
-        "toTeamId": {
+        "id": {
           "type": "string",
           "format": "int64"
         },
-        "fromTeamId": {
+        "name": {
+          "type": "string"
+        },
+        "teamCode": {
+          "type": "string"
+        }
+      }
+    },
+    "invoice_ifaceTeamLimitInvoiceReq": {
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "forTeamId": {
           "type": "string",
           "format": "int64"
         }

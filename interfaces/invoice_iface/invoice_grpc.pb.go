@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InvoiceService_GetLimitInvoice_FullMethodName  = "/invoice_iface.InvoiceService/GetLimitInvoice"
-	InvoiceService_SetLimitInvoice_FullMethodName  = "/invoice_iface.InvoiceService/SetLimitInvoice"
-	InvoiceService_LimitInvoiceList_FullMethodName = "/invoice_iface.InvoiceService/LimitInvoiceList"
+	InvoiceService_GetLimitInvoice_FullMethodName    = "/invoice_iface.InvoiceService/GetLimitInvoice"
+	InvoiceService_SetLimitInvoice_FullMethodName    = "/invoice_iface.InvoiceService/SetLimitInvoice"
+	InvoiceService_LimitInvoiceDelete_FullMethodName = "/invoice_iface.InvoiceService/LimitInvoiceDelete"
+	InvoiceService_LimitInvoiceList_FullMethodName   = "/invoice_iface.InvoiceService/LimitInvoiceList"
 )
 
 // InvoiceServiceClient is the client API for InvoiceService service.
@@ -30,6 +31,7 @@ const (
 type InvoiceServiceClient interface {
 	GetLimitInvoice(ctx context.Context, in *TeamLimitInvoiceReq, opts ...grpc.CallOption) (*TeamLimitInvoiceRes, error)
 	SetLimitInvoice(ctx context.Context, in *SetLimitInvoiceReq, opts ...grpc.CallOption) (*SetLimitInvoiceRes, error)
+	LimitInvoiceDelete(ctx context.Context, in *LimitInvoiceDeleteReq, opts ...grpc.CallOption) (*CommonRes, error)
 	LimitInvoiceList(ctx context.Context, in *ConfigListReq, opts ...grpc.CallOption) (*ConfigListRes, error)
 }
 
@@ -61,6 +63,16 @@ func (c *invoiceServiceClient) SetLimitInvoice(ctx context.Context, in *SetLimit
 	return out, nil
 }
 
+func (c *invoiceServiceClient) LimitInvoiceDelete(ctx context.Context, in *LimitInvoiceDeleteReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, InvoiceService_LimitInvoiceDelete_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *invoiceServiceClient) LimitInvoiceList(ctx context.Context, in *ConfigListReq, opts ...grpc.CallOption) (*ConfigListRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ConfigListRes)
@@ -77,6 +89,7 @@ func (c *invoiceServiceClient) LimitInvoiceList(ctx context.Context, in *ConfigL
 type InvoiceServiceServer interface {
 	GetLimitInvoice(context.Context, *TeamLimitInvoiceReq) (*TeamLimitInvoiceRes, error)
 	SetLimitInvoice(context.Context, *SetLimitInvoiceReq) (*SetLimitInvoiceRes, error)
+	LimitInvoiceDelete(context.Context, *LimitInvoiceDeleteReq) (*CommonRes, error)
 	LimitInvoiceList(context.Context, *ConfigListReq) (*ConfigListRes, error)
 	mustEmbedUnimplementedInvoiceServiceServer()
 }
@@ -93,6 +106,9 @@ func (UnimplementedInvoiceServiceServer) GetLimitInvoice(context.Context, *TeamL
 }
 func (UnimplementedInvoiceServiceServer) SetLimitInvoice(context.Context, *SetLimitInvoiceReq) (*SetLimitInvoiceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetLimitInvoice not implemented")
+}
+func (UnimplementedInvoiceServiceServer) LimitInvoiceDelete(context.Context, *LimitInvoiceDeleteReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LimitInvoiceDelete not implemented")
 }
 func (UnimplementedInvoiceServiceServer) LimitInvoiceList(context.Context, *ConfigListReq) (*ConfigListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LimitInvoiceList not implemented")
@@ -154,6 +170,24 @@ func _InvoiceService_SetLimitInvoice_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InvoiceService_LimitInvoiceDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LimitInvoiceDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoiceServiceServer).LimitInvoiceDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoiceService_LimitInvoiceDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoiceServiceServer).LimitInvoiceDelete(ctx, req.(*LimitInvoiceDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _InvoiceService_LimitInvoiceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ConfigListReq)
 	if err := dec(in); err != nil {
@@ -186,6 +220,10 @@ var InvoiceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetLimitInvoice",
 			Handler:    _InvoiceService_SetLimitInvoice_Handler,
+		},
+		{
+			MethodName: "LimitInvoiceDelete",
+			Handler:    _InvoiceService_LimitInvoiceDelete_Handler,
 		},
 		{
 			MethodName: "LimitInvoiceList",

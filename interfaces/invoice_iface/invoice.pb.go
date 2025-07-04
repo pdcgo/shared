@@ -72,6 +72,102 @@ func (LimitType) EnumDescriptor() ([]byte, []int) {
 	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{0}
 }
 
+type CommonRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CommonRes) Reset() {
+	*x = CommonRes{}
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CommonRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CommonRes) ProtoMessage() {}
+
+func (x *CommonRes) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CommonRes.ProtoReflect.Descriptor instead.
+func (*CommonRes) Descriptor() ([]byte, []int) {
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *CommonRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type LimitInvoiceDeleteReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TeamId        int64                  `protobuf:"varint,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	ForTeamId     *int64                 `protobuf:"varint,2,opt,name=for_team_id,json=forTeamId,proto3,oneof" json:"for_team_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LimitInvoiceDeleteReq) Reset() {
+	*x = LimitInvoiceDeleteReq{}
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LimitInvoiceDeleteReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LimitInvoiceDeleteReq) ProtoMessage() {}
+
+func (x *LimitInvoiceDeleteReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LimitInvoiceDeleteReq.ProtoReflect.Descriptor instead.
+func (*LimitInvoiceDeleteReq) Descriptor() ([]byte, []int) {
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LimitInvoiceDeleteReq) GetTeamId() int64 {
+	if x != nil {
+		return x.TeamId
+	}
+	return 0
+}
+
+func (x *LimitInvoiceDeleteReq) GetForTeamId() int64 {
+	if x != nil && x.ForTeamId != nil {
+		return *x.ForTeamId
+	}
+	return 0
+}
+
 type SetLimitInvoiceReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TeamId        int64                  `protobuf:"varint,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
@@ -83,7 +179,7 @@ type SetLimitInvoiceReq struct {
 
 func (x *SetLimitInvoiceReq) Reset() {
 	*x = SetLimitInvoiceReq{}
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[0]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -95,7 +191,7 @@ func (x *SetLimitInvoiceReq) String() string {
 func (*SetLimitInvoiceReq) ProtoMessage() {}
 
 func (x *SetLimitInvoiceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[0]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -108,7 +204,7 @@ func (x *SetLimitInvoiceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetLimitInvoiceReq.ProtoReflect.Descriptor instead.
 func (*SetLimitInvoiceReq) Descriptor() ([]byte, []int) {
-	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{0}
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SetLimitInvoiceReq) GetTeamId() int64 {
@@ -141,7 +237,7 @@ type SetLimitInvoiceRes struct {
 
 func (x *SetLimitInvoiceRes) Reset() {
 	*x = SetLimitInvoiceRes{}
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[1]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -153,7 +249,7 @@ func (x *SetLimitInvoiceRes) String() string {
 func (*SetLimitInvoiceRes) ProtoMessage() {}
 
 func (x *SetLimitInvoiceRes) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[1]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -166,7 +262,7 @@ func (x *SetLimitInvoiceRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetLimitInvoiceRes.ProtoReflect.Descriptor instead.
 func (*SetLimitInvoiceRes) Descriptor() ([]byte, []int) {
-	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{1}
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SetLimitInvoiceRes) GetMessage() string {
@@ -178,15 +274,15 @@ func (x *SetLimitInvoiceRes) GetMessage() string {
 
 type TeamLimitInvoiceReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ToTeamId      int64                  `protobuf:"varint,1,opt,name=to_team_id,json=toTeamId,proto3" json:"to_team_id,omitempty"`
-	FromTeamId    int64                  `protobuf:"varint,2,opt,name=from_team_id,json=fromTeamId,proto3" json:"from_team_id,omitempty"`
+	TeamId        int64                  `protobuf:"varint,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
+	ForTeamId     int64                  `protobuf:"varint,2,opt,name=for_team_id,json=forTeamId,proto3" json:"for_team_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *TeamLimitInvoiceReq) Reset() {
 	*x = TeamLimitInvoiceReq{}
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[2]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -198,7 +294,7 @@ func (x *TeamLimitInvoiceReq) String() string {
 func (*TeamLimitInvoiceReq) ProtoMessage() {}
 
 func (x *TeamLimitInvoiceReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[2]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -211,19 +307,19 @@ func (x *TeamLimitInvoiceReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeamLimitInvoiceReq.ProtoReflect.Descriptor instead.
 func (*TeamLimitInvoiceReq) Descriptor() ([]byte, []int) {
-	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{2}
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *TeamLimitInvoiceReq) GetToTeamId() int64 {
+func (x *TeamLimitInvoiceReq) GetTeamId() int64 {
 	if x != nil {
-		return x.ToTeamId
+		return x.TeamId
 	}
 	return 0
 }
 
-func (x *TeamLimitInvoiceReq) GetFromTeamId() int64 {
+func (x *TeamLimitInvoiceReq) GetForTeamId() int64 {
 	if x != nil {
-		return x.FromTeamId
+		return x.ForTeamId
 	}
 	return 0
 }
@@ -242,7 +338,7 @@ type TeamLimitInvoiceRes struct {
 
 func (x *TeamLimitInvoiceRes) Reset() {
 	*x = TeamLimitInvoiceRes{}
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[3]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -254,7 +350,7 @@ func (x *TeamLimitInvoiceRes) String() string {
 func (*TeamLimitInvoiceRes) ProtoMessage() {}
 
 func (x *TeamLimitInvoiceRes) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[3]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -267,7 +363,7 @@ func (x *TeamLimitInvoiceRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeamLimitInvoiceRes.ProtoReflect.Descriptor instead.
 func (*TeamLimitInvoiceRes) Descriptor() ([]byte, []int) {
-	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{3}
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *TeamLimitInvoiceRes) GetTeamId() int64 {
@@ -312,21 +408,82 @@ func (x *TeamLimitInvoiceRes) GetUnpaidInvoiceAmount() float64 {
 	return 0
 }
 
+type TeamInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	TeamCode      string                 `protobuf:"bytes,3,opt,name=team_code,json=teamCode,proto3" json:"team_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TeamInfo) Reset() {
+	*x = TeamInfo{}
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TeamInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TeamInfo) ProtoMessage() {}
+
+func (x *TeamInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TeamInfo.ProtoReflect.Descriptor instead.
+func (*TeamInfo) Descriptor() ([]byte, []int) {
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *TeamInfo) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *TeamInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TeamInfo) GetTeamCode() string {
+	if x != nil {
+		return x.TeamCode
+	}
+	return ""
+}
+
 type ConfigItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	LimitType     LimitType              `protobuf:"varint,2,opt,name=limit_type,json=limitType,proto3,enum=invoice_iface.LimitType" json:"limit_type,omitempty"`
 	TeamId        int64                  `protobuf:"varint,3,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
-	ForTeamId     int64                  `protobuf:"varint,4,opt,name=for_team_id,json=forTeamId,proto3" json:"for_team_id,omitempty"`
+	ForTeamId     *int64                 `protobuf:"varint,4,opt,name=for_team_id,json=forTeamId,proto3,oneof" json:"for_team_id,omitempty"`
 	Threshold     float64                `protobuf:"fixed64,5,opt,name=threshold,proto3" json:"threshold,omitempty"`
-	TeamName      string                 `protobuf:"bytes,6,opt,name=team_name,json=teamName,proto3" json:"team_name,omitempty"`
+	Team          *TeamInfo              `protobuf:"bytes,6,opt,name=team,proto3" json:"team,omitempty"`
+	ForTeam       *TeamInfo              `protobuf:"bytes,7,opt,name=for_team,json=forTeam,proto3,oneof" json:"for_team,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ConfigItem) Reset() {
 	*x = ConfigItem{}
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[4]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -338,7 +495,7 @@ func (x *ConfigItem) String() string {
 func (*ConfigItem) ProtoMessage() {}
 
 func (x *ConfigItem) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[4]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -351,7 +508,7 @@ func (x *ConfigItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigItem.ProtoReflect.Descriptor instead.
 func (*ConfigItem) Descriptor() ([]byte, []int) {
-	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{4}
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ConfigItem) GetId() int64 {
@@ -376,8 +533,8 @@ func (x *ConfigItem) GetTeamId() int64 {
 }
 
 func (x *ConfigItem) GetForTeamId() int64 {
-	if x != nil {
-		return x.ForTeamId
+	if x != nil && x.ForTeamId != nil {
+		return *x.ForTeamId
 	}
 	return 0
 }
@@ -389,11 +546,18 @@ func (x *ConfigItem) GetThreshold() float64 {
 	return 0
 }
 
-func (x *ConfigItem) GetTeamName() string {
+func (x *ConfigItem) GetTeam() *TeamInfo {
 	if x != nil {
-		return x.TeamName
+		return x.Team
 	}
-	return ""
+	return nil
+}
+
+func (x *ConfigItem) GetForTeam() *TeamInfo {
+	if x != nil {
+		return x.ForTeam
+	}
+	return nil
 }
 
 type ConfigListReq struct {
@@ -405,7 +569,7 @@ type ConfigListReq struct {
 
 func (x *ConfigListReq) Reset() {
 	*x = ConfigListReq{}
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[5]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -417,7 +581,7 @@ func (x *ConfigListReq) String() string {
 func (*ConfigListReq) ProtoMessage() {}
 
 func (x *ConfigListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[5]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -430,7 +594,7 @@ func (x *ConfigListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigListReq.ProtoReflect.Descriptor instead.
 func (*ConfigListReq) Descriptor() ([]byte, []int) {
-	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{5}
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ConfigListReq) GetTeamId() int64 {
@@ -449,7 +613,7 @@ type ConfigListRes struct {
 
 func (x *ConfigListRes) Reset() {
 	*x = ConfigListRes{}
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[6]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -461,7 +625,7 @@ func (x *ConfigListRes) String() string {
 func (*ConfigListRes) ProtoMessage() {}
 
 func (x *ConfigListRes) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_invoice_service_invoice_proto_msgTypes[6]
+	mi := &file_proto_invoice_service_invoice_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -474,7 +638,7 @@ func (x *ConfigListRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigListRes.ProtoReflect.Descriptor instead.
 func (*ConfigListRes) Descriptor() ([]byte, []int) {
-	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{6}
+	return file_proto_invoice_service_invoice_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ConfigListRes) GetData() []*ConfigItem {
@@ -488,19 +652,23 @@ var File_proto_invoice_service_invoice_proto protoreflect.FileDescriptor
 
 const file_proto_invoice_service_invoice_proto_rawDesc = "" +
 	"\n" +
-	"#proto/invoice_service/invoice.proto\x12\rinvoice_iface\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"\x80\x01\n" +
+	"#proto/invoice_service/invoice.proto\x12\rinvoice_iface\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"%\n" +
+	"\tCommonRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"e\n" +
+	"\x15LimitInvoiceDeleteReq\x12\x17\n" +
+	"\ateam_id\x18\x01 \x01(\x03R\x06teamId\x12#\n" +
+	"\vfor_team_id\x18\x02 \x01(\x03H\x00R\tforTeamId\x88\x01\x01B\x0e\n" +
+	"\f_for_team_id\"\x80\x01\n" +
 	"\x12SetLimitInvoiceReq\x12\x17\n" +
 	"\ateam_id\x18\x01 \x01(\x03R\x06teamId\x12#\n" +
 	"\vfor_team_id\x18\x02 \x01(\x03H\x00R\tforTeamId\x88\x01\x01\x12\x1c\n" +
 	"\tthreshold\x18\x03 \x01(\x01R\tthresholdB\x0e\n" +
 	"\f_for_team_id\".\n" +
 	"\x12SetLimitInvoiceRes\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"U\n" +
-	"\x13TeamLimitInvoiceReq\x12\x1c\n" +
-	"\n" +
-	"to_team_id\x18\x01 \x01(\x03R\btoTeamId\x12 \n" +
-	"\ffrom_team_id\x18\x02 \x01(\x03R\n" +
-	"fromTeamId\"\x9d\x02\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"N\n" +
+	"\x13TeamLimitInvoiceReq\x12\x17\n" +
+	"\ateam_id\x18\x01 \x01(\x03R\x06teamId\x12\x1e\n" +
+	"\vfor_team_id\x18\x02 \x01(\x03R\tforTeamId\"\x9d\x02\n" +
 	"\x13TeamLimitInvoiceRes\x12\x17\n" +
 	"\ateam_id\x18\x01 \x01(\x03R\x06teamId\x12\x1e\n" +
 	"\vfor_team_id\x18\x02 \x01(\x03R\tforTeamId\x127\n" +
@@ -508,16 +676,23 @@ const file_proto_invoice_service_invoice_proto_rawDesc = "" +
 	"limit_type\x18\x03 \x01(\x0e2\x18.invoice_iface.LimitTypeR\tlimitType\x12(\n" +
 	"\x10can_create_order\x18\x04 \x01(\bR\x0ecanCreateOrder\x126\n" +
 	"\x17limit_thresshold_amount\x18\x05 \x01(\x01R\x15limitThressholdAmount\x122\n" +
-	"\x15unpaid_invoice_amount\x18\x06 \x01(\x01R\x13unpaidInvoiceAmount\"\xc9\x01\n" +
+	"\x15unpaid_invoice_amount\x18\x06 \x01(\x01R\x13unpaidInvoiceAmount\"K\n" +
+	"\bTeamInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
+	"\tteam_code\x18\x03 \x01(\tR\bteamCode\"\xb4\x02\n" +
 	"\n" +
 	"ConfigItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x127\n" +
 	"\n" +
 	"limit_type\x18\x02 \x01(\x0e2\x18.invoice_iface.LimitTypeR\tlimitType\x12\x17\n" +
-	"\ateam_id\x18\x03 \x01(\x03R\x06teamId\x12\x1e\n" +
-	"\vfor_team_id\x18\x04 \x01(\x03R\tforTeamId\x12\x1c\n" +
-	"\tthreshold\x18\x05 \x01(\x01R\tthreshold\x12\x1b\n" +
-	"\tteam_name\x18\x06 \x01(\tR\bteamName\"(\n" +
+	"\ateam_id\x18\x03 \x01(\x03R\x06teamId\x12#\n" +
+	"\vfor_team_id\x18\x04 \x01(\x03H\x00R\tforTeamId\x88\x01\x01\x12\x1c\n" +
+	"\tthreshold\x18\x05 \x01(\x01R\tthreshold\x12+\n" +
+	"\x04team\x18\x06 \x01(\v2\x17.invoice_iface.TeamInfoR\x04team\x127\n" +
+	"\bfor_team\x18\a \x01(\v2\x17.invoice_iface.TeamInfoH\x01R\aforTeam\x88\x01\x01B\x0e\n" +
+	"\f_for_team_idB\v\n" +
+	"\t_for_team\"(\n" +
 	"\rConfigListReq\x12\x17\n" +
 	"\ateam_id\x18\x01 \x01(\x03R\x06teamId\">\n" +
 	"\rConfigListRes\x12-\n" +
@@ -525,12 +700,13 @@ const file_proto_invoice_service_invoice_proto_rawDesc = "" +
 	"\tLimitType\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\v\n" +
 	"\aDEFAULT\x10\x01\x12\b\n" +
-	"\x04TEAM\x10\x022\xfb\x02\n" +
+	"\x04TEAM\x10\x022\xf6\x03\n" +
 	"\x0eInvoiceService\x12{\n" +
 	"\x0fGetLimitInvoice\x12\".invoice_iface.TeamLimitInvoiceReq\x1a\".invoice_iface.TeamLimitInvoiceRes\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/get_limit_invoice\x12y\n" +
-	"\x0fSetLimitInvoice\x12!.invoice_iface.SetLimitInvoiceReq\x1a!.invoice_iface.SetLimitInvoiceRes\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/set_limit_invoice\x12q\n" +
-	"\x10LimitInvoiceList\x12\x1c.invoice_iface.ConfigListReq\x1a\x1c.invoice_iface.ConfigListRes\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/limit_invoice_listB7\x92A\x15\x12\x13\n" +
-	"\fUser Service2\x031.0Z\x1d./invoice_iface;invoice_ifaceb\x06proto3"
+	"\x0fSetLimitInvoice\x12!.invoice_iface.SetLimitInvoiceReq\x1a!.invoice_iface.SetLimitInvoiceRes\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/set_limit_invoice\x12y\n" +
+	"\x12LimitInvoiceDelete\x12$.invoice_iface.LimitInvoiceDeleteReq\x1a\x18.invoice_iface.CommonRes\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/limit_invoice/delete\x12q\n" +
+	"\x10LimitInvoiceList\x12\x1c.invoice_iface.ConfigListReq\x1a\x1c.invoice_iface.ConfigListRes\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/limit_invoice_listB:\x92A\x18\x12\x16\n" +
+	"\x0fInvoice Service2\x031.0Z\x1d./invoice_iface;invoice_ifaceb\x06proto3"
 
 var (
 	file_proto_invoice_service_invoice_proto_rawDescOnce sync.Once
@@ -545,32 +721,39 @@ func file_proto_invoice_service_invoice_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_invoice_service_invoice_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_invoice_service_invoice_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_proto_invoice_service_invoice_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_invoice_service_invoice_proto_goTypes = []any{
-	(LimitType)(0),              // 0: invoice_iface.LimitType
-	(*SetLimitInvoiceReq)(nil),  // 1: invoice_iface.SetLimitInvoiceReq
-	(*SetLimitInvoiceRes)(nil),  // 2: invoice_iface.SetLimitInvoiceRes
-	(*TeamLimitInvoiceReq)(nil), // 3: invoice_iface.TeamLimitInvoiceReq
-	(*TeamLimitInvoiceRes)(nil), // 4: invoice_iface.TeamLimitInvoiceRes
-	(*ConfigItem)(nil),          // 5: invoice_iface.ConfigItem
-	(*ConfigListReq)(nil),       // 6: invoice_iface.ConfigListReq
-	(*ConfigListRes)(nil),       // 7: invoice_iface.ConfigListRes
+	(LimitType)(0),                // 0: invoice_iface.LimitType
+	(*CommonRes)(nil),             // 1: invoice_iface.CommonRes
+	(*LimitInvoiceDeleteReq)(nil), // 2: invoice_iface.LimitInvoiceDeleteReq
+	(*SetLimitInvoiceReq)(nil),    // 3: invoice_iface.SetLimitInvoiceReq
+	(*SetLimitInvoiceRes)(nil),    // 4: invoice_iface.SetLimitInvoiceRes
+	(*TeamLimitInvoiceReq)(nil),   // 5: invoice_iface.TeamLimitInvoiceReq
+	(*TeamLimitInvoiceRes)(nil),   // 6: invoice_iface.TeamLimitInvoiceRes
+	(*TeamInfo)(nil),              // 7: invoice_iface.TeamInfo
+	(*ConfigItem)(nil),            // 8: invoice_iface.ConfigItem
+	(*ConfigListReq)(nil),         // 9: invoice_iface.ConfigListReq
+	(*ConfigListRes)(nil),         // 10: invoice_iface.ConfigListRes
 }
 var file_proto_invoice_service_invoice_proto_depIdxs = []int32{
-	0, // 0: invoice_iface.TeamLimitInvoiceRes.limit_type:type_name -> invoice_iface.LimitType
-	0, // 1: invoice_iface.ConfigItem.limit_type:type_name -> invoice_iface.LimitType
-	5, // 2: invoice_iface.ConfigListRes.data:type_name -> invoice_iface.ConfigItem
-	3, // 3: invoice_iface.InvoiceService.GetLimitInvoice:input_type -> invoice_iface.TeamLimitInvoiceReq
-	1, // 4: invoice_iface.InvoiceService.SetLimitInvoice:input_type -> invoice_iface.SetLimitInvoiceReq
-	6, // 5: invoice_iface.InvoiceService.LimitInvoiceList:input_type -> invoice_iface.ConfigListReq
-	4, // 6: invoice_iface.InvoiceService.GetLimitInvoice:output_type -> invoice_iface.TeamLimitInvoiceRes
-	2, // 7: invoice_iface.InvoiceService.SetLimitInvoice:output_type -> invoice_iface.SetLimitInvoiceRes
-	7, // 8: invoice_iface.InvoiceService.LimitInvoiceList:output_type -> invoice_iface.ConfigListRes
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	0,  // 0: invoice_iface.TeamLimitInvoiceRes.limit_type:type_name -> invoice_iface.LimitType
+	0,  // 1: invoice_iface.ConfigItem.limit_type:type_name -> invoice_iface.LimitType
+	7,  // 2: invoice_iface.ConfigItem.team:type_name -> invoice_iface.TeamInfo
+	7,  // 3: invoice_iface.ConfigItem.for_team:type_name -> invoice_iface.TeamInfo
+	8,  // 4: invoice_iface.ConfigListRes.data:type_name -> invoice_iface.ConfigItem
+	5,  // 5: invoice_iface.InvoiceService.GetLimitInvoice:input_type -> invoice_iface.TeamLimitInvoiceReq
+	3,  // 6: invoice_iface.InvoiceService.SetLimitInvoice:input_type -> invoice_iface.SetLimitInvoiceReq
+	2,  // 7: invoice_iface.InvoiceService.LimitInvoiceDelete:input_type -> invoice_iface.LimitInvoiceDeleteReq
+	9,  // 8: invoice_iface.InvoiceService.LimitInvoiceList:input_type -> invoice_iface.ConfigListReq
+	6,  // 9: invoice_iface.InvoiceService.GetLimitInvoice:output_type -> invoice_iface.TeamLimitInvoiceRes
+	4,  // 10: invoice_iface.InvoiceService.SetLimitInvoice:output_type -> invoice_iface.SetLimitInvoiceRes
+	1,  // 11: invoice_iface.InvoiceService.LimitInvoiceDelete:output_type -> invoice_iface.CommonRes
+	10, // 12: invoice_iface.InvoiceService.LimitInvoiceList:output_type -> invoice_iface.ConfigListRes
+	9,  // [9:13] is the sub-list for method output_type
+	5,  // [5:9] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_proto_invoice_service_invoice_proto_init() }
@@ -578,14 +761,16 @@ func file_proto_invoice_service_invoice_proto_init() {
 	if File_proto_invoice_service_invoice_proto != nil {
 		return
 	}
-	file_proto_invoice_service_invoice_proto_msgTypes[0].OneofWrappers = []any{}
+	file_proto_invoice_service_invoice_proto_msgTypes[1].OneofWrappers = []any{}
+	file_proto_invoice_service_invoice_proto_msgTypes[2].OneofWrappers = []any{}
+	file_proto_invoice_service_invoice_proto_msgTypes[7].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_invoice_service_invoice_proto_rawDesc), len(file_proto_invoice_service_invoice_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   7,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
