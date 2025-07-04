@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "proto/invoice_service/invoice.proto",
-    "version": "version not set"
+    "title": "User Service",
+    "version": "1.0"
   },
   "tags": [
     {
@@ -48,6 +48,38 @@
         ]
       }
     },
+    "/v1/limit_invoice_list": {
+      "post": {
+        "operationId": "InvoiceService_LimitInvoiceList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/invoice_ifaceConfigListRes"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/invoice_ifaceConfigListReq"
+            }
+          }
+        ],
+        "tags": [
+          "InvoiceService"
+        ]
+      }
+    },
     "/v1/set_limit_invoice": {
       "post": {
         "operationId": "InvoiceService_SetLimitInvoice",
@@ -82,6 +114,54 @@
     }
   },
   "definitions": {
+    "invoice_ifaceConfigItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "limitType": {
+          "$ref": "#/definitions/invoice_ifaceLimitType"
+        },
+        "teamId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "forTeamId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "threshold": {
+          "type": "number",
+          "format": "double"
+        },
+        "teamName": {
+          "type": "string"
+        }
+      }
+    },
+    "invoice_ifaceConfigListReq": {
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "invoice_ifaceConfigListRes": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/invoice_ifaceConfigItem"
+          }
+        }
+      }
+    },
     "invoice_ifaceLimitType": {
       "type": "string",
       "enum": [

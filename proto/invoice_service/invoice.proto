@@ -2,8 +2,17 @@ syntax = "proto3";
 
 package invoice_iface;
 import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "./invoice_iface;invoice_iface";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Invoice Service";
+    version: "1.0";
+  };
+};
+
 
 service InvoiceService {
     rpc GetLimitInvoice(TeamLimitInvoiceReq) returns (TeamLimitInvoiceRes) {
@@ -15,6 +24,12 @@ service InvoiceService {
     rpc SetLimitInvoice(SetLimitInvoiceReq) returns (SetLimitInvoiceRes) {
         option (google.api.http) = {
             post: "/v1/set_limit_invoice"
+            body: "*"
+        };
+    };
+    rpc LimitInvoiceList(ConfigListReq) returns(ConfigListRes) {
+        option (google.api.http) = {
+            post: "/v1/limit_invoice_list"
             body: "*"
         };
     };
@@ -50,4 +65,24 @@ message TeamLimitInvoiceRes {
     double limit_thresshold_amount = 5;
     double unpaid_invoice_amount = 6;
 }
+
+
+message ConfigItem {
+    int64 id = 1;
+    LimitType limit_type = 2; 
+    int64 team_id = 3;
+    int64 for_team_id = 4;
+    double threshold = 5;
+
+    string team_name = 6;
+}
+
+message ConfigListReq {
+    int64 team_id = 1;
+}
+
+message ConfigListRes {
+    repeated ConfigItem data = 1;
+}
+
 

@@ -8,3 +8,4 @@ plugins:
     out: interfaces
   - plugin: openapiv2
     out: interfaces
+    path: protoc-gen-openapiv2

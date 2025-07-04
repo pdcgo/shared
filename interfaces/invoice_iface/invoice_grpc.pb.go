@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InvoiceService_GetLimitInvoice_FullMethodName = "/invoice_iface.InvoiceService/GetLimitInvoice"
-	InvoiceService_SetLimitInvoice_FullMethodName = "/invoice_iface.InvoiceService/SetLimitInvoice"
+	InvoiceService_GetLimitInvoice_FullMethodName  = "/invoice_iface.InvoiceService/GetLimitInvoice"
+	InvoiceService_SetLimitInvoice_FullMethodName  = "/invoice_iface.InvoiceService/SetLimitInvoice"
+	InvoiceService_LimitInvoiceList_FullMethodName = "/invoice_iface.InvoiceService/LimitInvoiceList"
 )
 
 // InvoiceServiceClient is the client API for InvoiceService service.
@@ -29,6 +30,7 @@ const (
 type InvoiceServiceClient interface {
 	GetLimitInvoice(ctx context.Context, in *TeamLimitInvoiceReq, opts ...grpc.CallOption) (*TeamLimitInvoiceRes, error)
 	SetLimitInvoice(ctx context.Context, in *SetLimitInvoiceReq, opts ...grpc.CallOption) (*SetLimitInvoiceRes, error)
+	LimitInvoiceList(ctx context.Context, in *ConfigListReq, opts ...grpc.CallOption) (*ConfigListRes, error)
 }
 
 type invoiceServiceClient struct {
@@ -59,12 +61,23 @@ func (c *invoiceServiceClient) SetLimitInvoice(ctx context.Context, in *SetLimit
 	return out, nil
 }
 
+func (c *invoiceServiceClient) LimitInvoiceList(ctx context.Context, in *ConfigListReq, opts ...grpc.CallOption) (*ConfigListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ConfigListRes)
+	err := c.cc.Invoke(ctx, InvoiceService_LimitInvoiceList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InvoiceServiceServer is the server API for InvoiceService service.
 // All implementations must embed UnimplementedInvoiceServiceServer
 // for forward compatibility.
 type InvoiceServiceServer interface {
 	GetLimitInvoice(context.Context, *TeamLimitInvoiceReq) (*TeamLimitInvoiceRes, error)
 	SetLimitInvoice(context.Context, *SetLimitInvoiceReq) (*SetLimitInvoiceRes, error)
+	LimitInvoiceList(context.Context, *ConfigListReq) (*ConfigListRes, error)
 	mustEmbedUnimplementedInvoiceServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedInvoiceServiceServer) GetLimitInvoice(context.Context, *TeamL
 }
 func (UnimplementedInvoiceServiceServer) SetLimitInvoice(context.Context, *SetLimitInvoiceReq) (*SetLimitInvoiceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetLimitInvoice not implemented")
+}
+func (UnimplementedInvoiceServiceServer) LimitInvoiceList(context.Context, *ConfigListReq) (*ConfigListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LimitInvoiceList not implemented")
 }
 func (UnimplementedInvoiceServiceServer) mustEmbedUnimplementedInvoiceServiceServer() {}
 func (UnimplementedInvoiceServiceServer) testEmbeddedByValue()                        {}
@@ -138,6 +154,24 @@ func _InvoiceService_SetLimitInvoice_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InvoiceService_LimitInvoiceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoiceServiceServer).LimitInvoiceList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoiceService_LimitInvoiceList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoiceServiceServer).LimitInvoiceList(ctx, req.(*ConfigListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InvoiceService_ServiceDesc is the grpc.ServiceDesc for InvoiceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var InvoiceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetLimitInvoice",
 			Handler:    _InvoiceService_SetLimitInvoice_Handler,
+		},
+		{
+			MethodName: "LimitInvoiceList",
+			Handler:    _InvoiceService_LimitInvoiceList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
