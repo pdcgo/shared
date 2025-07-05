@@ -25,6 +25,7 @@ func (c *CacheItem) Deserialize(data []byte) error {
 
 type Cache interface {
 	Add(ctx context.Context, item *CacheItem) error
+	Replace(ctx context.Context, item *CacheItem) error
 	Get(ctx context.Context, key string, data any) error
 	Delete(ctx context.Context, key string) error
 	Flush(ctx context.Context) error

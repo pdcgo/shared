@@ -71,6 +71,11 @@ func (l *localCacheImpl) Get(ctx context.Context, key string, data any) error {
 	return nil
 }
 
+// Replace implements Cache.
+func (l *localCacheImpl) Replace(ctx context.Context, item *CacheItem) error {
+	return l.Add(ctx, item)
+}
+
 func NewLocalCache() Cache {
 	return &localCacheImpl{
 		data:       map[string][]byte{},

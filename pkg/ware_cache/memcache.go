@@ -68,6 +68,40 @@ func (m *memcacheImpl) Get(ctx context.Context, key string, data any) error {
 	return nil
 }
 
+// Replace implements Cache.
+func (m *memcacheImpl) Replace(ctx context.Context, item *CacheItem) error {
+	value, err := item.Serialize()
+	if err != nil {
+		return err
+	}
+
+	err = memcache.Set(ctx, &memcache.Item{
+		Key:        item.Key,
+		Value:      value,
+		Expiration: item.Expiration,
+	})
+
+	if err != nil {
+		if errors.Is(err, memcache.ErrNotStored) {
+			return memcache.Add(ctx, &memcache.Item{
+				Key:        item.Key,
+				Value:      value,
+				Expiration: item.Expiration,
+			})
+		}
+		if errors.Is(err, memcache.ErrCacheMiss) {
+			return memcache.Add(ctx, &memcache.Item{
+				Key:        item.Key,
+				Value:      value,
+				Expiration: item.Expiration,
+			})
+		}
+		return err
+	}
+
+	return nil
+}
+
 func NewMemcache() Cache {
 	return &memcacheImpl{}
 }
