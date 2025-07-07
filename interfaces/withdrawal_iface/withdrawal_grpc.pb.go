@@ -21,6 +21,9 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	WithdrawalService_SubmitWithdrawal_FullMethodName = "/withdrawal_iface.WithdrawalService/SubmitWithdrawal"
 	WithdrawalService_GetTaskList_FullMethodName      = "/withdrawal_iface.WithdrawalService/GetTaskList"
+	WithdrawalService_Run_FullMethodName              = "/withdrawal_iface.WithdrawalService/Run"
+	WithdrawalService_Stop_FullMethodName             = "/withdrawal_iface.WithdrawalService/Stop"
+	WithdrawalService_HealthCheck_FullMethodName      = "/withdrawal_iface.WithdrawalService/HealthCheck"
 )
 
 // WithdrawalServiceClient is the client API for WithdrawalService service.
@@ -29,6 +32,9 @@ const (
 type WithdrawalServiceClient interface {
 	SubmitWithdrawal(ctx context.Context, in *SubmitWdRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 	GetTaskList(ctx context.Context, in *TaskListRequest, opts ...grpc.CallOption) (*TaskListResponse, error)
+	Run(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+	Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+	HealthCheck(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 }
 
 type withdrawalServiceClient struct {
@@ -59,12 +65,45 @@ func (c *withdrawalServiceClient) GetTaskList(ctx context.Context, in *TaskListR
 	return out, nil
 }
 
+func (c *withdrawalServiceClient) Run(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CommonResponse)
+	err := c.cc.Invoke(ctx, WithdrawalService_Run_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *withdrawalServiceClient) Stop(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CommonResponse)
+	err := c.cc.Invoke(ctx, WithdrawalService_Stop_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *withdrawalServiceClient) HealthCheck(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CommonResponse)
+	err := c.cc.Invoke(ctx, WithdrawalService_HealthCheck_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WithdrawalServiceServer is the server API for WithdrawalService service.
 // All implementations must embed UnimplementedWithdrawalServiceServer
 // for forward compatibility.
 type WithdrawalServiceServer interface {
 	SubmitWithdrawal(context.Context, *SubmitWdRequest) (*CommonResponse, error)
 	GetTaskList(context.Context, *TaskListRequest) (*TaskListResponse, error)
+	Run(context.Context, *EmptyRequest) (*CommonResponse, error)
+	Stop(context.Context, *EmptyRequest) (*CommonResponse, error)
+	HealthCheck(context.Context, *EmptyRequest) (*CommonResponse, error)
 	mustEmbedUnimplementedWithdrawalServiceServer()
 }
 
@@ -80,6 +119,15 @@ func (UnimplementedWithdrawalServiceServer) SubmitWithdrawal(context.Context, *S
 }
 func (UnimplementedWithdrawalServiceServer) GetTaskList(context.Context, *TaskListRequest) (*TaskListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTaskList not implemented")
+}
+func (UnimplementedWithdrawalServiceServer) Run(context.Context, *EmptyRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Run not implemented")
+}
+func (UnimplementedWithdrawalServiceServer) Stop(context.Context, *EmptyRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
+}
+func (UnimplementedWithdrawalServiceServer) HealthCheck(context.Context, *EmptyRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
 }
 func (UnimplementedWithdrawalServiceServer) mustEmbedUnimplementedWithdrawalServiceServer() {}
 func (UnimplementedWithdrawalServiceServer) testEmbeddedByValue()                           {}
@@ -138,6 +186,60 @@ func _WithdrawalService_GetTaskList_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WithdrawalService_Run_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WithdrawalServiceServer).Run(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WithdrawalService_Run_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WithdrawalServiceServer).Run(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WithdrawalService_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WithdrawalServiceServer).Stop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WithdrawalService_Stop_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WithdrawalServiceServer).Stop(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WithdrawalService_HealthCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WithdrawalServiceServer).HealthCheck(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WithdrawalService_HealthCheck_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WithdrawalServiceServer).HealthCheck(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WithdrawalService_ServiceDesc is the grpc.ServiceDesc for WithdrawalService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +254,18 @@ var WithdrawalService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTaskList",
 			Handler:    _WithdrawalService_GetTaskList_Handler,
+		},
+		{
+			MethodName: "Run",
+			Handler:    _WithdrawalService_Run_Handler,
+		},
+		{
+			MethodName: "Stop",
+			Handler:    _WithdrawalService_Stop_Handler,
+		},
+		{
+			MethodName: "HealthCheck",
+			Handler:    _WithdrawalService_HealthCheck_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

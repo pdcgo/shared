@@ -15,7 +15,174 @@
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/v4/withdrawal/health": {
+      "get": {
+        "operationId": "WithdrawalService_HealthCheck",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/withdrawal_ifaceCommonResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "WithdrawalService"
+        ]
+      }
+    },
+    "/v4/withdrawal/run": {
+      "get": {
+        "operationId": "WithdrawalService_Run",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/withdrawal_ifaceCommonResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "WithdrawalService"
+        ]
+      }
+    },
+    "/v4/withdrawal/stop": {
+      "get": {
+        "operationId": "WithdrawalService_Stop",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/withdrawal_ifaceCommonResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "WithdrawalService"
+        ]
+      }
+    },
+    "/v4/withdrawal/task/list": {
+      "get": {
+        "operationId": "WithdrawalService_GetTaskList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/withdrawal_ifaceTaskListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "TASK_UNKNOWN",
+              "TASK_ERROR",
+              "TASK_WAITING",
+              "TASK_PROCESS"
+            ],
+            "default": "TASK_UNKNOWN"
+          }
+        ],
+        "tags": [
+          "WithdrawalService"
+        ]
+      }
+    },
+    "/v4/withdrawal/task/submit": {
+      "post": {
+        "operationId": "WithdrawalService_SubmitWithdrawal",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/withdrawal_ifaceCommonResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/withdrawal_ifaceSubmitWdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WithdrawalService"
+        ]
+      }
+    }
+  },
   "definitions": {
     "protobufAny": {
       "type": "object",
@@ -53,14 +220,73 @@
         }
       }
     },
+    "withdrawal_ifaceImporterSource": {
+      "type": "string",
+      "enum": [
+        "SOURCE_UNKNOWN",
+        "SOURCE_CSV",
+        "SOURCE_XLS",
+        "SOURCE_JSON"
+      ],
+      "default": "SOURCE_UNKNOWN"
+    },
+    "withdrawal_ifaceOrderMpType": {
+      "type": "string",
+      "enum": [
+        "Custom",
+        "Tokopedia",
+        "Shopee",
+        "Tiktok",
+        "Lazada",
+        "Mengantar"
+      ],
+      "default": "Custom"
+    },
+    "withdrawal_ifaceSubmitWdRequest": {
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "mpId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "source": {
+          "$ref": "#/definitions/withdrawal_ifaceImporterSource"
+        },
+        "mpType": {
+          "$ref": "#/definitions/withdrawal_ifaceOrderMpType"
+        },
+        "content": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
     "withdrawal_ifaceTaskItem": {
       "type": "object",
       "properties": {
+        "teamId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "mpId": {
+          "type": "string",
+          "format": "uint64"
+        },
         "filename": {
           "type": "string"
         },
         "status": {
           "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/withdrawal_ifaceImporterSource"
+        },
+        "mpType": {
+          "$ref": "#/definitions/withdrawal_ifaceOrderMpType"
         }
       }
     },
@@ -75,6 +301,16 @@
           }
         }
       }
+    },
+    "withdrawal_ifaceTaskStatus": {
+      "type": "string",
+      "enum": [
+        "TASK_UNKNOWN",
+        "TASK_ERROR",
+        "TASK_WAITING",
+        "TASK_PROCESS"
+      ],
+      "default": "TASK_UNKNOWN"
     }
   }
 }

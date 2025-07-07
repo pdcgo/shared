@@ -2,34 +2,89 @@ syntax = "proto3";
 
 package withdrawal_iface;
 
+import "google/api/annotations.proto";
+
 option go_package = "./withdrawal_iface;withdrawal_iface";
 
 service WithdrawalService {
-    rpc SubmitWithdrawal(SubmitWdRequest) returns (CommonResponse);
-    rpc GetTaskList(TaskListRequest) returns (TaskListResponse);
+  rpc SubmitWithdrawal(SubmitWdRequest) returns (CommonResponse) {
+    option (google.api.http) = {
+      post: "/v4/withdrawal/task/submit"
+      body: "*"
+    };
+  }
+  rpc GetTaskList(TaskListRequest) returns (TaskListResponse) {
+    option (google.api.http) = {get: "/v4/withdrawal/task/list"};
+  }
+
+  rpc Run(EmptyRequest) returns (CommonResponse) {
+    option (google.api.http) = {get: "/v4/withdrawal/run"};
+  }
+
+  rpc Stop(EmptyRequest) returns (CommonResponse) {
+    option (google.api.http) = {get: "/v4/withdrawal/stop"};
+  }
+
+  rpc HealthCheck(EmptyRequest) returns (CommonResponse) {
+    option (google.api.http) = {get: "/v4/withdrawal/health"};
+  }
+}
+
+enum TaskStatus {
+  TASK_UNKNOWN = 0;
+  TASK_ERROR = 1;
+  TASK_WAITING = 2;
+  TASK_PROCESS = 3;
 }
 
 message TaskListRequest {
-    uint64 team_id = 1;
-    string status = 2;
+  uint64 team_id = 1;
+  TaskStatus status = 2;
 }
 
 message TaskListResponse {
-    repeated TaskItem items = 1;
+  repeated TaskItem items = 1;
 }
 
 message TaskItem {
-    string filename = 1;
-    string status = 2;
-    
+  uint64 team_id = 1;
+  uint64 mp_id = 2;
+  string filename = 3;
+  string status = 4;
+
+  ImporterSource source = 5;
+  OrderMpType mp_type = 6;
 }
 
+enum ImporterSource {
+  SOURCE_UNKNOWN = 0;
+  SOURCE_CSV = 1;
+  SOURCE_XLS = 2;
+  SOURCE_JSON = 3;
+}
+
+enum OrderMpType {
+  Custom = 0;
+  Tokopedia = 1;
+  Shopee = 2;
+  Tiktok = 3;
+  Lazada = 4;
+  Mengantar = 5;
+}
 
 message SubmitWdRequest {
-    string filename = 1;
-    bytes content = 2;
+  uint64 team_id = 1;
+  uint64 mp_id = 2;
+
+  ImporterSource source = 3;
+  OrderMpType mp_type = 4;
+  bytes content = 5;
+}
+
+message EmptyRequest {
+  string id = 1;
 }
 
 message CommonResponse {
-    string message = 1;
+  string message = 1;
 }
