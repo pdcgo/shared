@@ -5,6 +5,7 @@ import (
 	"math"
 	"time"
 
+	"github.com/pdcgo/shared/interfaces/identity_iface"
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
 )
@@ -98,6 +99,22 @@ func (prod *Product) VarValueExist(id uint) *VariationValue {
 	}
 
 	return nil
+}
+
+type ProductLogType string
+
+const (
+	ProductLogDelete   ProductLogType = "delete"
+	ProductLogUndelete ProductLogType = "undelete"
+)
+
+type ProductLog struct {
+	ID        uint                     `json:"id" gorm:"primarykey"`
+	UserID    uint                     `json:"user_id"`
+	ProductID uint                     `json:"product_id"`
+	From      identity_iface.AgentType `json:"from"`
+	Type      ProductLogType           `json:"type"`
+	At        time.Time                `json:"at"`
 }
 
 type VariationName struct {

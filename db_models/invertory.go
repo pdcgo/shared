@@ -180,6 +180,25 @@ type InvTxItem struct {
 
 type InvItemList []*InvTxItem
 
+func (i InvItemList) ProductIDs() ([]uint, error) {
+	var err error
+	mapprod := map[uint]bool{}
+	result := []uint{}
+
+	for _, item := range i {
+		skuD, err := item.SkuID.Extract()
+		if err != nil {
+			return result, err
+		}
+		mapprod[skuD.ProductID] = true
+	}
+	for pid := range mapprod {
+		result = append(result, pid)
+	}
+
+	return result, err
+}
+
 func (i InvItemList) TotalCount() (total int) {
 	for _, item := range i {
 		total += item.Count
