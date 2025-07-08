@@ -19,8 +19,15 @@ func main() {
 			7,
 		}).
 		Via("flatmapping", yenstream.NewFlatMap(func(data uint) ([]uint, error) {
+			datas := make([]uint, data)
+			var c uint = 0
+			result := []uint{}
+			for range datas {
+				c += 1
+				result = append(result, c)
+			}
 
-			return make([]uint, data), nil
+			return result, nil
 		})).
 		Via("Mapping To String", yenstream.NewMap(func(data uint) (string, error) {
 			return fmt.Sprintf("asdasd-%d", data), nil
