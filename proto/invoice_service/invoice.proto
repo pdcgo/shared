@@ -6,13 +6,6 @@ import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "./invoice_iface;invoice_iface";
-option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
-  info: {
-    title: "Invoice Service";
-    version: "1.0";
-  };
-};
-
 service InvoiceService {
   rpc GetLimitInvoice(TeamLimitInvoiceReq) returns (TeamLimitInvoiceRes) {
     option (google.api.http) = {

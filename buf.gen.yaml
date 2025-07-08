@@ -7,5 +7,8 @@ plugins:
   - plugin: grpc-gateway
     out: interfaces
   - plugin: openapiv2
-    out: interfaces
-    path: protoc-gen-openapiv2
+    out: openapi_spec
+    opt:
+      # - allow_merge=true
+      - logtostderr=true
+    # path: protoc-gen-openapiv2

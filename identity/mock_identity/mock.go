@@ -21,9 +21,13 @@ type MockAgent struct {
 
 // GetToken implements identity_iface.Agent.
 func (m *MockAgent) GetToken(appname string, secret string) (string, error) {
+	validUntil := time.Now().Add(time.Hour * 350).UnixMicro()
 	j := MockJwt{
 		UserID:     m.UserID,
-		ValidUntil: time.Now().Add(time.Minute * 1).UnixMicro(),
+		ValidUntil: validUntil,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: validUntil,
+		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, j)
 	return token.SignedString([]byte(secret))

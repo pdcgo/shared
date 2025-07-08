@@ -705,8 +705,7 @@ const file_proto_invoice_service_invoice_proto_rawDesc = "" +
 	"\x0fGetLimitInvoice\x12\".invoice_iface.TeamLimitInvoiceReq\x1a\".invoice_iface.TeamLimitInvoiceRes\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/get_limit_invoice\x12y\n" +
 	"\x0fSetLimitInvoice\x12!.invoice_iface.SetLimitInvoiceReq\x1a!.invoice_iface.SetLimitInvoiceRes\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/set_limit_invoice\x12y\n" +
 	"\x12LimitInvoiceDelete\x12$.invoice_iface.LimitInvoiceDeleteReq\x1a\x18.invoice_iface.CommonRes\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/limit_invoice/delete\x12q\n" +
-	"\x10LimitInvoiceList\x12\x1c.invoice_iface.ConfigListReq\x1a\x1c.invoice_iface.ConfigListRes\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/limit_invoice_listB:\x92A\x18\x12\x16\n" +
-	"\x0fInvoice Service2\x031.0Z\x1d./invoice_iface;invoice_ifaceb\x06proto3"
+	"\x10LimitInvoiceList\x12\x1c.invoice_iface.ConfigListReq\x1a\x1c.invoice_iface.ConfigListRes\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/limit_invoice_listB\x1fZ\x1d./invoice_iface;invoice_ifaceb\x06proto3"
 
 var (
 	file_proto_invoice_service_invoice_proto_rawDescOnce sync.Once

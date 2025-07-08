@@ -1,0 +1,299 @@
+openapi: 3.0.1
+info:
+  title: proto/withdrawal_service/withdrawal.proto
+  version: version not set
+servers:
+- url: /
+tags:
+- name: DoubleWDService
+- name: WithdrawalService
+paths:
+  /v4/double/health:
+    get:
+      operationId: DoubleWDService_HealthCheck
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/withdrawal_ifaceCommonResponse"
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rpcStatus"
+          description: An unexpected error response.
+      tags:
+      - DoubleWDService
+  /v4/withdrawal/health:
+    get:
+      operationId: WithdrawalService_HealthCheck
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/withdrawal_ifaceCommonResponse"
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rpcStatus"
+          description: An unexpected error response.
+      tags:
+      - WithdrawalService
+  /v4/withdrawal/run:
+    get:
+      operationId: WithdrawalService_Run
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/withdrawal_ifaceCommonResponse"
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rpcStatus"
+          description: An unexpected error response.
+      tags:
+      - WithdrawalService
+  /v4/withdrawal/stop:
+    get:
+      operationId: WithdrawalService_Stop
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/withdrawal_ifaceCommonResponse"
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rpcStatus"
+          description: An unexpected error response.
+      tags:
+      - WithdrawalService
+  /v4/withdrawal/task/list:
+    get:
+      operationId: WithdrawalService_GetTaskList
+      parameters:
+      - in: query
+        name: teamId
+        schema:
+          format: uint64
+          type: string
+      - in: query
+        name: status
+        schema:
+          default: TASK_UNKNOWN
+          enum:
+          - TASK_UNKNOWN
+          - TASK_ERROR
+          - TASK_WAITING
+          - TASK_PROCESS
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/withdrawal_ifaceTaskListResponse"
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rpcStatus"
+          description: An unexpected error response.
+      tags:
+      - WithdrawalService
+  /v4/withdrawal/task/submit:
+    post:
+      operationId: WithdrawalService_SubmitWithdrawal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/withdrawal_ifaceSubmitWdRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/withdrawal_ifaceCommonResponse"
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/rpcStatus"
+          description: An unexpected error response.
+      tags:
+      - WithdrawalService
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    protobufAny:
+      additionalProperties:
+        type: object
+      example:
+        '@type': '@type'
+      properties:
+        '@type':
+          type: string
+      type: object
+    rpcStatus:
+      example:
+        code: 0
+        details:
+        - '@type': '@type'
+        - '@type': '@type'
+        message: message
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+        details:
+          items:
+            $ref: "#/components/schemas/protobufAny"
+          type: array
+      type: object
+    withdrawal_ifaceCommonResponse:
+      example:
+        message: message
+      properties:
+        message:
+          type: string
+      type: object
+    withdrawal_ifaceImporterSource:
+      default: SOURCE_UNKNOWN
+      enum:
+      - SOURCE_UNKNOWN
+      - SOURCE_CSV
+      - SOURCE_XLS
+      - SOURCE_JSON
+      type: string
+    withdrawal_ifaceOrderMpType:
+      default: Custom
+      enum:
+      - Custom
+      - Tokopedia
+      - Shopee
+      - Tiktok
+      - Lazada
+      - Mengantar
+      type: string
+    withdrawal_ifaceSubmitWdRequest:
+      properties:
+        teamId:
+          format: uint64
+          type: string
+        mpId:
+          format: uint64
+          type: string
+        source:
+          $ref: "#/components/schemas/withdrawal_ifaceImporterSource"
+        mpType:
+          $ref: "#/components/schemas/withdrawal_ifaceOrderMpType"
+        resourceUri:
+          type: string
+      type: object
+    withdrawal_ifaceTaskItem:
+      example:
+        filename: filename
+        teamId: teamId
+        isErr: true
+        source: SOURCE_UNKNOWN
+        resourceUri: resourceUri
+        mpId: mpId
+        errMessage: errMessage
+        status: TASK_UNKNOWN
+        mpType: Custom
+      properties:
+        teamId:
+          format: uint64
+          type: string
+        mpId:
+          format: uint64
+          type: string
+        filename:
+          type: string
+        status:
+          $ref: "#/components/schemas/withdrawal_ifaceTaskStatus"
+        source:
+          $ref: "#/components/schemas/withdrawal_ifaceImporterSource"
+        mpType:
+          $ref: "#/components/schemas/withdrawal_ifaceOrderMpType"
+        resourceUri:
+          type: string
+        errMessage:
+          type: string
+        isErr:
+          type: boolean
+      type: object
+    withdrawal_ifaceTaskListResponse:
+      example:
+        items:
+        - filename: filename
+          teamId: teamId
+          isErr: true
+          source: SOURCE_UNKNOWN
+          resourceUri: resourceUri
+          mpId: mpId
+          errMessage: errMessage
+          status: TASK_UNKNOWN
+          mpType: Custom
+        - filename: filename
+          teamId: teamId
+          isErr: true
+          source: SOURCE_UNKNOWN
+          resourceUri: resourceUri
+          mpId: mpId
+          errMessage: errMessage
+          status: TASK_UNKNOWN
+          mpType: Custom
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/withdrawal_ifaceTaskItem"
+          type: array
+      type: object
+    withdrawal_ifaceTaskStatus:
+      default: TASK_UNKNOWN
+      enum:
+      - TASK_UNKNOWN
+      - TASK_ERROR
+      - TASK_WAITING
+      - TASK_PROCESS
+      type: string
+x-original-swagger-version: "2.0"
