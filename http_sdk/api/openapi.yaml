@@ -112,8 +112,9 @@ paths:
       - in: query
         name: status
         schema:
-          default: TASK_UNKNOWN
+          default: TASK_ALL
           enum:
+          - TASK_ALL
           - TASK_UNKNOWN
           - TASK_ERROR
           - TASK_WAITING
@@ -230,58 +231,53 @@ components:
       type: object
     withdrawal_ifaceTaskItem:
       example:
-        filename: filename
-        teamId: teamId
-        isErr: true
+        mp_type: Custom
+        mp_id: mp_id
+        resource_uri: resource_uri
+        team_id: team_id
         source: SOURCE_UNKNOWN
-        resourceUri: resourceUri
-        mpId: mpId
-        errMessage: errMessage
-        status: TASK_UNKNOWN
-        mpType: Custom
+        is_err: true
+        status: TASK_ALL
+        err_message: err_message
       properties:
-        teamId:
+        team_id:
           format: uint64
           type: string
-        mpId:
+        mp_id:
           format: uint64
-          type: string
-        filename:
           type: string
         status:
           $ref: "#/components/schemas/withdrawal_ifaceTaskStatus"
         source:
           $ref: "#/components/schemas/withdrawal_ifaceImporterSource"
-        mpType:
+        mp_type:
           $ref: "#/components/schemas/withdrawal_ifaceOrderMpType"
-        resourceUri:
+        resource_uri:
           type: string
-        errMessage:
+        err_message:
           type: string
-        isErr:
+        is_err:
           type: boolean
       type: object
     withdrawal_ifaceTaskListResponse:
       example:
         items:
-        - filename: filename
-          teamId: teamId
-          isErr: true
+        - mp_type: Custom
+          mp_id: mp_id
+          resource_uri: resource_uri
+          team_id: team_id
           source: SOURCE_UNKNOWN
-          resourceUri: resourceUri
-          mpId: mpId
-          errMessage: errMessage
-          status: TASK_UNKNOWN
-          mpType: Custom
-        - filename: filename
-          teamId: teamId
-          isErr: true
+          is_err: true
+          status: TASK_ALL
+          err_message: err_message
+        - mp_type: Custom
+          mp_id: mp_id
+          resource_uri: resource_uri
+          team_id: team_id
           source: SOURCE_UNKNOWN
-          resourceUri: resourceUri
-          mpId: mpId
-          errMessage: errMessage
-          status: TASK_UNKNOWN
-          mpType: Custom
+          is_err: true
+          status: TASK_ALL
+          err_message: err_message
       properties:
         items:
           items:
@@ -289,8 +285,9 @@ components:
           type: array
       type: object
     withdrawal_ifaceTaskStatus:
-      default: TASK_UNKNOWN
+      default: TASK_ALL
       enum:
+      - TASK_ALL
       - TASK_UNKNOWN
       - TASK_ERROR
       - TASK_WAITING

@@ -30,4 +30,6 @@ model_withdrawal_iface_task_item.go
 model_withdrawal_iface_task_list_response.go
 model_withdrawal_iface_task_status.go
 response.go
+test/api_double_wd_service_test.go
+test/api_withdrawal_service_test.go
 utils.go

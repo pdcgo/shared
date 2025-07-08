@@ -19,15 +19,14 @@ var _ MappedNullable = &WithdrawalIfaceTaskItem{}
 
 // WithdrawalIfaceTaskItem struct for WithdrawalIfaceTaskItem
 type WithdrawalIfaceTaskItem struct {
-	TeamId *string `json:"teamId,omitempty"`
-	MpId *string `json:"mpId,omitempty"`
-	Filename *string `json:"filename,omitempty"`
+	TeamId *string `json:"team_id,omitempty"`
+	MpId *string `json:"mp_id,omitempty"`
 	Status *WithdrawalIfaceTaskStatus `json:"status,omitempty"`
 	Source *WithdrawalIfaceImporterSource `json:"source,omitempty"`
-	MpType *WithdrawalIfaceOrderMpType `json:"mpType,omitempty"`
-	ResourceUri *string `json:"resourceUri,omitempty"`
-	ErrMessage *string `json:"errMessage,omitempty"`
-	IsErr *bool `json:"isErr,omitempty"`
+	MpType *WithdrawalIfaceOrderMpType `json:"mp_type,omitempty"`
+	ResourceUri *string `json:"resource_uri,omitempty"`
+	ErrMessage *string `json:"err_message,omitempty"`
+	IsErr *bool `json:"is_err,omitempty"`
 }
 
 // NewWithdrawalIfaceTaskItem instantiates a new WithdrawalIfaceTaskItem object
@@ -36,7 +35,7 @@ type WithdrawalIfaceTaskItem struct {
 // will change when the set of required properties is changed
 func NewWithdrawalIfaceTaskItem() *WithdrawalIfaceTaskItem {
 	this := WithdrawalIfaceTaskItem{}
-	var status WithdrawalIfaceTaskStatus = TASK_UNKNOWN
+	var status WithdrawalIfaceTaskStatus = TASK_ALL
 	this.Status = &status
 	var source WithdrawalIfaceImporterSource = SOURCE_UNKNOWN
 	this.Source = &source
@@ -50,7 +49,7 @@ func NewWithdrawalIfaceTaskItem() *WithdrawalIfaceTaskItem {
 // but it doesn't guarantee that properties required by API are set
 func NewWithdrawalIfaceTaskItemWithDefaults() *WithdrawalIfaceTaskItem {
 	this := WithdrawalIfaceTaskItem{}
-	var status WithdrawalIfaceTaskStatus = TASK_UNKNOWN
+	var status WithdrawalIfaceTaskStatus = TASK_ALL
 	this.Status = &status
 	var source WithdrawalIfaceImporterSource = SOURCE_UNKNOWN
 	this.Source = &source
@@ -121,38 +120,6 @@ func (o *WithdrawalIfaceTaskItem) HasMpId() bool {
 // SetMpId gets a reference to the given string and assigns it to the MpId field.
 func (o *WithdrawalIfaceTaskItem) SetMpId(v string) {
 	o.MpId = &v
-}
-
-// GetFilename returns the Filename field value if set, zero value otherwise.
-func (o *WithdrawalIfaceTaskItem) GetFilename() string {
-	if o == nil || IsNil(o.Filename) {
-		var ret string
-		return ret
-	}
-	return *o.Filename
-}
-
-// GetFilenameOk returns a tuple with the Filename field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WithdrawalIfaceTaskItem) GetFilenameOk() (*string, bool) {
-	if o == nil || IsNil(o.Filename) {
-		return nil, false
-	}
-	return o.Filename, true
-}
-
-// HasFilename returns a boolean if a field has been set.
-func (o *WithdrawalIfaceTaskItem) HasFilename() bool {
-	if o != nil && !IsNil(o.Filename) {
-		return true
-	}
-
-	return false
-}
-
-// SetFilename gets a reference to the given string and assigns it to the Filename field.
-func (o *WithdrawalIfaceTaskItem) SetFilename(v string) {
-	o.Filename = &v
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
@@ -358,13 +325,10 @@ func (o WithdrawalIfaceTaskItem) MarshalJSON() ([]byte, error) {
 func (o WithdrawalIfaceTaskItem) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.TeamId) {
-		toSerialize["teamId"] = o.TeamId
+		toSerialize["team_id"] = o.TeamId
 	}
 	if !IsNil(o.MpId) {
-		toSerialize["mpId"] = o.MpId
-	}
-	if !IsNil(o.Filename) {
-		toSerialize["filename"] = o.Filename
+		toSerialize["mp_id"] = o.MpId
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
@@ -373,16 +337,16 @@ func (o WithdrawalIfaceTaskItem) ToMap() (map[string]interface{}, error) {
 		toSerialize["source"] = o.Source
 	}
 	if !IsNil(o.MpType) {
-		toSerialize["mpType"] = o.MpType
+		toSerialize["mp_type"] = o.MpType
 	}
 	if !IsNil(o.ResourceUri) {
-		toSerialize["resourceUri"] = o.ResourceUri
+		toSerialize["resource_uri"] = o.ResourceUri
 	}
 	if !IsNil(o.ErrMessage) {
-		toSerialize["errMessage"] = o.ErrMessage
+		toSerialize["err_message"] = o.ErrMessage
 	}
 	if !IsNil(o.IsErr) {
-		toSerialize["isErr"] = o.IsErr
+		toSerialize["is_err"] = o.IsErr
 	}
 	return toSerialize, nil
 }

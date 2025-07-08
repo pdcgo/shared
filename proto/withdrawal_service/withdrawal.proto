@@ -37,10 +37,11 @@ service WithdrawalService {
 }
 
 enum TaskStatus {
-  TASK_UNKNOWN = 0;
-  TASK_ERROR = 1;
-  TASK_WAITING = 2;
-  TASK_PROCESS = 3;
+  TASK_ALL = 0;
+  TASK_UNKNOWN = 1;
+  TASK_ERROR = 2;
+  TASK_WAITING = 3;
+  TASK_PROCESS = 4;
 }
 
 message TaskListRequest {
@@ -49,20 +50,19 @@ message TaskListRequest {
 }
 
 message TaskListResponse {
-  repeated TaskItem items = 1;
+  repeated TaskItem items = 1 [json_name = "items"];
 }
 
 message TaskItem {
-  uint64 team_id = 1;
-  uint64 mp_id = 2;
-  string filename = 3;
-  TaskStatus status = 4;
+  uint64 team_id = 1 [json_name = "team_id"];
+  uint64 mp_id = 2 [json_name = "mp_id"];
+  TaskStatus status = 3 [json_name = "status"];
 
-  ImporterSource source = 5;
-  OrderMpType mp_type = 6;
-  string resource_uri = 7;
-  string err_message = 8;
-  bool is_err = 9;
+  ImporterSource source = 4 [json_name = "source"];
+  OrderMpType mp_type = 5 [json_name = "mp_type"];
+  string resource_uri = 6 [json_name = "resource_uri"];
+  string err_message = 7 [json_name = "err_message"];
+  bool is_err = 8 [json_name = "is_err"];
 }
 
 enum ImporterSource {

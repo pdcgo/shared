@@ -32,7 +32,7 @@ import (
 
 func main() {
 	teamId := "teamId_example" // string |  (optional)
-	status := "status_example" // string |  (optional) (default to "TASK_UNKNOWN")
+	status := "status_example" // string |  (optional) (default to "TASK_ALL")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -58,7 +58,7 @@ Other parameters are passed through a pointer to a apiWithdrawalServiceGetTaskLi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **teamId** | **string** |  | 
- **status** | **string** |  | [default to &quot;TASK_UNKNOWN&quot;]
+ **status** | **string** |  | [default to &quot;TASK_ALL&quot;]
 
 ### Return type
 

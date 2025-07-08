@@ -170,12 +170,13 @@
             "required": false,
             "type": "string",
             "enum": [
+              "TASK_ALL",
               "TASK_UNKNOWN",
               "TASK_ERROR",
               "TASK_WAITING",
               "TASK_PROCESS"
             ],
-            "default": "TASK_UNKNOWN"
+            "default": "TASK_ALL"
           }
         ],
         "tags": [
@@ -300,16 +301,13 @@
     "withdrawal_ifaceTaskItem": {
       "type": "object",
       "properties": {
-        "teamId": {
+        "team_id": {
           "type": "string",
           "format": "uint64"
         },
-        "mpId": {
+        "mp_id": {
           "type": "string",
           "format": "uint64"
-        },
-        "filename": {
-          "type": "string"
         },
         "status": {
           "$ref": "#/definitions/withdrawal_ifaceTaskStatus"
@@ -317,16 +315,16 @@
         "source": {
           "$ref": "#/definitions/withdrawal_ifaceImporterSource"
         },
-        "mpType": {
+        "mp_type": {
           "$ref": "#/definitions/withdrawal_ifaceOrderMpType"
         },
-        "resourceUri": {
+        "resource_uri": {
           "type": "string"
         },
-        "errMessage": {
+        "err_message": {
           "type": "string"
         },
-        "isErr": {
+        "is_err": {
           "type": "boolean"
         }
       }
@@ -346,12 +344,13 @@
     "withdrawal_ifaceTaskStatus": {
       "type": "string",
       "enum": [
+        "TASK_ALL",
         "TASK_UNKNOWN",
         "TASK_ERROR",
         "TASK_WAITING",
         "TASK_PROCESS"
       ],
-      "default": "TASK_UNKNOWN"
+      "default": "TASK_ALL"
     }
   }
 }

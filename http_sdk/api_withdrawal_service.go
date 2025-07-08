@@ -83,7 +83,7 @@ func (a *WithdrawalServiceAPIService) WithdrawalServiceGetTaskListExecute(r ApiW
 	if r.status != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "", "")
 	} else {
-		var defaultValue string = "TASK_UNKNOWN"
+		var defaultValue string = "TASK_ALL"
 		r.status = &defaultValue
 	}
 	// to determine the Content-Type header

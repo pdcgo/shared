@@ -1,42 +1,32 @@
 package main
 
 import (
-	"context"
+	"fmt"
 	"log"
-	"net"
 
-	"github.com/pdcgo/shared/interfaces/withdrawal_iface"
-	"google.golang.org/grpc"
+	"github.com/pdcgo/shared/yenstream"
 )
 
-type MockWdServer struct {
-	withdrawal_iface.UnimplementedWithdrawalServiceServer
-}
-
-// GetTaskList implements withdrawal_iface.WithdrawalServiceServer.
-func (m *MockWdServer) GetTaskList(context.Context, *withdrawal_iface.TaskListRequest) (*withdrawal_iface.TaskListResponse, error) {
-	panic("unimplemented")
-}
-
-// SubmitWithdrawal implements withdrawal_iface.WithdrawalServiceServer.
-func (m *MockWdServer) SubmitWithdrawal(context.Context, *withdrawal_iface.SubmitWdRequest) (*withdrawal_iface.CommonResponse, error) {
-	data := withdrawal_iface.CommonResponse{
-		Message: "success",
-	}
-
-	return &data, nil
-}
-
 func main() {
-	lis, err := net.Listen("tcp", ":50051")
-	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
-	}
-	s := grpc.NewServer()
-	withdrawal_iface.RegisterWithdrawalServiceServer(s, &MockWdServer{})
+	source := yenstream.
+		NewSliceSource([]uint{
+			1,
+			2,
+			3,
+			4,
+			5,
+			6,
+			7,
+		}).
+		Via("flatmapping", yenstream.NewFlatMap(func(data uint) ([]uint, error) {
 
-	log.Println("gRPC server listening on :50051")
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
+			return make([]uint, data), nil
+		})).
+		Via("Mapping To String", yenstream.NewMap(func(data uint) (string, error) {
+			return fmt.Sprintf("asdasd-%d", data), nil
+		}))
+
+	for data := range source.Out() {
+		log.Println(data)
 	}
 }

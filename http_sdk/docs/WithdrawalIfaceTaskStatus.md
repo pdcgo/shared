@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `TASK_ALL` (value: `"TASK_ALL"`)
+
 * `TASK_UNKNOWN` (value: `"TASK_UNKNOWN"`)
 
 * `TASK_ERROR` (value: `"TASK_ERROR"`)

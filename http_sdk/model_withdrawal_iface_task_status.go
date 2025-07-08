@@ -20,6 +20,7 @@ type WithdrawalIfaceTaskStatus string
 
 // List of withdrawal_ifaceTaskStatus
 const (
+	TASK_ALL WithdrawalIfaceTaskStatus = "TASK_ALL"
 	TASK_UNKNOWN WithdrawalIfaceTaskStatus = "TASK_UNKNOWN"
 	TASK_ERROR WithdrawalIfaceTaskStatus = "TASK_ERROR"
 	TASK_WAITING WithdrawalIfaceTaskStatus = "TASK_WAITING"
@@ -28,6 +29,7 @@ const (
 
 // All allowed values of WithdrawalIfaceTaskStatus enum
 var AllowedWithdrawalIfaceTaskStatusEnumValues = []WithdrawalIfaceTaskStatus{
+	"TASK_ALL",
 	"TASK_UNKNOWN",
 	"TASK_ERROR",
 	"TASK_WAITING",

@@ -25,25 +25,28 @@ const (
 type TaskStatus int32
 
 const (
-	TaskStatus_TASK_UNKNOWN TaskStatus = 0
-	TaskStatus_TASK_ERROR   TaskStatus = 1
-	TaskStatus_TASK_WAITING TaskStatus = 2
-	TaskStatus_TASK_PROCESS TaskStatus = 3
+	TaskStatus_TASK_ALL     TaskStatus = 0
+	TaskStatus_TASK_UNKNOWN TaskStatus = 1
+	TaskStatus_TASK_ERROR   TaskStatus = 2
+	TaskStatus_TASK_WAITING TaskStatus = 3
+	TaskStatus_TASK_PROCESS TaskStatus = 4
 )
 
 // Enum value maps for TaskStatus.
 var (
 	TaskStatus_name = map[int32]string{
-		0: "TASK_UNKNOWN",
-		1: "TASK_ERROR",
-		2: "TASK_WAITING",
-		3: "TASK_PROCESS",
+		0: "TASK_ALL",
+		1: "TASK_UNKNOWN",
+		2: "TASK_ERROR",
+		3: "TASK_WAITING",
+		4: "TASK_PROCESS",
 	}
 	TaskStatus_value = map[string]int32{
-		"TASK_UNKNOWN": 0,
-		"TASK_ERROR":   1,
-		"TASK_WAITING": 2,
-		"TASK_PROCESS": 3,
+		"TASK_ALL":     0,
+		"TASK_UNKNOWN": 1,
+		"TASK_ERROR":   2,
+		"TASK_WAITING": 3,
+		"TASK_PROCESS": 4,
 	}
 )
 
@@ -233,7 +236,7 @@ func (x *TaskListRequest) GetStatus() TaskStatus {
 	if x != nil {
 		return x.Status
 	}
-	return TaskStatus_TASK_UNKNOWN
+	return TaskStatus_TASK_ALL
 }
 
 type TaskListResponse struct {
@@ -282,15 +285,14 @@ func (x *TaskListResponse) GetItems() []*TaskItem {
 
 type TaskItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TeamId        uint64                 `protobuf:"varint,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
-	MpId          uint64                 `protobuf:"varint,2,opt,name=mp_id,json=mpId,proto3" json:"mp_id,omitempty"`
-	Filename      string                 `protobuf:"bytes,3,opt,name=filename,proto3" json:"filename,omitempty"`
-	Status        TaskStatus             `protobuf:"varint,4,opt,name=status,proto3,enum=withdrawal_iface.TaskStatus" json:"status,omitempty"`
-	Source        ImporterSource         `protobuf:"varint,5,opt,name=source,proto3,enum=withdrawal_iface.ImporterSource" json:"source,omitempty"`
-	MpType        OrderMpType            `protobuf:"varint,6,opt,name=mp_type,json=mpType,proto3,enum=withdrawal_iface.OrderMpType" json:"mp_type,omitempty"`
-	ResourceUri   string                 `protobuf:"bytes,7,opt,name=resource_uri,json=resourceUri,proto3" json:"resource_uri,omitempty"`
-	ErrMessage    string                 `protobuf:"bytes,8,opt,name=err_message,json=errMessage,proto3" json:"err_message,omitempty"`
-	IsErr         bool                   `protobuf:"varint,9,opt,name=is_err,json=isErr,proto3" json:"is_err,omitempty"`
+	TeamId        uint64                 `protobuf:"varint,1,opt,name=team_id,proto3" json:"team_id,omitempty"`
+	MpId          uint64                 `protobuf:"varint,2,opt,name=mp_id,proto3" json:"mp_id,omitempty"`
+	Status        TaskStatus             `protobuf:"varint,3,opt,name=status,proto3,enum=withdrawal_iface.TaskStatus" json:"status,omitempty"`
+	Source        ImporterSource         `protobuf:"varint,4,opt,name=source,proto3,enum=withdrawal_iface.ImporterSource" json:"source,omitempty"`
+	MpType        OrderMpType            `protobuf:"varint,5,opt,name=mp_type,proto3,enum=withdrawal_iface.OrderMpType" json:"mp_type,omitempty"`
+	ResourceUri   string                 `protobuf:"bytes,6,opt,name=resource_uri,proto3" json:"resource_uri,omitempty"`
+	ErrMessage    string                 `protobuf:"bytes,7,opt,name=err_message,proto3" json:"err_message,omitempty"`
+	IsErr         bool                   `protobuf:"varint,8,opt,name=is_err,proto3" json:"is_err,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -339,18 +341,11 @@ func (x *TaskItem) GetMpId() uint64 {
 	return 0
 }
 
-func (x *TaskItem) GetFilename() string {
-	if x != nil {
-		return x.Filename
-	}
-	return ""
-}
-
 func (x *TaskItem) GetStatus() TaskStatus {
 	if x != nil {
 		return x.Status
 	}
-	return TaskStatus_TASK_UNKNOWN
+	return TaskStatus_TASK_ALL
 }
 
 func (x *TaskItem) GetSource() ImporterSource {
@@ -561,18 +556,16 @@ const file_proto_withdrawal_service_withdrawal_proto_rawDesc = "" +
 	"\ateam_id\x18\x01 \x01(\x04R\x06teamId\x124\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x1c.withdrawal_iface.TaskStatusR\x06status\"D\n" +
 	"\x10TaskListResponse\x120\n" +
-	"\x05items\x18\x01 \x03(\v2\x1a.withdrawal_iface.TaskItemR\x05items\"\xd7\x02\n" +
-	"\bTaskItem\x12\x17\n" +
-	"\ateam_id\x18\x01 \x01(\x04R\x06teamId\x12\x13\n" +
-	"\x05mp_id\x18\x02 \x01(\x04R\x04mpId\x12\x1a\n" +
-	"\bfilename\x18\x03 \x01(\tR\bfilename\x124\n" +
-	"\x06status\x18\x04 \x01(\x0e2\x1c.withdrawal_iface.TaskStatusR\x06status\x128\n" +
-	"\x06source\x18\x05 \x01(\x0e2 .withdrawal_iface.ImporterSourceR\x06source\x126\n" +
-	"\amp_type\x18\x06 \x01(\x0e2\x1d.withdrawal_iface.OrderMpTypeR\x06mpType\x12!\n" +
-	"\fresource_uri\x18\a \x01(\tR\vresourceUri\x12\x1f\n" +
-	"\verr_message\x18\b \x01(\tR\n" +
-	"errMessage\x12\x15\n" +
-	"\x06is_err\x18\t \x01(\bR\x05isErr\"\xd4\x01\n" +
+	"\x05items\x18\x01 \x03(\v2\x1a.withdrawal_iface.TaskItemR\x05items\"\xc1\x02\n" +
+	"\bTaskItem\x12\x18\n" +
+	"\ateam_id\x18\x01 \x01(\x04R\ateam_id\x12\x14\n" +
+	"\x05mp_id\x18\x02 \x01(\x04R\x05mp_id\x124\n" +
+	"\x06status\x18\x03 \x01(\x0e2\x1c.withdrawal_iface.TaskStatusR\x06status\x128\n" +
+	"\x06source\x18\x04 \x01(\x0e2 .withdrawal_iface.ImporterSourceR\x06source\x127\n" +
+	"\amp_type\x18\x05 \x01(\x0e2\x1d.withdrawal_iface.OrderMpTypeR\amp_type\x12\"\n" +
+	"\fresource_uri\x18\x06 \x01(\tR\fresource_uri\x12 \n" +
+	"\verr_message\x18\a \x01(\tR\verr_message\x12\x16\n" +
+	"\x06is_err\x18\b \x01(\bR\x06is_err\"\xd4\x01\n" +
 	"\x0fSubmitWdRequest\x12\x17\n" +
 	"\ateam_id\x18\x01 \x01(\x04R\x06teamId\x12\x13\n" +
 	"\x05mp_id\x18\x02 \x01(\x04R\x04mpId\x128\n" +
@@ -582,14 +575,15 @@ const file_proto_withdrawal_service_withdrawal_proto_rawDesc = "" +
 	"\fEmptyRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"*\n" +
 	"\x0eCommonResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage*R\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage*`\n" +
 	"\n" +
-	"TaskStatus\x12\x10\n" +
-	"\fTASK_UNKNOWN\x10\x00\x12\x0e\n" +
+	"TaskStatus\x12\f\n" +
+	"\bTASK_ALL\x10\x00\x12\x10\n" +
+	"\fTASK_UNKNOWN\x10\x01\x12\x0e\n" +
 	"\n" +
-	"TASK_ERROR\x10\x01\x12\x10\n" +
-	"\fTASK_WAITING\x10\x02\x12\x10\n" +
-	"\fTASK_PROCESS\x10\x03*U\n" +
+	"TASK_ERROR\x10\x02\x12\x10\n" +
+	"\fTASK_WAITING\x10\x03\x12\x10\n" +
+	"\fTASK_PROCESS\x10\x04*U\n" +
 	"\x0eImporterSource\x12\x12\n" +
 	"\x0eSOURCE_UNKNOWN\x10\x00\x12\x0e\n" +
 	"\n" +

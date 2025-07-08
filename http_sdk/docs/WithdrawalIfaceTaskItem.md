@@ -6,8 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TeamId** | Pointer to **string** |  | [optional] 
 **MpId** | Pointer to **string** |  | [optional] 
-**Filename** | Pointer to **string** |  | [optional] 
-**Status** | Pointer to [**WithdrawalIfaceTaskStatus**](WithdrawalIfaceTaskStatus.md) |  | [optional] [default to TASK_UNKNOWN]
+**Status** | Pointer to [**WithdrawalIfaceTaskStatus**](WithdrawalIfaceTaskStatus.md) |  | [optional] [default to TASK_ALL]
 **Source** | Pointer to [**WithdrawalIfaceImporterSource**](WithdrawalIfaceImporterSource.md) |  | [optional] [default to SOURCE_UNKNOWN]
 **MpType** | Pointer to [**WithdrawalIfaceOrderMpType**](WithdrawalIfaceOrderMpType.md) |  | [optional] [default to CUSTOM]
 **ResourceUri** | Pointer to **string** |  | [optional] 
@@ -82,31 +81,6 @@ SetMpId sets MpId field to given value.
 `func (o *WithdrawalIfaceTaskItem) HasMpId() bool`
 
 HasMpId returns a boolean if a field has been set.
-
-### GetFilename
-
-`func (o *WithdrawalIfaceTaskItem) GetFilename() string`
-
-GetFilename returns the Filename field if non-nil, zero value otherwise.
-
-### GetFilenameOk
-
-`func (o *WithdrawalIfaceTaskItem) GetFilenameOk() (*string, bool)`
-
-GetFilenameOk returns a tuple with the Filename field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetFilename
-
-`func (o *WithdrawalIfaceTaskItem) SetFilename(v string)`
-
-SetFilename sets Filename field to given value.
-
-### HasFilename
-
-`func (o *WithdrawalIfaceTaskItem) HasFilename() bool`
-
-HasFilename returns a boolean if a field has been set.
 
 ### GetStatus
 
