@@ -285,9 +285,12 @@ type TaskItem struct {
 	TeamId        uint64                 `protobuf:"varint,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
 	MpId          uint64                 `protobuf:"varint,2,opt,name=mp_id,json=mpId,proto3" json:"mp_id,omitempty"`
 	Filename      string                 `protobuf:"bytes,3,opt,name=filename,proto3" json:"filename,omitempty"`
-	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	Status        TaskStatus             `protobuf:"varint,4,opt,name=status,proto3,enum=withdrawal_iface.TaskStatus" json:"status,omitempty"`
 	Source        ImporterSource         `protobuf:"varint,5,opt,name=source,proto3,enum=withdrawal_iface.ImporterSource" json:"source,omitempty"`
 	MpType        OrderMpType            `protobuf:"varint,6,opt,name=mp_type,json=mpType,proto3,enum=withdrawal_iface.OrderMpType" json:"mp_type,omitempty"`
+	ResourceUri   string                 `protobuf:"bytes,7,opt,name=resource_uri,json=resourceUri,proto3" json:"resource_uri,omitempty"`
+	ErrMessage    string                 `protobuf:"bytes,8,opt,name=err_message,json=errMessage,proto3" json:"err_message,omitempty"`
+	IsErr         bool                   `protobuf:"varint,9,opt,name=is_err,json=isErr,proto3" json:"is_err,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -343,11 +346,11 @@ func (x *TaskItem) GetFilename() string {
 	return ""
 }
 
-func (x *TaskItem) GetStatus() string {
+func (x *TaskItem) GetStatus() TaskStatus {
 	if x != nil {
 		return x.Status
 	}
-	return ""
+	return TaskStatus_TASK_UNKNOWN
 }
 
 func (x *TaskItem) GetSource() ImporterSource {
@@ -364,13 +367,34 @@ func (x *TaskItem) GetMpType() OrderMpType {
 	return OrderMpType_Custom
 }
 
+func (x *TaskItem) GetResourceUri() string {
+	if x != nil {
+		return x.ResourceUri
+	}
+	return ""
+}
+
+func (x *TaskItem) GetErrMessage() string {
+	if x != nil {
+		return x.ErrMessage
+	}
+	return ""
+}
+
+func (x *TaskItem) GetIsErr() bool {
+	if x != nil {
+		return x.IsErr
+	}
+	return false
+}
+
 type SubmitWdRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TeamId        uint64                 `protobuf:"varint,1,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`
 	MpId          uint64                 `protobuf:"varint,2,opt,name=mp_id,json=mpId,proto3" json:"mp_id,omitempty"`
 	Source        ImporterSource         `protobuf:"varint,3,opt,name=source,proto3,enum=withdrawal_iface.ImporterSource" json:"source,omitempty"`
 	MpType        OrderMpType            `protobuf:"varint,4,opt,name=mp_type,json=mpType,proto3,enum=withdrawal_iface.OrderMpType" json:"mp_type,omitempty"`
-	Content       []byte                 `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
+	ResourceUri   string                 `protobuf:"bytes,5,opt,name=resource_uri,json=resourceUri,proto3" json:"resource_uri,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -433,11 +457,11 @@ func (x *SubmitWdRequest) GetMpType() OrderMpType {
 	return OrderMpType_Custom
 }
 
-func (x *SubmitWdRequest) GetContent() []byte {
+func (x *SubmitWdRequest) GetResourceUri() string {
 	if x != nil {
-		return x.Content
+		return x.ResourceUri
 	}
-	return nil
+	return ""
 }
 
 type EmptyRequest struct {
@@ -537,20 +561,24 @@ const file_proto_withdrawal_service_withdrawal_proto_rawDesc = "" +
 	"\ateam_id\x18\x01 \x01(\x04R\x06teamId\x124\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x1c.withdrawal_iface.TaskStatusR\x06status\"D\n" +
 	"\x10TaskListResponse\x120\n" +
-	"\x05items\x18\x01 \x03(\v2\x1a.withdrawal_iface.TaskItemR\x05items\"\xde\x01\n" +
+	"\x05items\x18\x01 \x03(\v2\x1a.withdrawal_iface.TaskItemR\x05items\"\xd7\x02\n" +
 	"\bTaskItem\x12\x17\n" +
 	"\ateam_id\x18\x01 \x01(\x04R\x06teamId\x12\x13\n" +
 	"\x05mp_id\x18\x02 \x01(\x04R\x04mpId\x12\x1a\n" +
-	"\bfilename\x18\x03 \x01(\tR\bfilename\x12\x16\n" +
-	"\x06status\x18\x04 \x01(\tR\x06status\x128\n" +
+	"\bfilename\x18\x03 \x01(\tR\bfilename\x124\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x1c.withdrawal_iface.TaskStatusR\x06status\x128\n" +
 	"\x06source\x18\x05 \x01(\x0e2 .withdrawal_iface.ImporterSourceR\x06source\x126\n" +
-	"\amp_type\x18\x06 \x01(\x0e2\x1d.withdrawal_iface.OrderMpTypeR\x06mpType\"\xcb\x01\n" +
+	"\amp_type\x18\x06 \x01(\x0e2\x1d.withdrawal_iface.OrderMpTypeR\x06mpType\x12!\n" +
+	"\fresource_uri\x18\a \x01(\tR\vresourceUri\x12\x1f\n" +
+	"\verr_message\x18\b \x01(\tR\n" +
+	"errMessage\x12\x15\n" +
+	"\x06is_err\x18\t \x01(\bR\x05isErr\"\xd4\x01\n" +
 	"\x0fSubmitWdRequest\x12\x17\n" +
 	"\ateam_id\x18\x01 \x01(\x04R\x06teamId\x12\x13\n" +
 	"\x05mp_id\x18\x02 \x01(\x04R\x04mpId\x128\n" +
 	"\x06source\x18\x03 \x01(\x0e2 .withdrawal_iface.ImporterSourceR\x06source\x126\n" +
-	"\amp_type\x18\x04 \x01(\x0e2\x1d.withdrawal_iface.OrderMpTypeR\x06mpType\x12\x18\n" +
-	"\acontent\x18\x05 \x01(\fR\acontent\"\x1e\n" +
+	"\amp_type\x18\x04 \x01(\x0e2\x1d.withdrawal_iface.OrderMpTypeR\x06mpType\x12!\n" +
+	"\fresource_uri\x18\x05 \x01(\tR\vresourceUri\"\x1e\n" +
 	"\fEmptyRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"*\n" +
 	"\x0eCommonResponse\x12\x18\n" +
@@ -579,7 +607,9 @@ const file_proto_withdrawal_service_withdrawal_proto_rawDesc = "" +
 	"\x06Tiktok\x10\x03\x12\n" +
 	"\n" +
 	"\x06Lazada\x10\x04\x12\r\n" +
-	"\tMengantar\x10\x052\xc7\x04\n" +
+	"\tMengantar\x10\x052}\n" +
+	"\x0fDoubleWDService\x12j\n" +
+	"\vHealthCheck\x12\x1e.withdrawal_iface.EmptyRequest\x1a .withdrawal_iface.CommonResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v4/double/health2\xc7\x04\n" +
 	"\x11WithdrawalService\x12~\n" +
 	"\x10SubmitWithdrawal\x12!.withdrawal_iface.SubmitWdRequest\x1a .withdrawal_iface.CommonResponse\"%\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/v4/withdrawal/task/submit\x12v\n" +
 	"\vGetTaskList\x12!.withdrawal_iface.TaskListRequest\x1a\".withdrawal_iface.TaskListResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/v4/withdrawal/task/list\x12c\n" +
@@ -615,25 +645,28 @@ var file_proto_withdrawal_service_withdrawal_proto_goTypes = []any{
 var file_proto_withdrawal_service_withdrawal_proto_depIdxs = []int32{
 	0,  // 0: withdrawal_iface.TaskListRequest.status:type_name -> withdrawal_iface.TaskStatus
 	5,  // 1: withdrawal_iface.TaskListResponse.items:type_name -> withdrawal_iface.TaskItem
-	1,  // 2: withdrawal_iface.TaskItem.source:type_name -> withdrawal_iface.ImporterSource
-	2,  // 3: withdrawal_iface.TaskItem.mp_type:type_name -> withdrawal_iface.OrderMpType
-	1,  // 4: withdrawal_iface.SubmitWdRequest.source:type_name -> withdrawal_iface.ImporterSource
-	2,  // 5: withdrawal_iface.SubmitWdRequest.mp_type:type_name -> withdrawal_iface.OrderMpType
-	6,  // 6: withdrawal_iface.WithdrawalService.SubmitWithdrawal:input_type -> withdrawal_iface.SubmitWdRequest
-	3,  // 7: withdrawal_iface.WithdrawalService.GetTaskList:input_type -> withdrawal_iface.TaskListRequest
-	7,  // 8: withdrawal_iface.WithdrawalService.Run:input_type -> withdrawal_iface.EmptyRequest
-	7,  // 9: withdrawal_iface.WithdrawalService.Stop:input_type -> withdrawal_iface.EmptyRequest
-	7,  // 10: withdrawal_iface.WithdrawalService.HealthCheck:input_type -> withdrawal_iface.EmptyRequest
-	8,  // 11: withdrawal_iface.WithdrawalService.SubmitWithdrawal:output_type -> withdrawal_iface.CommonResponse
-	4,  // 12: withdrawal_iface.WithdrawalService.GetTaskList:output_type -> withdrawal_iface.TaskListResponse
-	8,  // 13: withdrawal_iface.WithdrawalService.Run:output_type -> withdrawal_iface.CommonResponse
-	8,  // 14: withdrawal_iface.WithdrawalService.Stop:output_type -> withdrawal_iface.CommonResponse
-	8,  // 15: withdrawal_iface.WithdrawalService.HealthCheck:output_type -> withdrawal_iface.CommonResponse
-	11, // [11:16] is the sub-list for method output_type
-	6,  // [6:11] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	0,  // 2: withdrawal_iface.TaskItem.status:type_name -> withdrawal_iface.TaskStatus
+	1,  // 3: withdrawal_iface.TaskItem.source:type_name -> withdrawal_iface.ImporterSource
+	2,  // 4: withdrawal_iface.TaskItem.mp_type:type_name -> withdrawal_iface.OrderMpType
+	1,  // 5: withdrawal_iface.SubmitWdRequest.source:type_name -> withdrawal_iface.ImporterSource
+	2,  // 6: withdrawal_iface.SubmitWdRequest.mp_type:type_name -> withdrawal_iface.OrderMpType
+	7,  // 7: withdrawal_iface.DoubleWDService.HealthCheck:input_type -> withdrawal_iface.EmptyRequest
+	6,  // 8: withdrawal_iface.WithdrawalService.SubmitWithdrawal:input_type -> withdrawal_iface.SubmitWdRequest
+	3,  // 9: withdrawal_iface.WithdrawalService.GetTaskList:input_type -> withdrawal_iface.TaskListRequest
+	7,  // 10: withdrawal_iface.WithdrawalService.Run:input_type -> withdrawal_iface.EmptyRequest
+	7,  // 11: withdrawal_iface.WithdrawalService.Stop:input_type -> withdrawal_iface.EmptyRequest
+	7,  // 12: withdrawal_iface.WithdrawalService.HealthCheck:input_type -> withdrawal_iface.EmptyRequest
+	8,  // 13: withdrawal_iface.DoubleWDService.HealthCheck:output_type -> withdrawal_iface.CommonResponse
+	8,  // 14: withdrawal_iface.WithdrawalService.SubmitWithdrawal:output_type -> withdrawal_iface.CommonResponse
+	4,  // 15: withdrawal_iface.WithdrawalService.GetTaskList:output_type -> withdrawal_iface.TaskListResponse
+	8,  // 16: withdrawal_iface.WithdrawalService.Run:output_type -> withdrawal_iface.CommonResponse
+	8,  // 17: withdrawal_iface.WithdrawalService.Stop:output_type -> withdrawal_iface.CommonResponse
+	8,  // 18: withdrawal_iface.WithdrawalService.HealthCheck:output_type -> withdrawal_iface.CommonResponse
+	13, // [13:19] is the sub-list for method output_type
+	7,  // [7:13] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_proto_withdrawal_service_withdrawal_proto_init() }
@@ -649,7 +682,7 @@ func file_proto_withdrawal_service_withdrawal_proto_init() {
 			NumEnums:      3,
 			NumMessages:   6,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_proto_withdrawal_service_withdrawal_proto_goTypes,
 		DependencyIndexes: file_proto_withdrawal_service_withdrawal_proto_depIdxs,

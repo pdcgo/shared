@@ -19,6 +19,108 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	DoubleWDService_HealthCheck_FullMethodName = "/withdrawal_iface.DoubleWDService/HealthCheck"
+)
+
+// DoubleWDServiceClient is the client API for DoubleWDService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type DoubleWDServiceClient interface {
+	HealthCheck(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+}
+
+type doubleWDServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewDoubleWDServiceClient(cc grpc.ClientConnInterface) DoubleWDServiceClient {
+	return &doubleWDServiceClient{cc}
+}
+
+func (c *doubleWDServiceClient) HealthCheck(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CommonResponse)
+	err := c.cc.Invoke(ctx, DoubleWDService_HealthCheck_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DoubleWDServiceServer is the server API for DoubleWDService service.
+// All implementations must embed UnimplementedDoubleWDServiceServer
+// for forward compatibility.
+type DoubleWDServiceServer interface {
+	HealthCheck(context.Context, *EmptyRequest) (*CommonResponse, error)
+	mustEmbedUnimplementedDoubleWDServiceServer()
+}
+
+// UnimplementedDoubleWDServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedDoubleWDServiceServer struct{}
+
+func (UnimplementedDoubleWDServiceServer) HealthCheck(context.Context, *EmptyRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
+}
+func (UnimplementedDoubleWDServiceServer) mustEmbedUnimplementedDoubleWDServiceServer() {}
+func (UnimplementedDoubleWDServiceServer) testEmbeddedByValue()                         {}
+
+// UnsafeDoubleWDServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DoubleWDServiceServer will
+// result in compilation errors.
+type UnsafeDoubleWDServiceServer interface {
+	mustEmbedUnimplementedDoubleWDServiceServer()
+}
+
+func RegisterDoubleWDServiceServer(s grpc.ServiceRegistrar, srv DoubleWDServiceServer) {
+	// If the following call pancis, it indicates UnimplementedDoubleWDServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&DoubleWDService_ServiceDesc, srv)
+}
+
+func _DoubleWDService_HealthCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoubleWDServiceServer).HealthCheck(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DoubleWDService_HealthCheck_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoubleWDServiceServer).HealthCheck(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// DoubleWDService_ServiceDesc is the grpc.ServiceDesc for DoubleWDService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var DoubleWDService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "withdrawal_iface.DoubleWDService",
+	HandlerType: (*DoubleWDServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "HealthCheck",
+			Handler:    _DoubleWDService_HealthCheck_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/withdrawal_service/withdrawal.proto",
+}
+
+const (
 	WithdrawalService_SubmitWithdrawal_FullMethodName = "/withdrawal_iface.WithdrawalService/SubmitWithdrawal"
 	WithdrawalService_GetTaskList_FullMethodName      = "/withdrawal_iface.WithdrawalService/GetTaskList"
 	WithdrawalService_Run_FullMethodName              = "/withdrawal_iface.WithdrawalService/Run"

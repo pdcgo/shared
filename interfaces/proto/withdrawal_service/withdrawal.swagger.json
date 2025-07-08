@@ -6,6 +6,9 @@
   },
   "tags": [
     {
+      "name": "DoubleWDService"
+    },
+    {
       "name": "WithdrawalService"
     }
   ],
@@ -16,6 +19,36 @@
     "application/json"
   ],
   "paths": {
+    "/v4/double/health": {
+      "get": {
+        "operationId": "DoubleWDService_HealthCheck",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/withdrawal_ifaceCommonResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "DoubleWDService"
+        ]
+      }
+    },
     "/v4/withdrawal/health": {
       "get": {
         "operationId": "WithdrawalService_HealthCheck",
@@ -259,9 +292,8 @@
         "mpType": {
           "$ref": "#/definitions/withdrawal_ifaceOrderMpType"
         },
-        "content": {
-          "type": "string",
-          "format": "byte"
+        "resourceUri": {
+          "type": "string"
         }
       }
     },
@@ -280,13 +312,22 @@
           "type": "string"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/definitions/withdrawal_ifaceTaskStatus"
         },
         "source": {
           "$ref": "#/definitions/withdrawal_ifaceImporterSource"
         },
         "mpType": {
           "$ref": "#/definitions/withdrawal_ifaceOrderMpType"
+        },
+        "resourceUri": {
+          "type": "string"
+        },
+        "errMessage": {
+          "type": "string"
+        },
+        "isErr": {
+          "type": "boolean"
         }
       }
     },

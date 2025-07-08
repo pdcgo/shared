@@ -6,6 +6,12 @@ import "google/api/annotations.proto";
 
 option go_package = "./withdrawal_iface;withdrawal_iface";
 
+service DoubleWDService {
+  rpc HealthCheck(EmptyRequest) returns (CommonResponse) {
+    option (google.api.http) = {get: "/v4/double/health"};
+  }
+}
+
 service WithdrawalService {
   rpc SubmitWithdrawal(SubmitWdRequest) returns (CommonResponse) {
     option (google.api.http) = {
@@ -50,10 +56,13 @@ message TaskItem {
   uint64 team_id = 1;
   uint64 mp_id = 2;
   string filename = 3;
-  string status = 4;
+  TaskStatus status = 4;
 
   ImporterSource source = 5;
   OrderMpType mp_type = 6;
+  string resource_uri = 7;
+  string err_message = 8;
+  bool is_err = 9;
 }
 
 enum ImporterSource {
@@ -78,7 +87,7 @@ message SubmitWdRequest {
 
   ImporterSource source = 3;
   OrderMpType mp_type = 4;
-  bytes content = 5;
+  string resource_uri = 5;
 }
 
 message EmptyRequest {
