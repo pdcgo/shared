@@ -62,7 +62,7 @@ func (m *mapImpl[T, R]) Out() <-chan any {
 func (m *mapImpl[T, R]) Via(label string, pipe Pipeline) Pipeline {
 	DoStream(label, m, pipe)
 
-	return m
+	return pipe
 }
 
 func NewMap[T, R any](mapper func(data T) (R, error)) *mapImpl[T, R] {

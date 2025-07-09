@@ -323,3 +323,24 @@ type OrderTagRelation struct {
 	Order    *Order    `json:"product"`
 	OrderTag *OrderTag `json:"tag"`
 }
+
+type InvoItem struct {
+	MpFrom          OrderMpType
+	ExternalOrderID string
+	Type            AdjustmentType
+	TransactionDate time.Time
+	Description     string
+	Amount          float64
+	BalanceAfter    float64
+}
+
+type InvoItemList []*InvoItem
+
+func (in InvoItemList) TotalAmount() float64 {
+	var amount float64 = 0
+	for _, item := range in {
+		amount += item.Amount
+	}
+
+	return amount
+}
