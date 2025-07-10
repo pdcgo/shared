@@ -42,6 +42,7 @@ enum TaskStatus {
   TASK_ERROR = 2;
   TASK_WAITING = 3;
   TASK_PROCESS = 4;
+  TASK_FINISH = 5;
 }
 
 message TaskListRequest {

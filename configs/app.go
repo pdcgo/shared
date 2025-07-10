@@ -7,7 +7,9 @@ import (
 )
 
 type AppConfig struct {
-	Database      DatabaseConfig                   `yaml:"database"`
+	JwtSecret string         `yaml:"jwt_secret"`
+	Database  DatabaseConfig `yaml:"database"`
+
 	StatService   StatService                      `yaml:"stat_service"`
 	WalletService wallet_iface.WalletServiceConfig `yaml:"wallet_service"`
 	TrackService  TrackService                     `yaml:"track_service"`

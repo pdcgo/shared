@@ -174,7 +174,8 @@
               "TASK_UNKNOWN",
               "TASK_ERROR",
               "TASK_WAITING",
-              "TASK_PROCESS"
+              "TASK_PROCESS",
+              "TASK_FINISH"
             ],
             "default": "TASK_ALL"
           }
@@ -348,7 +349,8 @@
         "TASK_UNKNOWN",
         "TASK_ERROR",
         "TASK_WAITING",
-        "TASK_PROCESS"
+        "TASK_PROCESS",
+        "TASK_FINISH"
       ],
       "default": "TASK_ALL"
     }

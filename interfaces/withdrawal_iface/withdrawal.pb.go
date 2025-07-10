@@ -30,6 +30,7 @@ const (
 	TaskStatus_TASK_ERROR   TaskStatus = 2
 	TaskStatus_TASK_WAITING TaskStatus = 3
 	TaskStatus_TASK_PROCESS TaskStatus = 4
+	TaskStatus_TASK_FINISH  TaskStatus = 5
 )
 
 // Enum value maps for TaskStatus.
@@ -40,6 +41,7 @@ var (
 		2: "TASK_ERROR",
 		3: "TASK_WAITING",
 		4: "TASK_PROCESS",
+		5: "TASK_FINISH",
 	}
 	TaskStatus_value = map[string]int32{
 		"TASK_ALL":     0,
@@ -47,6 +49,7 @@ var (
 		"TASK_ERROR":   2,
 		"TASK_WAITING": 3,
 		"TASK_PROCESS": 4,
+		"TASK_FINISH":  5,
 	}
 )
 
@@ -575,7 +578,7 @@ const file_proto_withdrawal_service_withdrawal_proto_rawDesc = "" +
 	"\fEmptyRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"*\n" +
 	"\x0eCommonResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage*`\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage*q\n" +
 	"\n" +
 	"TaskStatus\x12\f\n" +
 	"\bTASK_ALL\x10\x00\x12\x10\n" +
@@ -583,7 +586,8 @@ const file_proto_withdrawal_service_withdrawal_proto_rawDesc = "" +
 	"\n" +
 	"TASK_ERROR\x10\x02\x12\x10\n" +
 	"\fTASK_WAITING\x10\x03\x12\x10\n" +
-	"\fTASK_PROCESS\x10\x04*U\n" +
+	"\fTASK_PROCESS\x10\x04\x12\x0f\n" +
+	"\vTASK_FINISH\x10\x05*U\n" +
 	"\x0eImporterSource\x12\x12\n" +
 	"\x0eSOURCE_UNKNOWN\x10\x00\x12\x0e\n" +
 	"\n" +

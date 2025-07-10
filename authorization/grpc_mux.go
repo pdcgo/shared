@@ -104,7 +104,7 @@ func MuxAuthMiddleware(db *gorm.DB, next http.Handler, defaultphrase string) htt
 		// identity.From = db_models.RootTeamType
 		// identity.UserAgent = identity_iface.ThirdAppAgent
 
-		expTime := time.Unix(int64(identity.StandardClaims.ExpiresAt), 0)
+		expTime := time.Unix(int64(identity.ValidUntil), 0)
 		if time.Now().After(expTime) {
 			muxSetError(w, http.StatusUnauthorized, &AuthError{
 				ErrMsg: "token expired",
