@@ -1,39 +1,41 @@
 package yenstream
 
-import "context"
-
 var _ Source = (*ChannelSource[any])(nil)
 
 type ChannelSource[T any] struct {
-	out chan any
+	ctx *RunnerContext
+	out NodeOut
+}
+
+// Process implements Outlet.
+func (c *ChannelSource[T]) Process() {}
+
+// Out implements Source.
+func (c *ChannelSource[T]) Out() NodeOut {
+	return c.out
 }
 
 func (c *ChannelSource[T]) Emit(data T) T {
 	go func() {
-		c.out <- data
+		c.out.C() <- data
 	}()
 	return data
 }
 
-// Out implements Source.
-func (c *ChannelSource[T]) Out() <-chan any {
-	return c.out
-}
-
 // Via implements Source.
 func (c *ChannelSource[T]) Via(label string, pipe Pipeline) Pipeline {
-	DoStream(label, c, pipe)
+	c.ctx.RegisterStream(label, c, pipe)
 	return pipe
 }
 
-func NewChannelSource[T any](ctx context.Context) *ChannelSource[T] {
+func NewChannelSource[T any](ctx *RunnerContext) *ChannelSource[T] {
 	source := ChannelSource[T]{
-		out: make(chan any, 1),
+		out: NewNodeOut(ctx),
 	}
 
 	go func() {
 		<-ctx.Done()
-		close(source.out)
+		close(source.out.C())
 	}()
 
 	return &source
