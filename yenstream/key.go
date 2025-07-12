@@ -1,28 +1,28 @@
 package yenstream
 
-type KeyedItem[K comparable, D any] interface {
-	Key() K
+type KeyedItem[D any] interface {
+	Key() any
 	Data() D
 }
 
-type keyedItemImpl[K comparable, D any] struct {
-	key  K
+type keyedItemImpl[D any] struct {
+	key  any
 	data D
 }
 
-func NewKeyedItem[K comparable, D any](key K, data D) *keyedItemImpl[K, D] {
-	return &keyedItemImpl[K, D]{
+func NewKeyedItem[D any](key any, data D) *keyedItemImpl[D] {
+	return &keyedItemImpl[D]{
 		key:  key,
 		data: data,
 	}
 }
 
 // Data implements KeyedItem.
-func (k *keyedItemImpl[K, D]) Data() D {
+func (k *keyedItemImpl[D]) Data() D {
 	return k.data
 }
 
 // Key implements KeyedItem.
-func (k *keyedItemImpl[K, D]) Key() K {
+func (k *keyedItemImpl[D]) Key() any {
 	return k.key
 }

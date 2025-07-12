@@ -5,6 +5,7 @@ import "sync"
 type StateStore interface {
 	Get(key any) any
 	Set(key any, value any)
+	GetAll(emitter func(key any, data any))
 }
 
 type Window interface {
@@ -26,11 +27,20 @@ func (w *windowImpl) Store(key string) StateStore {
 			state: map[any]any{},
 		}
 	}
+
 	return w.stateStore[key]
 }
 
 type keyMapStoreImpl struct {
 	state map[any]any
+}
+
+// GetAll implements StateStore.
+func (s *keyMapStoreImpl) GetAll(emitter func(key any, data any)) {
+	for key, d := range s.state {
+		data := d
+		emitter(key, data)
+	}
 }
 
 // Get implements StateStore.
