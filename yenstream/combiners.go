@@ -42,7 +42,6 @@ Loop:
 		if !ok {
 			break Loop
 		}
-
 		// getting accumulator
 		var sacc any
 		var key any

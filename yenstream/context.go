@@ -16,6 +16,7 @@ type RunnerContext struct {
 var WINDOW_KEY = "state_store"
 
 func NewRunnerContext(pctx context.Context) *RunnerContext {
+	// var _ Window = (*windowImpl)(nil)
 	ctx := &RunnerContext{
 		ctx:         pctx,
 		processFunc: []func(){},
