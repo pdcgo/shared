@@ -88,6 +88,14 @@ Loop:
 		// getting accumulator
 		var sacc any
 		var key any
+		var pdata any
+
+		tdata, ok := data.(*TimestampedValue)
+		if ok {
+			pdata = tdata.Data
+		} else {
+			pdata = data
+		}
 
 		if c.globally {
 			key = GLOBAL_COMBINE
@@ -95,7 +103,12 @@ Loop:
 				key = window.Start().UnixMicro()
 			}
 		} else {
-			dkey := data.(KeyedItem[T])
+
+			dkey, ok := pdata.(KeyedItem[T])
+			if !ok {
+				panic("pipe " + c.label + " item not keyed data")
+			}
+
 			key = dkey.Key()
 		}
 
@@ -107,9 +120,9 @@ Loop:
 
 		accu := sacc.(R)
 		if c.globally {
-			accu = c.acc.AddInput(data.(T), accu)
+			accu = c.acc.AddInput(pdata.(T), accu)
 		} else {
-			kdata := data.(KeyedItem[T])
+			kdata := pdata.(KeyedItem[T])
 			accu = c.acc.AddInput(kdata.Data(), accu)
 		}
 

@@ -32,6 +32,7 @@ func (d *durationTriggerImpl) Close() {
 
 // Emit implements TriggerCombiner.
 func (d *durationTriggerImpl) Emit(key any, data any) {
+
 	d.data[key] = data
 
 }
