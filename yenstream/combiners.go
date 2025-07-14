@@ -4,6 +4,21 @@ var GLOBAL_COMBINE = "global"
 
 var _ Pipeline = (*combinerImpl[any, any])(nil)
 
+type CombinerValue[T any] struct {
+	Key    any
+	Data   T
+	Final  bool
+	window Window
+}
+
+type TriggerCombiner interface {
+	Emit(key, data any)
+	Process()
+	Close()
+}
+
+type TriggerFunc func(store StateStore, window Window, sendItem func(key, data any)) TriggerCombiner
+
 type Accumulator[T, R any] interface {
 	CreateAccumulator() R
 	AddInput(item T, acc R) R
@@ -15,9 +30,13 @@ type combinerImpl[T, R any] struct {
 	out      NodeOut
 	label    string
 	globally bool
+	trigger  TriggerFunc
 }
 
-func NewCombiner[T, R any](ctx *RunnerContext, acc Accumulator[T, R]) *combinerImpl[T, R] {
+func NewCombiner[T, R any](ctx *RunnerContext, acc Accumulator[T, R], trigger TriggerFunc) *combinerImpl[T, R] {
+	if trigger == nil {
+		trigger = NewEmptyTrigger
+	}
 
 	combine := &combinerImpl[T, R]{
 		ctx:      ctx,
@@ -25,6 +44,7 @@ func NewCombiner[T, R any](ctx *RunnerContext, acc Accumulator[T, R]) *combinerI
 		in:       make(chan any, 1),
 		out:      NewNodeOut(ctx),
 		globally: true,
+		trigger:  trigger,
 	}
 	return combine
 }
@@ -36,6 +56,29 @@ func (c *combinerImpl[T, R]) Process() {
 	// getting accumulate store
 	window := c.ctx.GetWindow()
 	store := window.Store(c.ctx.hash(c.label))
+
+	sendItemFinal := func(key, data any) {
+		var dsend CombinerValue[R]
+		dsend.Key = key
+		dsend.Data = data.(R)
+		dsend.Final = true
+		dsend.window = window
+		out <- &dsend
+	}
+
+	sendItem := func(key, data any) {
+		var dsend CombinerValue[R]
+		dsend.Key = key
+		dsend.Data = data.(R)
+		dsend.window = window
+		out <- &dsend
+	}
+	defer store.GetAll(sendItemFinal)
+
+	trigger := c.trigger(store, window, sendItem)
+	defer trigger.Close()
+	go trigger.Process()
+
 Loop:
 	for {
 		data, ok := <-c.in
@@ -48,6 +91,9 @@ Loop:
 
 		if c.globally {
 			key = GLOBAL_COMBINE
+			if window.WindowType() != WindowGlobal {
+				key = window.Start().UnixMicro()
+			}
 		} else {
 			dkey := data.(KeyedItem[T])
 			key = dkey.Key()
@@ -68,18 +114,10 @@ Loop:
 		}
 
 		store.Set(key, accu)
+		trigger.Emit(key, accu)
+		// sending accumulator
 
 	}
-
-	store.GetAll(func(key, data any) {
-		if c.globally {
-			out <- data.(R)
-		} else {
-			dkey := NewKeyedItem(key, data.(R))
-			out <- dkey
-		}
-
-	})
 
 }
 

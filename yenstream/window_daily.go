@@ -41,7 +41,7 @@ func (d *dailyWindowFunc) CreateWindow(wg *sync.WaitGroup, rctx *RunnerContext, 
 			source := NewChannelSource(ctx, inChan)
 			return d.
 				phandler(ctx, window, source).
-				Via("window sendout", NewMap(ctx, func(data any) (any, error) {
+				Via("daily_window_sendout", NewMap(ctx, func(data any) (any, error) {
 					out <- data
 					return data, nil
 				}))
@@ -82,6 +82,11 @@ type dailyWindow struct {
 	stateStore map[string]StateStore
 	in         chan any
 	label      string
+}
+
+// WindowType implements Window.
+func (d *dailyWindow) WindowType() WindowType {
+	return WindowChild
 }
 
 // End implements Window.

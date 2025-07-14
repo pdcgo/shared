@@ -10,6 +10,11 @@ type windowImpl struct {
 	stateStore map[string]StateStore
 }
 
+// WindowType implements Window.
+func (w *windowImpl) WindowType() WindowType {
+	return WindowGlobal
+}
+
 // End implements Window.
 func (w *windowImpl) End() time.Time {
 	return time.Now()

@@ -52,10 +52,16 @@ func main() {
 			9,
 			10,
 			11,
+			1,
+			2,
+			3,
+			4,
+			5,
 		})
 
 		window := truesource.
 			Via("flatmapping", yenstream.NewFlatMap(ctx, func(data uint) ([]*yenstream.TimestampedValue, error) {
+				time.Sleep(time.Second * 2)
 				datas := make([]uint, data)
 				var c uint = 0
 				result := []*yenstream.TimestampedValue{}
@@ -75,16 +81,20 @@ func main() {
 						c := (data.Data).(uint)
 						return c, nil
 					})).
-					Via("combine all", yenstream.NewCombiner(rctx, &sumCombiner{})).
-					Via("log combine", yenstream.NewMap(rctx, func(data uint) (uint, error) {
+					Via("combine all", yenstream.NewCombiner(
+						rctx,
+						&sumCombiner{},
+						yenstream.NewDurationTrigger(time.Second*5),
+					))
+				// Via("log combine", yenstream.NewMap(rctx, func(data *yenstream.CombinerValue[uint]) (*yenstream.CombinerValue[uint], error) {
 
-						log.Println(window.Start(), data)
-						return data, nil
-					}))
+				// 	log.Println(window.Start(), data)
+				// 	return data, nil
+				// }))
 
 			}))).
-			Via("after windowing", yenstream.NewMap(ctx, func(data uint) (uint, error) {
-				log.Println("after windowing", data)
+			Via("after windowing", yenstream.NewMap(ctx, func(data *yenstream.CombinerValue[uint]) (*yenstream.CombinerValue[uint], error) {
+				log.Println("after windowing", data, data.Final)
 				return data, nil
 			}))
 

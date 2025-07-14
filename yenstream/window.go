@@ -11,9 +11,17 @@ type StateStore interface {
 	GetAll(emitter func(key any, data any))
 }
 
+type WindowType string
+
+const (
+	WindowGlobal WindowType = "global"
+	WindowChild  WindowType = "child"
+)
+
 type Window interface {
 	Start() time.Time
 	End() time.Time
+	WindowType() WindowType
 	Store(key string) StateStore
 	Emit(data *TimestampedValue)
 	Close()
