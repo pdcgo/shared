@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/pdcgo/shared/interfaces/identity_iface"
+	"gorm.io/datatypes"
 )
 
 type AdjustmentType string
@@ -172,6 +173,24 @@ type CustomerAddress struct {
 	Order *Order `json:"-"`
 }
 
+type OrderAdditionalCostType string
+
+const (
+	FakeOrderCost OrderAdditionalCostType = "fake_order_cost"
+)
+
+func (OrderAdditionalCostType) EnumList() []string {
+	return []string{
+		"fake_order_cost",
+	}
+}
+
+type OrderAdditionalCost struct {
+	Type        OrderAdditionalCostType `json:"type"`
+	PaymentType PaymentType             `json:"payment_type"`
+	Amount      float64                 `json:"amount"`
+}
+
 type Order struct {
 	ID                  uint  `json:"id" gorm:"primarykey"`
 	TeamID              uint  `json:"team_id"`
@@ -208,12 +227,13 @@ type Order struct {
 	ReceiptReturn     string `json:"receipt_return"`
 	ReceiptReturnFile string `json:"receipt_return_file"`
 
-	Status       OrdStatus `json:"status"`
-	WarehouseFee float64   `json:"warehouse_fee"`
-	ShipmentFee  float64   `json:"shipping_fee"`
-	ItemCount    int       `json:"item_count"`
-	Total        float64   `json:"total"`
-	CreatedAt    time.Time `json:"created_at" gorm:"index"`
+	Status          OrdStatus                                 `json:"status"`
+	WarehouseFee    float64                                   `json:"warehouse_fee"`
+	ShipmentFee     float64                                   `json:"shipping_fee"`
+	ItemCount       int                                       `json:"item_count"`
+	Total           float64                                   `json:"total"`
+	CreatedAt       time.Time                                 `json:"created_at" gorm:"index"`
+	AdditionalCosts datatypes.JSONSlice[*OrderAdditionalCost] `json:"additional_costs"`
 
 	Address           *CustomerAddress  `json:"address"`
 	Invoices          []*Invoice        `json:"-"`
