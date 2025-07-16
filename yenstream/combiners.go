@@ -1,14 +1,33 @@
 package yenstream
 
+import (
+	"log/slog"
+	"reflect"
+)
+
 var GLOBAL_COMBINE = "global"
 
-var _ Pipeline = (*combinerImpl[any, any])(nil)
+var _ Pipeline = (*combinerImpl[any, HaveMeta])(nil)
 
-type CombinerValue[T any] struct {
+type CombinerValue[T HaveMeta] struct {
 	Key    any
-	Data   T
-	Final  bool
+	Data   T    `json:"data"`
+	Final  bool `json:"final"`
 	window Window
+}
+
+// GetMeta implements HaveMeta.
+func (c *CombinerValue[T]) GetMeta(key string) any {
+	return c.Data.GetMeta(key)
+}
+
+// SetMeta implements HaveMeta.
+func (c *CombinerValue[T]) SetMeta(key string, value any) {
+	c.Data.SetMeta(key, value)
+}
+
+func (c *CombinerValue[T]) GetWindow() Window {
+	return c.window
 }
 
 type TriggerCombiner interface {
@@ -23,7 +42,7 @@ type Accumulator[T, R any] interface {
 	CreateAccumulator() R
 	AddInput(item T, acc R) R
 }
-type combinerImpl[T, R any] struct {
+type combinerImpl[T any, R HaveMeta] struct {
 	ctx      *RunnerContext
 	acc      Accumulator[T, R]
 	in       chan any
@@ -33,7 +52,7 @@ type combinerImpl[T, R any] struct {
 	trigger  TriggerFunc
 }
 
-func NewCombiner[T, R any](ctx *RunnerContext, acc Accumulator[T, R], trigger TriggerFunc) *combinerImpl[T, R] {
+func NewCombiner[T any, R HaveMeta](ctx *RunnerContext, acc Accumulator[T, R], trigger TriggerFunc) *combinerImpl[T, R] {
 	if trigger == nil {
 		trigger = NewEmptyTrigger
 	}
@@ -106,6 +125,10 @@ Loop:
 
 			dkey, ok := pdata.(KeyedItem[T])
 			if !ok {
+				name := reflect.TypeOf(pdata).Elem().Name()
+				var need T
+				needname := reflect.TypeOf(need).Elem().Name()
+				slog.Error("type error", slog.String("type", name), slog.String("type_need", needname), slog.String("pipe", c.label))
 				panic("pipe " + c.label + " item not keyed data")
 			}
 

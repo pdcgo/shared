@@ -48,14 +48,25 @@ func (s *keyMapStoreImpl) Get(key any) any {
 
 // Set implements StateStore.
 func (s *keyMapStoreImpl) Set(key any, value any) {
+	// print(value)
 	s.state[key] = value
 }
 
 var _ Pipeline = (*windowIntoImpl)(nil)
 
 type TimestampedValue struct {
-	Key  time.Time
-	Data any
+	Key  time.Time `json:"key"`
+	Data HaveMeta  `json:"data"`
+}
+
+// GetMeta implements HaveMeta.
+func (t *TimestampedValue) GetMeta(key string) any {
+	return t.Data.GetMeta(key)
+}
+
+// SetMeta implements HaveMeta.
+func (t *TimestampedValue) SetMeta(key string, value any) {
+	t.Data.SetMeta(key, value)
 }
 
 type windowIntoImpl struct {

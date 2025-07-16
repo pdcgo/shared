@@ -9,15 +9,20 @@ import (
 )
 
 type sumCombiner struct{}
+type uintValue struct {
+	yenstream.Metadata
+	Value uint
+}
 
 // AddInput implements yenstream.Accumulator.
-func (s *sumCombiner) AddInput(item uint, acc uint) uint {
-	return item + acc
+func (s *sumCombiner) AddInput(item uint, acc *uintValue) *uintValue {
+	acc.Value += item
+	return acc
 }
 
 // CreateAccumulator implements yenstream.Accumulator.
-func (s *sumCombiner) CreateAccumulator() uint {
-	return 0
+func (s *sumCombiner) CreateAccumulator() *uintValue {
+	return &uintValue{}
 }
 
 type listCombiner struct{}
@@ -68,8 +73,10 @@ func main() {
 				for range datas {
 					c += 1
 					result = append(result, &yenstream.TimestampedValue{
-						Key:  time.Now().AddDate(0, 0, int(data)),
-						Data: c,
+						Key: time.Now().AddDate(0, 0, int(data)),
+						Data: &uintValue{
+							Value: c,
+						},
 					})
 				}
 
@@ -77,8 +84,8 @@ func main() {
 			})).
 			Via("windowing", yenstream.NewWindowInto(ctx, yenstream.DailyWindow(func(rctx *yenstream.RunnerContext, window yenstream.Window, source yenstream.Source) yenstream.Pipeline {
 				return source.
-					Via("map get c", yenstream.NewMap(rctx, func(data *yenstream.TimestampedValue) (uint, error) {
-						c := (data.Data).(uint)
+					Via("map get c", yenstream.NewMap(rctx, func(data *yenstream.TimestampedValue) (*uintValue, error) {
+						c := (data.Data).(*uintValue)
 						return c, nil
 					})).
 					Via("combine all", yenstream.NewCombiner(
@@ -93,7 +100,7 @@ func main() {
 				// }))
 
 			}))).
-			Via("after windowing", yenstream.NewMap(ctx, func(data *yenstream.CombinerValue[uint]) (*yenstream.CombinerValue[uint], error) {
+			Via("after windowing", yenstream.NewMap(ctx, func(data *yenstream.CombinerValue[*uintValue]) (*yenstream.CombinerValue[*uintValue], error) {
 				log.Println("after windowing", data, data.Final)
 				return data, nil
 			}))

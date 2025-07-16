@@ -1,8 +1,8 @@
 package yenstream
 
-var _ Pipeline = (*combinerImpl[any, any])(nil)
+var _ Pipeline = (*combinerImpl[any, HaveMeta])(nil)
 
-func NewKeyCombiner[T, R any](ctx *RunnerContext, acc Accumulator[T, R], trigger TriggerFunc) *combinerImpl[T, R] {
+func NewKeyCombiner[T any, R HaveMeta](ctx *RunnerContext, acc Accumulator[T, R], trigger TriggerFunc) *combinerImpl[T, R] {
 	if trigger == nil {
 		trigger = NewEmptyTrigger
 	}

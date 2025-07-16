@@ -8,7 +8,7 @@ import (
 
 type WindowFunc interface {
 	WindowID(data *TimestampedValue) int64
-	CreateWindow(wg *sync.WaitGroup, rctx *RunnerContext, key int64, in chan any) Window
+	CreateWindow(wg *sync.WaitGroup, wctx *RunnerContext, key int64, in chan any) Window
 }
 
 type dailyWindowFunc struct {

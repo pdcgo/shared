@@ -4,6 +4,8 @@ import (
 	"time"
 )
 
+type TriggerCreator func(store StateStore, window Window, sendItem func(key, data any)) TriggerCombiner
+
 type durationTriggerImpl struct {
 	sendItem func(key, data any)
 	data     map[any]any
