@@ -7,19 +7,19 @@ type HaveMeta interface {
 
 // GetMeta implements HaveMeta.
 func (h *Metadata) GetMeta(key string) any {
-	return h.meta[key]
+	return h.StreamMeta[key]
 }
 
 // SetMeta implements HaveMeta.
 func (h *Metadata) SetMeta(key string, value any) {
-	if h.meta == nil {
-		h.meta = map[string]any{}
+	if h.StreamMeta == nil {
+		h.StreamMeta = map[string]any{}
 	}
-	h.meta[key] = value
+	h.StreamMeta[key] = value
 }
 
 type Metadata struct {
-	meta map[string]any
+	StreamMeta map[string]any `json:"meta"`
 }
 
 func SetMeta(ctx *RunnerContext, key, value string) Pipeline {

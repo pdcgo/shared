@@ -20,9 +20,7 @@ func NewRunnerContext(pctx context.Context) *RunnerContext {
 	ctx := &RunnerContext{
 		ctx:         pctx,
 		processFunc: []func(){},
-		window: &windowImpl{
-			stateStore: map[string]StateStore{},
-		},
+		window:      &windowImpl{},
 	}
 
 	return ctx
@@ -80,7 +78,7 @@ func (rctx *RunnerContext) Value(key any) any {
 	return rctx.ctx.Value(key)
 }
 
-func (rctx *RunnerContext) hash(data string) string {
+func (rctx *RunnerContext) Hash(data string) string {
 	hash := md5.Sum([]byte(data)) // returns [16]byte
 	hashStr := hex.EncodeToString(hash[:])
 	return hashStr

@@ -20,10 +20,9 @@ func (d *dailyWindowFunc) CreateWindow(wg *sync.WaitGroup, rctx *RunnerContext, 
 	inChan := make(chan any, 1)
 
 	window := &dailyWindow{
-		stateStore: map[string]StateStore{},
-		in:         inChan,
-		label:      fmt.Sprintf("%d", key),
-		start:      time.Unix(0, key*1000),
+		in:    inChan,
+		label: fmt.Sprintf("%d", key),
+		start: time.Unix(0, key*1000),
 	}
 
 	// var ww Window = window
@@ -77,11 +76,9 @@ func (d *dailyWindowFunc) WindowID(data *TimestampedValue) int64 {
 }
 
 type dailyWindow struct {
-	sync.Mutex
-	start      time.Time
-	stateStore map[string]StateStore
-	in         chan any
-	label      string
+	start time.Time
+	in    chan any
+	label string
 }
 
 // WindowType implements Window.
@@ -107,18 +104,4 @@ func (d *dailyWindow) Close() {
 // Emit implements Window.
 func (d *dailyWindow) Emit(data *TimestampedValue) {
 	d.in <- data
-}
-
-// Store implements Window.
-func (d *dailyWindow) Store(key string) StateStore {
-	d.Lock()
-	defer d.Unlock()
-
-	if d.stateStore[key] == nil {
-		d.stateStore[key] = &keyMapStoreImpl{
-			state: map[any]any{},
-		}
-	}
-
-	return d.stateStore[key]
 }

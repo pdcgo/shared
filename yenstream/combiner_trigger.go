@@ -2,9 +2,11 @@ package yenstream
 
 import (
 	"time"
+
+	"github.com/pdcgo/shared/yenstream/store"
 )
 
-type TriggerCreator func(store StateStore, window Window, sendItem func(key, data any)) TriggerCombiner
+type TriggerCreator func(store store.StateStore, window Window, sendItem func(key, data any)) TriggerCombiner
 
 type durationTriggerImpl struct {
 	sendItem func(key, data any)
@@ -13,8 +15,8 @@ type durationTriggerImpl struct {
 	close    chan int
 }
 
-func NewDurationTrigger(duration time.Duration) func(store StateStore, window Window, sendItem func(key, data any)) TriggerCombiner {
-	return func(store StateStore, window Window, sendItem func(key any, data any)) TriggerCombiner {
+func NewDurationTrigger(duration time.Duration) func(store store.StateStore, window Window, sendItem func(key, data any)) TriggerCombiner {
+	return func(store store.StateStore, window Window, sendItem func(key any, data any)) TriggerCombiner {
 		durTrigger := &durationTriggerImpl{
 			sendItem: sendItem,
 			data:     map[any]any{},
@@ -59,7 +61,7 @@ func (d *durationTriggerImpl) Process() {
 
 type EmptyTrigger struct{}
 
-func NewEmptyTrigger(store StateStore, window Window, sendItem func(key, data any)) TriggerCombiner {
+func NewEmptyTrigger(store store.StateStore, window Window, sendItem func(key, data any)) TriggerCombiner {
 	return &EmptyTrigger{}
 }
 

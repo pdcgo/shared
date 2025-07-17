@@ -1,8 +1,12 @@
 package yenstream
 
 import (
+	"fmt"
+	"log"
 	"log/slog"
 	"reflect"
+
+	"github.com/pdcgo/shared/yenstream/store"
 )
 
 var GLOBAL_COMBINE = "global"
@@ -36,7 +40,7 @@ type TriggerCombiner interface {
 	Close()
 }
 
-type TriggerFunc func(store StateStore, window Window, sendItem func(key, data any)) TriggerCombiner
+type TriggerFunc func(store store.StateStore, window Window, sendItem func(key, data any)) TriggerCombiner
 
 type Accumulator[T, R any] interface {
 	CreateAccumulator() R
@@ -50,6 +54,7 @@ type combinerImpl[T any, R HaveMeta] struct {
 	label    string
 	globally bool
 	trigger  TriggerFunc
+	store    store.StateStore
 }
 
 func NewCombiner[T any, R HaveMeta](ctx *RunnerContext, acc Accumulator[T, R], trigger TriggerFunc) *combinerImpl[T, R] {
@@ -74,7 +79,7 @@ func (c *combinerImpl[T, R]) Process() {
 	defer close(out)
 	// getting accumulate store
 	window := c.ctx.GetWindow()
-	store := window.Store(c.ctx.hash(c.label))
+	state := store.CreateStoreFromCtx(c.ctx, c.label, c.acc.CreateAccumulator)
 
 	sendItemFinal := func(key, data any) {
 		var dsend CombinerValue[R]
@@ -82,6 +87,7 @@ func (c *combinerImpl[T, R]) Process() {
 		dsend.Data = data.(R)
 		dsend.Final = true
 		dsend.window = window
+		log.Println(window.Start().String(), data)
 		out <- &dsend
 	}
 
@@ -92,9 +98,9 @@ func (c *combinerImpl[T, R]) Process() {
 		dsend.window = window
 		out <- &dsend
 	}
-	defer store.GetAll(sendItemFinal)
+	defer state.GetAll(sendItemFinal)
 
-	trigger := c.trigger(store, window, sendItem)
+	trigger := c.trigger(state, window, sendItem)
 	defer trigger.Close()
 	go trigger.Process()
 
@@ -119,7 +125,7 @@ Loop:
 		if c.globally {
 			key = GLOBAL_COMBINE
 			if window.WindowType() != WindowGlobal {
-				key = window.Start().UnixMicro()
+				key = fmt.Sprintf("%d/%s", window.Start().UnixMicro(), c.label)
 			}
 		} else {
 
@@ -134,8 +140,7 @@ Loop:
 
 			key = dkey.Key()
 		}
-
-		sacc = store.Get(key)
+		sacc = state.Get(key)
 
 		if sacc == nil {
 			sacc = c.acc.CreateAccumulator()
@@ -149,7 +154,7 @@ Loop:
 			accu = c.acc.AddInput(kdata.Data(), accu)
 		}
 
-		store.Set(key, accu)
+		state.Set(key, accu)
 		trigger.Emit(key, accu)
 		// sending accumulator
 

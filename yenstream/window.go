@@ -5,12 +5,6 @@ import (
 	"time"
 )
 
-type StateStore interface {
-	Get(key any) any
-	Set(key any, value any)
-	GetAll(emitter func(key any, data any))
-}
-
 type WindowType string
 
 const (
@@ -22,35 +16,12 @@ type Window interface {
 	Start() time.Time
 	End() time.Time
 	WindowType() WindowType
-	Store(key string) StateStore
+	// Store(key string) store.StateStore
 	Emit(data *TimestampedValue)
 	Close()
 }
 
 type WindowCreatePipe func(rctx *RunnerContext, window Window, source Source) Pipeline
-
-type keyMapStoreImpl struct {
-	state map[any]any
-}
-
-// GetAll implements StateStore.
-func (s *keyMapStoreImpl) GetAll(emitter func(key any, data any)) {
-	for key, d := range s.state {
-		data := d
-		emitter(key, data)
-	}
-}
-
-// Get implements StateStore.
-func (s *keyMapStoreImpl) Get(key any) any {
-	return s.state[key]
-}
-
-// Set implements StateStore.
-func (s *keyMapStoreImpl) Set(key any, value any) {
-	// print(value)
-	s.state[key] = value
-}
 
 var _ Pipeline = (*windowIntoImpl)(nil)
 
