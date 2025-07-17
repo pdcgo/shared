@@ -2,6 +2,116 @@ syntax = "proto3";
 
 package warehouse_iface;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "./warehouse_iface;warehouse_iface";
 
-service WarehouseService {};
+service WarehouseService {}
+
+service WarehouseFinanceService {
+  // balance
+  rpc ExpenseAccountGet(ExpenseAccountGetReq) returns (ExpenseAccount);
+  rpc ExpenseAccountCreate(ExpenseAccountCreateReq) returns (ExpenseAccount);
+  rpc ExpenseAccountEdit(ExpenseAccountCreateReq) returns (ExpenseAccount);
+  //   rpc ExpenseAccountDelete(CommonReq) returns (CommonRes);
+  rpc ExpenseAccountList(ExpenseAccountListReq) returns (ExpenseAccountListRes);
+  //   history
+  rpc ExpenseHistoryAdd(ExpenseHistoryAddReq) returns (ExpenseHistoryAddRes);
+  rpc ExpenseHistoryList(ExpenseHistoryListReq) returns (ExpenseHistoryListRes);
+  //   report
+  rpc ExpenseReportDaily(ExpenseReportDailyReq) returns (ExpenseReportDailyRes);
+}
+
+message ExpenseReportDailyReq {
+  uint64 account_id = 1;
+  uint64 warehouse_id = 2;
+}
+
+message ReportDaily {
+  int64 start_date = 1;
+  int64 end_date = 2;
+  double expense = 3;
+  double income = 4;
+  double system_diff_amount = 5;
+  double actual_diff_amount = 6;
+  double err_diff_amount = 7;
+}
+
+message ExpenseReportDailyRes {
+  string message = 1;
+  repeated ReportDaily data = 2;
+}
+
+message ExpenseHistoryListReq {
+  uint64 account_id = 1;
+  uint64 warehouse_id = 2;
+  bool is_ops_account = 3;
+  string expense_type = 4;
+  int64 start_date = 5;
+  int64 end_date = 6;
+}
+
+message ExpenseHistoryListRes {
+  string message = 1;
+  repeated ExpenseHistory data = 2;
+}
+
+message ExpenseHistory {
+  uint64 id = 1;
+  uint64 account_id = 2;
+  uint64 warehouse_id = 3;
+  bool is_ops_account = 4;
+  string expense_type = 5;
+  double amount = 6;
+}
+
+message ExpenseHistoryAddReq {
+  uint64 account_id = 1;
+  uint64 warehouse_id = 2;
+  bool is_ops_account = 3;
+  string expense_type = 4;
+  double amount = 5;
+}
+
+message ExpenseHistoryAddRes {
+  string message = 1;
+}
+
+message ExpenseAccountGetReq {
+  uint64 id = 1;
+  uint64 warehouse_id = 2;
+  bool is_ops_account = 3;
+}
+
+message ExpenseAccountCreateReq {
+  uint64 warehouse_id = 1;
+  string number_id = 2;
+  string name = 3;
+  bool is_ops_account = 4;
+}
+
+message ExpenseAccount {
+  uint64 id = 1;
+  uint64 warehouse_id = 2;
+  string number_id = 3;
+  string name = 4;
+  bool is_ops_account = 5;
+  bool disabled = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message ExpenseAccountListReq {
+  uint64 warehouse_id = 1;
+  string number_id = 2;
+  string name = 3;
+  bool is_ops_account = 4;
+}
+message ExpenseAccountListRes {
+  string message = 1;
+  repeated ExpenseAccount data = 2;
+}
+
+message EmptyReq {}
+message EmptyRes {
+  string message = 1;
+}

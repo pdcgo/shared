@@ -1,0 +1,33 @@
+erDiagram
+
+    
+    WareExpenseAccount ||--o{ WareExpenseAccountWarehouse : includes
+    Warehouse ||--o{ WareExpenseAccountWarehouse : includes
+    WareExpenseAccount ||--o{ WareExpenseHistory : contains
+    Warehouse {
+        uint id
+        string name
+        etc etc
+    }
+    WareExpenseAccount {
+        uint id
+        string number_id
+        string name
+        bool disabled
+        timestamp created_at
+    }
+    WareExpenseAccountWarehouse {
+        uint account_id
+        uint warehouse_id
+        bool is_ops_account
+    }
+    
+    WareExpenseHistory {
+        uint id
+        uint warehouse_id
+        uint account_id
+        string expense_type
+        float64 amount
+        timestamp created_at
+    }
+

@@ -7,7 +7,10 @@
 package warehouse_iface
 
 import (
+	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -73,4 +76,343 @@ var WarehouseService_ServiceDesc = grpc.ServiceDesc{
 	Methods:     []grpc.MethodDesc{},
 	Streams:     []grpc.StreamDesc{},
 	Metadata:    "proto/warehouse_service/warehouse.proto",
+}
+
+const (
+	WarehouseFinanceService_ExpenseAccountGet_FullMethodName    = "/warehouse_iface.WarehouseFinanceService/ExpenseAccountGet"
+	WarehouseFinanceService_ExpenseAccountCreate_FullMethodName = "/warehouse_iface.WarehouseFinanceService/ExpenseAccountCreate"
+	WarehouseFinanceService_ExpenseAccountEdit_FullMethodName   = "/warehouse_iface.WarehouseFinanceService/ExpenseAccountEdit"
+	WarehouseFinanceService_ExpenseAccountList_FullMethodName   = "/warehouse_iface.WarehouseFinanceService/ExpenseAccountList"
+	WarehouseFinanceService_ExpenseHistoryAdd_FullMethodName    = "/warehouse_iface.WarehouseFinanceService/ExpenseHistoryAdd"
+	WarehouseFinanceService_ExpenseHistoryList_FullMethodName   = "/warehouse_iface.WarehouseFinanceService/ExpenseHistoryList"
+	WarehouseFinanceService_ExpenseReportDaily_FullMethodName   = "/warehouse_iface.WarehouseFinanceService/ExpenseReportDaily"
+)
+
+// WarehouseFinanceServiceClient is the client API for WarehouseFinanceService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type WarehouseFinanceServiceClient interface {
+	// balance
+	ExpenseAccountGet(ctx context.Context, in *ExpenseAccountGetReq, opts ...grpc.CallOption) (*ExpenseAccount, error)
+	ExpenseAccountCreate(ctx context.Context, in *ExpenseAccountCreateReq, opts ...grpc.CallOption) (*ExpenseAccount, error)
+	ExpenseAccountEdit(ctx context.Context, in *ExpenseAccountCreateReq, opts ...grpc.CallOption) (*ExpenseAccount, error)
+	//   rpc ExpenseAccountDelete(CommonReq) returns (CommonRes);
+	ExpenseAccountList(ctx context.Context, in *ExpenseAccountListReq, opts ...grpc.CallOption) (*ExpenseAccountListRes, error)
+	//   history
+	ExpenseHistoryAdd(ctx context.Context, in *ExpenseHistoryAddReq, opts ...grpc.CallOption) (*ExpenseHistoryAddRes, error)
+	ExpenseHistoryList(ctx context.Context, in *ExpenseHistoryListReq, opts ...grpc.CallOption) (*ExpenseHistoryListRes, error)
+	//   report
+	ExpenseReportDaily(ctx context.Context, in *ExpenseReportDailyReq, opts ...grpc.CallOption) (*ExpenseReportDailyRes, error)
+}
+
+type warehouseFinanceServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewWarehouseFinanceServiceClient(cc grpc.ClientConnInterface) WarehouseFinanceServiceClient {
+	return &warehouseFinanceServiceClient{cc}
+}
+
+func (c *warehouseFinanceServiceClient) ExpenseAccountGet(ctx context.Context, in *ExpenseAccountGetReq, opts ...grpc.CallOption) (*ExpenseAccount, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpenseAccount)
+	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseAccountGet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *warehouseFinanceServiceClient) ExpenseAccountCreate(ctx context.Context, in *ExpenseAccountCreateReq, opts ...grpc.CallOption) (*ExpenseAccount, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpenseAccount)
+	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseAccountCreate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *warehouseFinanceServiceClient) ExpenseAccountEdit(ctx context.Context, in *ExpenseAccountCreateReq, opts ...grpc.CallOption) (*ExpenseAccount, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpenseAccount)
+	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseAccountEdit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *warehouseFinanceServiceClient) ExpenseAccountList(ctx context.Context, in *ExpenseAccountListReq, opts ...grpc.CallOption) (*ExpenseAccountListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpenseAccountListRes)
+	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseAccountList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *warehouseFinanceServiceClient) ExpenseHistoryAdd(ctx context.Context, in *ExpenseHistoryAddReq, opts ...grpc.CallOption) (*ExpenseHistoryAddRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpenseHistoryAddRes)
+	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseHistoryAdd_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *warehouseFinanceServiceClient) ExpenseHistoryList(ctx context.Context, in *ExpenseHistoryListReq, opts ...grpc.CallOption) (*ExpenseHistoryListRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpenseHistoryListRes)
+	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseHistoryList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *warehouseFinanceServiceClient) ExpenseReportDaily(ctx context.Context, in *ExpenseReportDailyReq, opts ...grpc.CallOption) (*ExpenseReportDailyRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpenseReportDailyRes)
+	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseReportDaily_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// WarehouseFinanceServiceServer is the server API for WarehouseFinanceService service.
+// All implementations must embed UnimplementedWarehouseFinanceServiceServer
+// for forward compatibility.
+type WarehouseFinanceServiceServer interface {
+	// balance
+	ExpenseAccountGet(context.Context, *ExpenseAccountGetReq) (*ExpenseAccount, error)
+	ExpenseAccountCreate(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error)
+	ExpenseAccountEdit(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error)
+	//   rpc ExpenseAccountDelete(CommonReq) returns (CommonRes);
+	ExpenseAccountList(context.Context, *ExpenseAccountListReq) (*ExpenseAccountListRes, error)
+	//   history
+	ExpenseHistoryAdd(context.Context, *ExpenseHistoryAddReq) (*ExpenseHistoryAddRes, error)
+	ExpenseHistoryList(context.Context, *ExpenseHistoryListReq) (*ExpenseHistoryListRes, error)
+	//   report
+	ExpenseReportDaily(context.Context, *ExpenseReportDailyReq) (*ExpenseReportDailyRes, error)
+	mustEmbedUnimplementedWarehouseFinanceServiceServer()
+}
+
+// UnimplementedWarehouseFinanceServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedWarehouseFinanceServiceServer struct{}
+
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountGet(context.Context, *ExpenseAccountGetReq) (*ExpenseAccount, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpenseAccountGet not implemented")
+}
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountCreate(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpenseAccountCreate not implemented")
+}
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountEdit(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpenseAccountEdit not implemented")
+}
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountList(context.Context, *ExpenseAccountListReq) (*ExpenseAccountListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpenseAccountList not implemented")
+}
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseHistoryAdd(context.Context, *ExpenseHistoryAddReq) (*ExpenseHistoryAddRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpenseHistoryAdd not implemented")
+}
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseHistoryList(context.Context, *ExpenseHistoryListReq) (*ExpenseHistoryListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpenseHistoryList not implemented")
+}
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseReportDaily(context.Context, *ExpenseReportDailyReq) (*ExpenseReportDailyRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExpenseReportDaily not implemented")
+}
+func (UnimplementedWarehouseFinanceServiceServer) mustEmbedUnimplementedWarehouseFinanceServiceServer() {
+}
+func (UnimplementedWarehouseFinanceServiceServer) testEmbeddedByValue() {}
+
+// UnsafeWarehouseFinanceServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to WarehouseFinanceServiceServer will
+// result in compilation errors.
+type UnsafeWarehouseFinanceServiceServer interface {
+	mustEmbedUnimplementedWarehouseFinanceServiceServer()
+}
+
+func RegisterWarehouseFinanceServiceServer(s grpc.ServiceRegistrar, srv WarehouseFinanceServiceServer) {
+	// If the following call pancis, it indicates UnimplementedWarehouseFinanceServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&WarehouseFinanceService_ServiceDesc, srv)
+}
+
+func _WarehouseFinanceService_ExpenseAccountGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpenseAccountGetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseFinanceService_ExpenseAccountGet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountGet(ctx, req.(*ExpenseAccountGetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WarehouseFinanceService_ExpenseAccountCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpenseAccountCreateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseFinanceService_ExpenseAccountCreate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountCreate(ctx, req.(*ExpenseAccountCreateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WarehouseFinanceService_ExpenseAccountEdit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpenseAccountCreateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountEdit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseFinanceService_ExpenseAccountEdit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountEdit(ctx, req.(*ExpenseAccountCreateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WarehouseFinanceService_ExpenseAccountList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpenseAccountListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseFinanceService_ExpenseAccountList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountList(ctx, req.(*ExpenseAccountListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WarehouseFinanceService_ExpenseHistoryAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpenseHistoryAddReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseFinanceServiceServer).ExpenseHistoryAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseFinanceService_ExpenseHistoryAdd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseFinanceServiceServer).ExpenseHistoryAdd(ctx, req.(*ExpenseHistoryAddReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WarehouseFinanceService_ExpenseHistoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpenseHistoryListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseFinanceServiceServer).ExpenseHistoryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseFinanceService_ExpenseHistoryList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseFinanceServiceServer).ExpenseHistoryList(ctx, req.(*ExpenseHistoryListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WarehouseFinanceService_ExpenseReportDaily_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExpenseReportDailyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WarehouseFinanceServiceServer).ExpenseReportDaily(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WarehouseFinanceService_ExpenseReportDaily_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WarehouseFinanceServiceServer).ExpenseReportDaily(ctx, req.(*ExpenseReportDailyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// WarehouseFinanceService_ServiceDesc is the grpc.ServiceDesc for WarehouseFinanceService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var WarehouseFinanceService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "warehouse_iface.WarehouseFinanceService",
+	HandlerType: (*WarehouseFinanceServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ExpenseAccountGet",
+			Handler:    _WarehouseFinanceService_ExpenseAccountGet_Handler,
+		},
+		{
+			MethodName: "ExpenseAccountCreate",
+			Handler:    _WarehouseFinanceService_ExpenseAccountCreate_Handler,
+		},
+		{
+			MethodName: "ExpenseAccountEdit",
+			Handler:    _WarehouseFinanceService_ExpenseAccountEdit_Handler,
+		},
+		{
+			MethodName: "ExpenseAccountList",
+			Handler:    _WarehouseFinanceService_ExpenseAccountList_Handler,
+		},
+		{
+			MethodName: "ExpenseHistoryAdd",
+			Handler:    _WarehouseFinanceService_ExpenseHistoryAdd_Handler,
+		},
+		{
+			MethodName: "ExpenseHistoryList",
+			Handler:    _WarehouseFinanceService_ExpenseHistoryList_Handler,
+		},
+		{
+			MethodName: "ExpenseReportDaily",
+			Handler:    _WarehouseFinanceService_ExpenseReportDaily_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proto/warehouse_service/warehouse.proto",
 }

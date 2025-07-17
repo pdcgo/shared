@@ -1,0 +1,74 @@
+classDiagram
+  class WarehouseService {
+    +void unimplemented
+    +void unimplemented()
+  }
+  class WarehouseFinanceService {
+    +**ExpenseAccount** ExpenseAccountGet(req **ExpenseAccountGetReq**)
+    +**ExpenseAccount** ExpenseAccountCreate(req **ExpenseAccountCreateReq**)
+    +**ExpenseAccount** ExpenseAccountEdit()
+    +**void** ExpenseAccountDelete()
+    +**ExpenseAccountListRes** ExpenseAccountList()
+    %% //   history
+    +**ExpenseHistoryAddRes** ExpenseHistoryAdd()
+    +**ExpenseHistoryListRes** ExpenseHistoryList()
+    %% //   report
+    +**ExpenseReportDailyRes** ExpenseReportDaily()
+  }
+  class ExpenseAccount {
+    +uint64 id
+    +uint64 warehouse_id
+    +string number_id
+    +string name
+    +string is_ops_account
+    +string disabled
+    +timestamp created_at
+  }
+
+  class ExpenseAccountGetReq {
+    +uint64 id
+    +uint64 warehouse_id
+    +bool is_ops_account
+  }
+  class ExpenseAccountCreateReq {
+    +uint64 warehouse_id
+    +string number_id
+    +string name
+    +bool is_ops_account
+  }
+  class ExpenseAccountCreateReq_rule {
+    yang bisa create **admin** saja
+  }
+
+  class is_ops_account {
+    kaitan dengan history **expense_type** yang bisa dibuat
+  }
+
+  class admin {
+    admin bisa membuat pengeluaran
+    - gaji
+    - transfer ke rekening **ops_account**
+
+  }
+
+  class gudang {
+    coma bisa membuat pengeluaran berikut
+    - dapur
+    - ongkir
+    - lainnya
+  }
+
+  class rule {
+    setiap gudang cuma boleh memiliki 1 **ops_account** di gudang
+  }
+  WarehouseFinanceService --> ExpenseAccountGetReq : get
+  ExpenseAccountGetReq --> ExpenseAccount : return
+  WarehouseFinanceService --> ExpenseAccountCreateReq : post
+  ExpenseAccountCreateReq --> ExpenseAccount: return
+  ExpenseAccountCreateReq <-- ExpenseAccountCreateReq_rule
+  rule <-- is_ops_account
+  gudang <-- is_ops_account
+  admin <-- is_ops_account
+  is_ops_account -- ExpenseAccount
+
+  

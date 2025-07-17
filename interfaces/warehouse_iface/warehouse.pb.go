@@ -9,7 +9,9 @@ package warehouse_iface
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
+	sync "sync"
 	unsafe "unsafe"
 )
 
@@ -20,20 +22,1127 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ExpenseReportDailyReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccountId     uint64                 `protobuf:"varint,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	WarehouseId   uint64                 `protobuf:"varint,2,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseReportDailyReq) Reset() {
+	*x = ExpenseReportDailyReq{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseReportDailyReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseReportDailyReq) ProtoMessage() {}
+
+func (x *ExpenseReportDailyReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseReportDailyReq.ProtoReflect.Descriptor instead.
+func (*ExpenseReportDailyReq) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *ExpenseReportDailyReq) GetAccountId() uint64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
+}
+
+func (x *ExpenseReportDailyReq) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+type ReportDaily struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	StartDate        int64                  `protobuf:"varint,1,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
+	EndDate          int64                  `protobuf:"varint,2,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	Expense          float64                `protobuf:"fixed64,3,opt,name=expense,proto3" json:"expense,omitempty"`
+	Income           float64                `protobuf:"fixed64,4,opt,name=income,proto3" json:"income,omitempty"`
+	SystemDiffAmount float64                `protobuf:"fixed64,5,opt,name=system_diff_amount,json=systemDiffAmount,proto3" json:"system_diff_amount,omitempty"`
+	ActualDiffAmount float64                `protobuf:"fixed64,6,opt,name=actual_diff_amount,json=actualDiffAmount,proto3" json:"actual_diff_amount,omitempty"`
+	ErrDiffAmount    float64                `protobuf:"fixed64,7,opt,name=err_diff_amount,json=errDiffAmount,proto3" json:"err_diff_amount,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ReportDaily) Reset() {
+	*x = ReportDaily{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReportDaily) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReportDaily) ProtoMessage() {}
+
+func (x *ReportDaily) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReportDaily.ProtoReflect.Descriptor instead.
+func (*ReportDaily) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ReportDaily) GetStartDate() int64 {
+	if x != nil {
+		return x.StartDate
+	}
+	return 0
+}
+
+func (x *ReportDaily) GetEndDate() int64 {
+	if x != nil {
+		return x.EndDate
+	}
+	return 0
+}
+
+func (x *ReportDaily) GetExpense() float64 {
+	if x != nil {
+		return x.Expense
+	}
+	return 0
+}
+
+func (x *ReportDaily) GetIncome() float64 {
+	if x != nil {
+		return x.Income
+	}
+	return 0
+}
+
+func (x *ReportDaily) GetSystemDiffAmount() float64 {
+	if x != nil {
+		return x.SystemDiffAmount
+	}
+	return 0
+}
+
+func (x *ReportDaily) GetActualDiffAmount() float64 {
+	if x != nil {
+		return x.ActualDiffAmount
+	}
+	return 0
+}
+
+func (x *ReportDaily) GetErrDiffAmount() float64 {
+	if x != nil {
+		return x.ErrDiffAmount
+	}
+	return 0
+}
+
+type ExpenseReportDailyRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Data          []*ReportDaily         `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseReportDailyRes) Reset() {
+	*x = ExpenseReportDailyRes{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseReportDailyRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseReportDailyRes) ProtoMessage() {}
+
+func (x *ExpenseReportDailyRes) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseReportDailyRes.ProtoReflect.Descriptor instead.
+func (*ExpenseReportDailyRes) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ExpenseReportDailyRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ExpenseReportDailyRes) GetData() []*ReportDaily {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type ExpenseHistoryListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccountId     uint64                 `protobuf:"varint,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	WarehouseId   uint64                 `protobuf:"varint,2,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,3,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	ExpenseType   string                 `protobuf:"bytes,4,opt,name=expense_type,json=expenseType,proto3" json:"expense_type,omitempty"`
+	StartDate     int64                  `protobuf:"varint,5,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
+	EndDate       int64                  `protobuf:"varint,6,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseHistoryListReq) Reset() {
+	*x = ExpenseHistoryListReq{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseHistoryListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseHistoryListReq) ProtoMessage() {}
+
+func (x *ExpenseHistoryListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseHistoryListReq.ProtoReflect.Descriptor instead.
+func (*ExpenseHistoryListReq) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ExpenseHistoryListReq) GetAccountId() uint64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
+}
+
+func (x *ExpenseHistoryListReq) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+func (x *ExpenseHistoryListReq) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
+}
+
+func (x *ExpenseHistoryListReq) GetExpenseType() string {
+	if x != nil {
+		return x.ExpenseType
+	}
+	return ""
+}
+
+func (x *ExpenseHistoryListReq) GetStartDate() int64 {
+	if x != nil {
+		return x.StartDate
+	}
+	return 0
+}
+
+func (x *ExpenseHistoryListReq) GetEndDate() int64 {
+	if x != nil {
+		return x.EndDate
+	}
+	return 0
+}
+
+type ExpenseHistoryListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Data          []*ExpenseHistory      `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseHistoryListRes) Reset() {
+	*x = ExpenseHistoryListRes{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseHistoryListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseHistoryListRes) ProtoMessage() {}
+
+func (x *ExpenseHistoryListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseHistoryListRes.ProtoReflect.Descriptor instead.
+func (*ExpenseHistoryListRes) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ExpenseHistoryListRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ExpenseHistoryListRes) GetData() []*ExpenseHistory {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type ExpenseHistory struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	AccountId     uint64                 `protobuf:"varint,2,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	WarehouseId   uint64                 `protobuf:"varint,3,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,4,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	ExpenseType   string                 `protobuf:"bytes,5,opt,name=expense_type,json=expenseType,proto3" json:"expense_type,omitempty"`
+	Amount        float64                `protobuf:"fixed64,6,opt,name=amount,proto3" json:"amount,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseHistory) Reset() {
+	*x = ExpenseHistory{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseHistory) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseHistory) ProtoMessage() {}
+
+func (x *ExpenseHistory) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseHistory.ProtoReflect.Descriptor instead.
+func (*ExpenseHistory) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ExpenseHistory) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ExpenseHistory) GetAccountId() uint64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
+}
+
+func (x *ExpenseHistory) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+func (x *ExpenseHistory) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
+}
+
+func (x *ExpenseHistory) GetExpenseType() string {
+	if x != nil {
+		return x.ExpenseType
+	}
+	return ""
+}
+
+func (x *ExpenseHistory) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+type ExpenseHistoryAddReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccountId     uint64                 `protobuf:"varint,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	WarehouseId   uint64                 `protobuf:"varint,2,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,3,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	ExpenseType   string                 `protobuf:"bytes,4,opt,name=expense_type,json=expenseType,proto3" json:"expense_type,omitempty"`
+	Amount        float64                `protobuf:"fixed64,5,opt,name=amount,proto3" json:"amount,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseHistoryAddReq) Reset() {
+	*x = ExpenseHistoryAddReq{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseHistoryAddReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseHistoryAddReq) ProtoMessage() {}
+
+func (x *ExpenseHistoryAddReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseHistoryAddReq.ProtoReflect.Descriptor instead.
+func (*ExpenseHistoryAddReq) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ExpenseHistoryAddReq) GetAccountId() uint64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
+}
+
+func (x *ExpenseHistoryAddReq) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+func (x *ExpenseHistoryAddReq) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
+}
+
+func (x *ExpenseHistoryAddReq) GetExpenseType() string {
+	if x != nil {
+		return x.ExpenseType
+	}
+	return ""
+}
+
+func (x *ExpenseHistoryAddReq) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+type ExpenseHistoryAddRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseHistoryAddRes) Reset() {
+	*x = ExpenseHistoryAddRes{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseHistoryAddRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseHistoryAddRes) ProtoMessage() {}
+
+func (x *ExpenseHistoryAddRes) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseHistoryAddRes.ProtoReflect.Descriptor instead.
+func (*ExpenseHistoryAddRes) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ExpenseHistoryAddRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type ExpenseAccountGetReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	WarehouseId   uint64                 `protobuf:"varint,2,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,3,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseAccountGetReq) Reset() {
+	*x = ExpenseAccountGetReq{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseAccountGetReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseAccountGetReq) ProtoMessage() {}
+
+func (x *ExpenseAccountGetReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseAccountGetReq.ProtoReflect.Descriptor instead.
+func (*ExpenseAccountGetReq) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ExpenseAccountGetReq) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ExpenseAccountGetReq) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+func (x *ExpenseAccountGetReq) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
+}
+
+type ExpenseAccountCreateReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	WarehouseId   uint64                 `protobuf:"varint,1,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	NumberId      string                 `protobuf:"bytes,2,opt,name=number_id,json=numberId,proto3" json:"number_id,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,4,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	Disabled      bool                   `protobuf:"varint,5,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseAccountCreateReq) Reset() {
+	*x = ExpenseAccountCreateReq{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseAccountCreateReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseAccountCreateReq) ProtoMessage() {}
+
+func (x *ExpenseAccountCreateReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseAccountCreateReq.ProtoReflect.Descriptor instead.
+func (*ExpenseAccountCreateReq) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ExpenseAccountCreateReq) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+func (x *ExpenseAccountCreateReq) GetNumberId() string {
+	if x != nil {
+		return x.NumberId
+	}
+	return ""
+}
+
+func (x *ExpenseAccountCreateReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ExpenseAccountCreateReq) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
+}
+
+func (x *ExpenseAccountCreateReq) GetDisabled() bool {
+	if x != nil {
+		return x.Disabled
+	}
+	return false
+}
+
+func (x *ExpenseAccountCreateReq) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type ExpenseAccount struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	WarehouseId   uint64                 `protobuf:"varint,2,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	NumberId      string                 `protobuf:"bytes,3,opt,name=number_id,json=numberId,proto3" json:"number_id,omitempty"`
+	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,5,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	Disabled      bool                   `protobuf:"varint,6,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseAccount) Reset() {
+	*x = ExpenseAccount{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseAccount) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseAccount) ProtoMessage() {}
+
+func (x *ExpenseAccount) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseAccount.ProtoReflect.Descriptor instead.
+func (*ExpenseAccount) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ExpenseAccount) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ExpenseAccount) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+func (x *ExpenseAccount) GetNumberId() string {
+	if x != nil {
+		return x.NumberId
+	}
+	return ""
+}
+
+func (x *ExpenseAccount) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ExpenseAccount) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
+}
+
+func (x *ExpenseAccount) GetDisabled() bool {
+	if x != nil {
+		return x.Disabled
+	}
+	return false
+}
+
+func (x *ExpenseAccount) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type ExpenseAccountListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	WarehouseId   uint64                 `protobuf:"varint,1,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
+	NumberId      string                 `protobuf:"bytes,2,opt,name=number_id,json=numberId,proto3" json:"number_id,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,4,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseAccountListReq) Reset() {
+	*x = ExpenseAccountListReq{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseAccountListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseAccountListReq) ProtoMessage() {}
+
+func (x *ExpenseAccountListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseAccountListReq.ProtoReflect.Descriptor instead.
+func (*ExpenseAccountListReq) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ExpenseAccountListReq) GetWarehouseId() uint64 {
+	if x != nil {
+		return x.WarehouseId
+	}
+	return 0
+}
+
+func (x *ExpenseAccountListReq) GetNumberId() string {
+	if x != nil {
+		return x.NumberId
+	}
+	return ""
+}
+
+func (x *ExpenseAccountListReq) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ExpenseAccountListReq) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
+}
+
+type ExpenseAccountListRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Data          []*ExpenseAccount      `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpenseAccountListRes) Reset() {
+	*x = ExpenseAccountListRes{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpenseAccountListRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpenseAccountListRes) ProtoMessage() {}
+
+func (x *ExpenseAccountListRes) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpenseAccountListRes.ProtoReflect.Descriptor instead.
+func (*ExpenseAccountListRes) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ExpenseAccountListRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ExpenseAccountListRes) GetData() []*ExpenseAccount {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type EmptyReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EmptyReq) Reset() {
+	*x = EmptyReq{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EmptyReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmptyReq) ProtoMessage() {}
+
+func (x *EmptyReq) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmptyReq.ProtoReflect.Descriptor instead.
+func (*EmptyReq) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{13}
+}
+
+type EmptyRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EmptyRes) Reset() {
+	*x = EmptyRes{}
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EmptyRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmptyRes) ProtoMessage() {}
+
+func (x *EmptyRes) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_warehouse_service_warehouse_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmptyRes.ProtoReflect.Descriptor instead.
+func (*EmptyRes) Descriptor() ([]byte, []int) {
+	return file_proto_warehouse_service_warehouse_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *EmptyRes) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_proto_warehouse_service_warehouse_proto protoreflect.FileDescriptor
 
 const file_proto_warehouse_service_warehouse_proto_rawDesc = "" +
 	"\n" +
-	"'proto/warehouse_service/warehouse.proto\x12\x0fwarehouse_iface2\x12\n" +
-	"\x10WarehouseServiceB#Z!./warehouse_iface;warehouse_ifaceb\x06proto3"
+	"'proto/warehouse_service/warehouse.proto\x12\x0fwarehouse_iface\x1a\x1fgoogle/protobuf/timestamp.proto\"Y\n" +
+	"\x15ExpenseReportDailyReq\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x01 \x01(\x04R\taccountId\x12!\n" +
+	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\"\xfd\x01\n" +
+	"\vReportDaily\x12\x1d\n" +
+	"\n" +
+	"start_date\x18\x01 \x01(\x03R\tstartDate\x12\x19\n" +
+	"\bend_date\x18\x02 \x01(\x03R\aendDate\x12\x18\n" +
+	"\aexpense\x18\x03 \x01(\x01R\aexpense\x12\x16\n" +
+	"\x06income\x18\x04 \x01(\x01R\x06income\x12,\n" +
+	"\x12system_diff_amount\x18\x05 \x01(\x01R\x10systemDiffAmount\x12,\n" +
+	"\x12actual_diff_amount\x18\x06 \x01(\x01R\x10actualDiffAmount\x12&\n" +
+	"\x0ferr_diff_amount\x18\a \x01(\x01R\rerrDiffAmount\"c\n" +
+	"\x15ExpenseReportDailyRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x120\n" +
+	"\x04data\x18\x02 \x03(\v2\x1c.warehouse_iface.ReportDailyR\x04data\"\xdc\x01\n" +
+	"\x15ExpenseHistoryListReq\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x01 \x01(\x04R\taccountId\x12!\n" +
+	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\x12$\n" +
+	"\x0eis_ops_account\x18\x03 \x01(\bR\fisOpsAccount\x12!\n" +
+	"\fexpense_type\x18\x04 \x01(\tR\vexpenseType\x12\x1d\n" +
+	"\n" +
+	"start_date\x18\x05 \x01(\x03R\tstartDate\x12\x19\n" +
+	"\bend_date\x18\x06 \x01(\x03R\aendDate\"f\n" +
+	"\x15ExpenseHistoryListRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x123\n" +
+	"\x04data\x18\x02 \x03(\v2\x1f.warehouse_iface.ExpenseHistoryR\x04data\"\xc3\x01\n" +
+	"\x0eExpenseHistory\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x02 \x01(\x04R\taccountId\x12!\n" +
+	"\fwarehouse_id\x18\x03 \x01(\x04R\vwarehouseId\x12$\n" +
+	"\x0eis_ops_account\x18\x04 \x01(\bR\fisOpsAccount\x12!\n" +
+	"\fexpense_type\x18\x05 \x01(\tR\vexpenseType\x12\x16\n" +
+	"\x06amount\x18\x06 \x01(\x01R\x06amount\"\xb9\x01\n" +
+	"\x14ExpenseHistoryAddReq\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x01 \x01(\x04R\taccountId\x12!\n" +
+	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\x12$\n" +
+	"\x0eis_ops_account\x18\x03 \x01(\bR\fisOpsAccount\x12!\n" +
+	"\fexpense_type\x18\x04 \x01(\tR\vexpenseType\x12\x16\n" +
+	"\x06amount\x18\x05 \x01(\x01R\x06amount\"0\n" +
+	"\x14ExpenseHistoryAddRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"o\n" +
+	"\x14ExpenseAccountGetReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12!\n" +
+	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\x12$\n" +
+	"\x0eis_ops_account\x18\x03 \x01(\bR\fisOpsAccount\"\xea\x01\n" +
+	"\x17ExpenseAccountCreateReq\x12!\n" +
+	"\fwarehouse_id\x18\x01 \x01(\x04R\vwarehouseId\x12\x1b\n" +
+	"\tnumber_id\x18\x02 \x01(\tR\bnumberId\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12$\n" +
+	"\x0eis_ops_account\x18\x04 \x01(\bR\fisOpsAccount\x12\x1a\n" +
+	"\bdisabled\x18\x05 \x01(\bR\bdisabled\x129\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\xf1\x01\n" +
+	"\x0eExpenseAccount\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12!\n" +
+	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\x12\x1b\n" +
+	"\tnumber_id\x18\x03 \x01(\tR\bnumberId\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12$\n" +
+	"\x0eis_ops_account\x18\x05 \x01(\bR\fisOpsAccount\x12\x1a\n" +
+	"\bdisabled\x18\x06 \x01(\bR\bdisabled\x129\n" +
+	"\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\x91\x01\n" +
+	"\x15ExpenseAccountListReq\x12!\n" +
+	"\fwarehouse_id\x18\x01 \x01(\x04R\vwarehouseId\x12\x1b\n" +
+	"\tnumber_id\x18\x02 \x01(\tR\bnumberId\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12$\n" +
+	"\x0eis_ops_account\x18\x04 \x01(\bR\fisOpsAccount\"f\n" +
+	"\x15ExpenseAccountListRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x123\n" +
+	"\x04data\x18\x02 \x03(\v2\x1f.warehouse_iface.ExpenseAccountR\x04data\"\n" +
+	"\n" +
+	"\bEmptyReq\"$\n" +
+	"\bEmptyRes\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\x12\n" +
+	"\x10WarehouseService2\xcf\x05\n" +
+	"\x17WarehouseFinanceService\x12[\n" +
+	"\x11ExpenseAccountGet\x12%.warehouse_iface.ExpenseAccountGetReq\x1a\x1f.warehouse_iface.ExpenseAccount\x12a\n" +
+	"\x14ExpenseAccountCreate\x12(.warehouse_iface.ExpenseAccountCreateReq\x1a\x1f.warehouse_iface.ExpenseAccount\x12_\n" +
+	"\x12ExpenseAccountEdit\x12(.warehouse_iface.ExpenseAccountCreateReq\x1a\x1f.warehouse_iface.ExpenseAccount\x12d\n" +
+	"\x12ExpenseAccountList\x12&.warehouse_iface.ExpenseAccountListReq\x1a&.warehouse_iface.ExpenseAccountListRes\x12a\n" +
+	"\x11ExpenseHistoryAdd\x12%.warehouse_iface.ExpenseHistoryAddReq\x1a%.warehouse_iface.ExpenseHistoryAddRes\x12d\n" +
+	"\x12ExpenseHistoryList\x12&.warehouse_iface.ExpenseHistoryListReq\x1a&.warehouse_iface.ExpenseHistoryListRes\x12d\n" +
+	"\x12ExpenseReportDaily\x12&.warehouse_iface.ExpenseReportDailyReq\x1a&.warehouse_iface.ExpenseReportDailyResB#Z!./warehouse_iface;warehouse_ifaceb\x06proto3"
 
-var file_proto_warehouse_service_warehouse_proto_goTypes = []any{}
+var (
+	file_proto_warehouse_service_warehouse_proto_rawDescOnce sync.Once
+	file_proto_warehouse_service_warehouse_proto_rawDescData []byte
+)
+
+func file_proto_warehouse_service_warehouse_proto_rawDescGZIP() []byte {
+	file_proto_warehouse_service_warehouse_proto_rawDescOnce.Do(func() {
+		file_proto_warehouse_service_warehouse_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_warehouse_service_warehouse_proto_rawDesc), len(file_proto_warehouse_service_warehouse_proto_rawDesc)))
+	})
+	return file_proto_warehouse_service_warehouse_proto_rawDescData
+}
+
+var file_proto_warehouse_service_warehouse_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_proto_warehouse_service_warehouse_proto_goTypes = []any{
+	(*ExpenseReportDailyReq)(nil),   // 0: warehouse_iface.ExpenseReportDailyReq
+	(*ReportDaily)(nil),             // 1: warehouse_iface.ReportDaily
+	(*ExpenseReportDailyRes)(nil),   // 2: warehouse_iface.ExpenseReportDailyRes
+	(*ExpenseHistoryListReq)(nil),   // 3: warehouse_iface.ExpenseHistoryListReq
+	(*ExpenseHistoryListRes)(nil),   // 4: warehouse_iface.ExpenseHistoryListRes
+	(*ExpenseHistory)(nil),          // 5: warehouse_iface.ExpenseHistory
+	(*ExpenseHistoryAddReq)(nil),    // 6: warehouse_iface.ExpenseHistoryAddReq
+	(*ExpenseHistoryAddRes)(nil),    // 7: warehouse_iface.ExpenseHistoryAddRes
+	(*ExpenseAccountGetReq)(nil),    // 8: warehouse_iface.ExpenseAccountGetReq
+	(*ExpenseAccountCreateReq)(nil), // 9: warehouse_iface.ExpenseAccountCreateReq
+	(*ExpenseAccount)(nil),          // 10: warehouse_iface.ExpenseAccount
+	(*ExpenseAccountListReq)(nil),   // 11: warehouse_iface.ExpenseAccountListReq
+	(*ExpenseAccountListRes)(nil),   // 12: warehouse_iface.ExpenseAccountListRes
+	(*EmptyReq)(nil),                // 13: warehouse_iface.EmptyReq
+	(*EmptyRes)(nil),                // 14: warehouse_iface.EmptyRes
+	(*timestamppb.Timestamp)(nil),   // 15: google.protobuf.Timestamp
+}
 var file_proto_warehouse_service_warehouse_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1,  // 0: warehouse_iface.ExpenseReportDailyRes.data:type_name -> warehouse_iface.ReportDaily
+	5,  // 1: warehouse_iface.ExpenseHistoryListRes.data:type_name -> warehouse_iface.ExpenseHistory
+	15, // 2: warehouse_iface.ExpenseAccountCreateReq.created_at:type_name -> google.protobuf.Timestamp
+	15, // 3: warehouse_iface.ExpenseAccount.created_at:type_name -> google.protobuf.Timestamp
+	10, // 4: warehouse_iface.ExpenseAccountListRes.data:type_name -> warehouse_iface.ExpenseAccount
+	8,  // 5: warehouse_iface.WarehouseFinanceService.ExpenseAccountGet:input_type -> warehouse_iface.ExpenseAccountGetReq
+	9,  // 6: warehouse_iface.WarehouseFinanceService.ExpenseAccountCreate:input_type -> warehouse_iface.ExpenseAccountCreateReq
+	9,  // 7: warehouse_iface.WarehouseFinanceService.ExpenseAccountEdit:input_type -> warehouse_iface.ExpenseAccountCreateReq
+	11, // 8: warehouse_iface.WarehouseFinanceService.ExpenseAccountList:input_type -> warehouse_iface.ExpenseAccountListReq
+	6,  // 9: warehouse_iface.WarehouseFinanceService.ExpenseHistoryAdd:input_type -> warehouse_iface.ExpenseHistoryAddReq
+	3,  // 10: warehouse_iface.WarehouseFinanceService.ExpenseHistoryList:input_type -> warehouse_iface.ExpenseHistoryListReq
+	0,  // 11: warehouse_iface.WarehouseFinanceService.ExpenseReportDaily:input_type -> warehouse_iface.ExpenseReportDailyReq
+	10, // 12: warehouse_iface.WarehouseFinanceService.ExpenseAccountGet:output_type -> warehouse_iface.ExpenseAccount
+	10, // 13: warehouse_iface.WarehouseFinanceService.ExpenseAccountCreate:output_type -> warehouse_iface.ExpenseAccount
+	10, // 14: warehouse_iface.WarehouseFinanceService.ExpenseAccountEdit:output_type -> warehouse_iface.ExpenseAccount
+	12, // 15: warehouse_iface.WarehouseFinanceService.ExpenseAccountList:output_type -> warehouse_iface.ExpenseAccountListRes
+	7,  // 16: warehouse_iface.WarehouseFinanceService.ExpenseHistoryAdd:output_type -> warehouse_iface.ExpenseHistoryAddRes
+	4,  // 17: warehouse_iface.WarehouseFinanceService.ExpenseHistoryList:output_type -> warehouse_iface.ExpenseHistoryListRes
+	2,  // 18: warehouse_iface.WarehouseFinanceService.ExpenseReportDaily:output_type -> warehouse_iface.ExpenseReportDailyRes
+	12, // [12:19] is the sub-list for method output_type
+	5,  // [5:12] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_proto_warehouse_service_warehouse_proto_init() }
@@ -47,12 +1156,13 @@ func file_proto_warehouse_service_warehouse_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_warehouse_service_warehouse_proto_rawDesc), len(file_proto_warehouse_service_warehouse_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   0,
+			NumMessages:   15,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_proto_warehouse_service_warehouse_proto_goTypes,
 		DependencyIndexes: file_proto_warehouse_service_warehouse_proto_depIdxs,
+		MessageInfos:      file_proto_warehouse_service_warehouse_proto_msgTypes,
 	}.Build()
 	File_proto_warehouse_service_warehouse_proto = out.File
 	file_proto_warehouse_service_warehouse_proto_goTypes = nil
