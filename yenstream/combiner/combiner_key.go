@@ -63,7 +63,6 @@ Loop:
 		sacc = state.Get(key)
 		if sacc == nil {
 			sacc = c.combiner.CreateAccumulator()
-
 		}
 
 		accu := sacc.(*yenstream.Row[R])

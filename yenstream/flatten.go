@@ -47,7 +47,8 @@ func (f *flattenImpl) Process() {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			for data := range pipe.Out().C() {
+			outp := pipe.Out().C()
+			for data := range outp {
 				out <- data
 			}
 
