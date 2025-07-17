@@ -624,8 +624,6 @@ type ExpenseAccountCreateReq struct {
 	NumberId      string                 `protobuf:"bytes,2,opt,name=number_id,json=numberId,proto3" json:"number_id,omitempty"`
 	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	IsOpsAccount  bool                   `protobuf:"varint,4,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
-	Disabled      bool                   `protobuf:"varint,5,opt,name=disabled,proto3" json:"disabled,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -686,20 +684,6 @@ func (x *ExpenseAccountCreateReq) GetIsOpsAccount() bool {
 		return x.IsOpsAccount
 	}
 	return false
-}
-
-func (x *ExpenseAccountCreateReq) GetDisabled() bool {
-	if x != nil {
-		return x.Disabled
-	}
-	return false
-}
-
-func (x *ExpenseAccountCreateReq) GetCreatedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return nil
 }
 
 type ExpenseAccount struct {
@@ -1047,15 +1031,12 @@ const file_proto_warehouse_service_warehouse_proto_rawDesc = "" +
 	"\x14ExpenseAccountGetReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12!\n" +
 	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\x12$\n" +
-	"\x0eis_ops_account\x18\x03 \x01(\bR\fisOpsAccount\"\xea\x01\n" +
+	"\x0eis_ops_account\x18\x03 \x01(\bR\fisOpsAccount\"\x93\x01\n" +
 	"\x17ExpenseAccountCreateReq\x12!\n" +
 	"\fwarehouse_id\x18\x01 \x01(\x04R\vwarehouseId\x12\x1b\n" +
 	"\tnumber_id\x18\x02 \x01(\tR\bnumberId\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12$\n" +
-	"\x0eis_ops_account\x18\x04 \x01(\bR\fisOpsAccount\x12\x1a\n" +
-	"\bdisabled\x18\x05 \x01(\bR\bdisabled\x129\n" +
-	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\xf1\x01\n" +
+	"\x0eis_ops_account\x18\x04 \x01(\bR\fisOpsAccount\"\xf1\x01\n" +
 	"\x0eExpenseAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12!\n" +
 	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\x12\x1b\n" +
@@ -1121,28 +1102,27 @@ var file_proto_warehouse_service_warehouse_proto_goTypes = []any{
 var file_proto_warehouse_service_warehouse_proto_depIdxs = []int32{
 	1,  // 0: warehouse_iface.ExpenseReportDailyRes.data:type_name -> warehouse_iface.ReportDaily
 	5,  // 1: warehouse_iface.ExpenseHistoryListRes.data:type_name -> warehouse_iface.ExpenseHistory
-	15, // 2: warehouse_iface.ExpenseAccountCreateReq.created_at:type_name -> google.protobuf.Timestamp
-	15, // 3: warehouse_iface.ExpenseAccount.created_at:type_name -> google.protobuf.Timestamp
-	10, // 4: warehouse_iface.ExpenseAccountListRes.data:type_name -> warehouse_iface.ExpenseAccount
-	8,  // 5: warehouse_iface.WarehouseFinanceService.ExpenseAccountGet:input_type -> warehouse_iface.ExpenseAccountGetReq
-	9,  // 6: warehouse_iface.WarehouseFinanceService.ExpenseAccountCreate:input_type -> warehouse_iface.ExpenseAccountCreateReq
-	9,  // 7: warehouse_iface.WarehouseFinanceService.ExpenseAccountEdit:input_type -> warehouse_iface.ExpenseAccountCreateReq
-	11, // 8: warehouse_iface.WarehouseFinanceService.ExpenseAccountList:input_type -> warehouse_iface.ExpenseAccountListReq
-	6,  // 9: warehouse_iface.WarehouseFinanceService.ExpenseHistoryAdd:input_type -> warehouse_iface.ExpenseHistoryAddReq
-	3,  // 10: warehouse_iface.WarehouseFinanceService.ExpenseHistoryList:input_type -> warehouse_iface.ExpenseHistoryListReq
-	0,  // 11: warehouse_iface.WarehouseFinanceService.ExpenseReportDaily:input_type -> warehouse_iface.ExpenseReportDailyReq
-	10, // 12: warehouse_iface.WarehouseFinanceService.ExpenseAccountGet:output_type -> warehouse_iface.ExpenseAccount
-	10, // 13: warehouse_iface.WarehouseFinanceService.ExpenseAccountCreate:output_type -> warehouse_iface.ExpenseAccount
-	10, // 14: warehouse_iface.WarehouseFinanceService.ExpenseAccountEdit:output_type -> warehouse_iface.ExpenseAccount
-	12, // 15: warehouse_iface.WarehouseFinanceService.ExpenseAccountList:output_type -> warehouse_iface.ExpenseAccountListRes
-	7,  // 16: warehouse_iface.WarehouseFinanceService.ExpenseHistoryAdd:output_type -> warehouse_iface.ExpenseHistoryAddRes
-	4,  // 17: warehouse_iface.WarehouseFinanceService.ExpenseHistoryList:output_type -> warehouse_iface.ExpenseHistoryListRes
-	2,  // 18: warehouse_iface.WarehouseFinanceService.ExpenseReportDaily:output_type -> warehouse_iface.ExpenseReportDailyRes
-	12, // [12:19] is the sub-list for method output_type
-	5,  // [5:12] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	15, // 2: warehouse_iface.ExpenseAccount.created_at:type_name -> google.protobuf.Timestamp
+	10, // 3: warehouse_iface.ExpenseAccountListRes.data:type_name -> warehouse_iface.ExpenseAccount
+	8,  // 4: warehouse_iface.WarehouseFinanceService.ExpenseAccountGet:input_type -> warehouse_iface.ExpenseAccountGetReq
+	9,  // 5: warehouse_iface.WarehouseFinanceService.ExpenseAccountCreate:input_type -> warehouse_iface.ExpenseAccountCreateReq
+	9,  // 6: warehouse_iface.WarehouseFinanceService.ExpenseAccountEdit:input_type -> warehouse_iface.ExpenseAccountCreateReq
+	11, // 7: warehouse_iface.WarehouseFinanceService.ExpenseAccountList:input_type -> warehouse_iface.ExpenseAccountListReq
+	6,  // 8: warehouse_iface.WarehouseFinanceService.ExpenseHistoryAdd:input_type -> warehouse_iface.ExpenseHistoryAddReq
+	3,  // 9: warehouse_iface.WarehouseFinanceService.ExpenseHistoryList:input_type -> warehouse_iface.ExpenseHistoryListReq
+	0,  // 10: warehouse_iface.WarehouseFinanceService.ExpenseReportDaily:input_type -> warehouse_iface.ExpenseReportDailyReq
+	10, // 11: warehouse_iface.WarehouseFinanceService.ExpenseAccountGet:output_type -> warehouse_iface.ExpenseAccount
+	10, // 12: warehouse_iface.WarehouseFinanceService.ExpenseAccountCreate:output_type -> warehouse_iface.ExpenseAccount
+	10, // 13: warehouse_iface.WarehouseFinanceService.ExpenseAccountEdit:output_type -> warehouse_iface.ExpenseAccount
+	12, // 14: warehouse_iface.WarehouseFinanceService.ExpenseAccountList:output_type -> warehouse_iface.ExpenseAccountListRes
+	7,  // 15: warehouse_iface.WarehouseFinanceService.ExpenseHistoryAdd:output_type -> warehouse_iface.ExpenseHistoryAddRes
+	4,  // 16: warehouse_iface.WarehouseFinanceService.ExpenseHistoryList:output_type -> warehouse_iface.ExpenseHistoryListRes
+	2,  // 17: warehouse_iface.WarehouseFinanceService.ExpenseReportDaily:output_type -> warehouse_iface.ExpenseReportDailyRes
+	11, // [11:18] is the sub-list for method output_type
+	4,  // [4:11] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_proto_warehouse_service_warehouse_proto_init() }
