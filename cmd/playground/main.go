@@ -106,7 +106,7 @@ func main() {
 			}))
 
 		// return summing
-		flatall := yenstream.NewFlatten(ctx, window)
+		flatall := yenstream.NewFlatten(ctx, "asdasd", window)
 		return flatall
 
 	})

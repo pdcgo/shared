@@ -1,8 +1,6 @@
 package yenstream
 
-import (
-	"sync"
-)
+import "sync"
 
 var _ Pipeline = (*flattenImpl)(nil)
 
@@ -14,15 +12,33 @@ type flattenImpl struct {
 	pipelines []Pipeline
 }
 
-func NewFlatten(ctx *RunnerContext, pipelines ...Pipeline) *flattenImpl {
+func NewFlatten(ctx *RunnerContext, label string, pipelines ...Pipeline) *flattenImpl {
 	flat := &flattenImpl{
+		label:     label,
 		ctx:       ctx,
 		in:        make(chan any, 1),
 		out:       NewNodeOut(ctx),
 		pipelines: pipelines,
 	}
 
+	var wg sync.WaitGroup
+
+	for _, p := range flat.pipelines {
+		pipe := p
+		wg.Add(1)
+		pipe.Out().Pair(label, flat.In(), func() {
+			wg.Done()
+		})
+
+	}
+
+	ctx.AddProcess(func() {
+		wg.Wait()
+		close(flat.in)
+	})
 	ctx.AddProcess(flat.Process)
+
+	// ctx.AddProcess(flat.Process)
 	return flat
 }
 
@@ -41,21 +57,9 @@ func (f *flattenImpl) Process() {
 	out := f.out.C()
 	defer close(out)
 
-	var wg sync.WaitGroup
-	for _, p := range f.pipelines {
-		pipe := p
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			outp := pipe.Out().C()
-			for data := range outp {
-				out <- data
-			}
-
-		}()
+	for data := range f.in {
+		out <- data
 	}
-
-	wg.Wait()
 
 }
 

@@ -2,6 +2,8 @@ package db_models
 
 import (
 	"time"
+
+	"github.com/pdcgo/shared/interfaces/identity_iface"
 )
 
 type InvoiceStatus string
@@ -140,6 +142,14 @@ type PaymentSubmission struct {
 
 	CreatedBy   *User `json:"created_by"`
 	CompletedBy *User `json:"completed_by"`
+}
+
+type PaymentSubmissionLog struct {
+	ID        uint                     `json:"id" gorm:"primarykey"`
+	Status    PaymentSubmissionStatus  `json:"status"`
+	From      identity_iface.AgentType `json:"from"`
+	ByUserID  uint                     `json:"by_user_id"`
+	CreatedAt time.Time                `json:"created_at"`
 }
 
 type PSubmissionInv struct {

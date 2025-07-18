@@ -43,7 +43,7 @@ func (rctx *RunnerContext) CreatePipeline(handler func(ctx *RunnerContext) Pipel
 
 func (rctx *RunnerContext) RegisterStream(label string, fromp Outlet, top Inlet) {
 	top.SetLabel(label)
-	fromp.Out().Pair(label, top.In())
+	fromp.Out().Pair(label, top.In(), nil)
 	rctx.processFunc = append(rctx.processFunc, top.Process)
 }
 

@@ -13,15 +13,16 @@ type Outlet interface {
 }
 
 type NodeOut interface {
-	Pair(label string, in chan any)
+	Pair(label string, in chan any, customclose func())
 	Process()
 	C() chan any
 }
 
 type nodeOutImpl struct {
-	c         chan any
-	nodemap   map[string]chan any
-	debugMode bool
+	c           chan any
+	nodemap     map[string]chan any
+	debugMode   bool
+	customclose map[string]func()
 }
 
 // Process implements NodeOut.
@@ -32,8 +33,12 @@ func (n *nodeOutImpl) Process() {
 			if n.debugMode {
 				slog.Info("closing node in", slog.String("key", key))
 			}
+			if n.customclose[key] == nil {
+				close(mchan)
+			} else {
+				n.customclose[key]()
+			}
 
-			close(mchan)
 		}
 	}()
 
@@ -50,7 +55,7 @@ func (n *nodeOutImpl) C() chan any {
 }
 
 // Pair implements NodeOut.
-func (n *nodeOutImpl) Pair(label string, in chan any) {
+func (n *nodeOutImpl) Pair(label string, in chan any, customclose func()) {
 	var key string
 	if n.debugMode {
 		key = label
@@ -65,6 +70,9 @@ func (n *nodeOutImpl) Pair(label string, in chan any) {
 	}
 
 	n.nodemap[key] = in
+	if customclose != nil {
+		n.customclose[key] = customclose
+	}
 
 }
 
@@ -82,9 +90,10 @@ func NewNodeOut(ctx *RunnerContext) NodeOut {
 	debugMode, _ = ctx.Value(DEBUG_NODE).(bool)
 
 	out := &nodeOutImpl{
-		nodemap:   map[string]chan any{},
-		c:         make(chan any, 1),
-		debugMode: debugMode,
+		nodemap:     map[string]chan any{},
+		customclose: map[string]func(){},
+		c:           make(chan any, 1),
+		debugMode:   debugMode,
 	}
 
 	ctx.AddProcess(out.Process)
