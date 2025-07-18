@@ -145,11 +145,14 @@ type PaymentSubmission struct {
 }
 
 type PaymentSubmissionLog struct {
-	ID        uint                     `json:"id" gorm:"primarykey"`
-	Status    PaymentSubmissionStatus  `json:"status"`
-	From      identity_iface.AgentType `json:"from"`
-	ByUserID  uint                     `json:"by_user_id"`
-	CreatedAt time.Time                `json:"created_at"`
+	ID                  uint                     `json:"id" gorm:"primarykey"`
+	Status              PaymentSubmissionStatus  `json:"status"`
+	From                identity_iface.AgentType `json:"from"`
+	ByUserID            uint                     `json:"by_user_id"`
+	PaymentSubmissionID uint                     `json:"payment_submission_id"`
+	CreatedAt           time.Time                `json:"created_at"`
+
+	PaymentSubmission *PaymentSubmission `json:"-"`
 }
 
 type PSubmissionInv struct {
