@@ -95,7 +95,7 @@ type WarehouseFinanceServiceClient interface {
 	// balance
 	ExpenseAccountGet(ctx context.Context, in *ExpenseAccountGetReq, opts ...grpc.CallOption) (*ExpenseAccount, error)
 	ExpenseAccountCreate(ctx context.Context, in *ExpenseAccountCreateReq, opts ...grpc.CallOption) (*ExpenseAccount, error)
-	ExpenseAccountEdit(ctx context.Context, in *ExpenseAccountCreateReq, opts ...grpc.CallOption) (*ExpenseAccount, error)
+	ExpenseAccountEdit(ctx context.Context, in *ExpenseAccountEditReq, opts ...grpc.CallOption) (*ExpenseAccount, error)
 	//   rpc ExpenseAccountDelete(CommonReq) returns (CommonRes);
 	ExpenseAccountList(ctx context.Context, in *ExpenseAccountListReq, opts ...grpc.CallOption) (*ExpenseAccountListRes, error)
 	//   history
@@ -133,7 +133,7 @@ func (c *warehouseFinanceServiceClient) ExpenseAccountCreate(ctx context.Context
 	return out, nil
 }
 
-func (c *warehouseFinanceServiceClient) ExpenseAccountEdit(ctx context.Context, in *ExpenseAccountCreateReq, opts ...grpc.CallOption) (*ExpenseAccount, error) {
+func (c *warehouseFinanceServiceClient) ExpenseAccountEdit(ctx context.Context, in *ExpenseAccountEditReq, opts ...grpc.CallOption) (*ExpenseAccount, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ExpenseAccount)
 	err := c.cc.Invoke(ctx, WarehouseFinanceService_ExpenseAccountEdit_FullMethodName, in, out, cOpts...)
@@ -190,7 +190,7 @@ type WarehouseFinanceServiceServer interface {
 	// balance
 	ExpenseAccountGet(context.Context, *ExpenseAccountGetReq) (*ExpenseAccount, error)
 	ExpenseAccountCreate(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error)
-	ExpenseAccountEdit(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error)
+	ExpenseAccountEdit(context.Context, *ExpenseAccountEditReq) (*ExpenseAccount, error)
 	//   rpc ExpenseAccountDelete(CommonReq) returns (CommonRes);
 	ExpenseAccountList(context.Context, *ExpenseAccountListReq) (*ExpenseAccountListRes, error)
 	//   history
@@ -214,7 +214,7 @@ func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountGet(context.Cont
 func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountCreate(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExpenseAccountCreate not implemented")
 }
-func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountEdit(context.Context, *ExpenseAccountCreateReq) (*ExpenseAccount, error) {
+func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountEdit(context.Context, *ExpenseAccountEditReq) (*ExpenseAccount, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExpenseAccountEdit not implemented")
 }
 func (UnimplementedWarehouseFinanceServiceServer) ExpenseAccountList(context.Context, *ExpenseAccountListReq) (*ExpenseAccountListRes, error) {
@@ -288,7 +288,7 @@ func _WarehouseFinanceService_ExpenseAccountCreate_Handler(srv interface{}, ctx 
 }
 
 func _WarehouseFinanceService_ExpenseAccountEdit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExpenseAccountCreateReq)
+	in := new(ExpenseAccountEditReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -300,7 +300,7 @@ func _WarehouseFinanceService_ExpenseAccountEdit_Handler(srv interface{}, ctx co
 		FullMethod: WarehouseFinanceService_ExpenseAccountEdit_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WarehouseFinanceServiceServer).ExpenseAccountEdit(ctx, req.(*ExpenseAccountCreateReq))
+		return srv.(WarehouseFinanceServiceServer).ExpenseAccountEdit(ctx, req.(*ExpenseAccountEditReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }

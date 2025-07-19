@@ -12,7 +12,7 @@ service WarehouseFinanceService {
   // balance
   rpc ExpenseAccountGet(ExpenseAccountGetReq) returns (ExpenseAccount);
   rpc ExpenseAccountCreate(ExpenseAccountCreateReq) returns (ExpenseAccount);
-  rpc ExpenseAccountEdit(ExpenseAccountCreateReq) returns (ExpenseAccount);
+  rpc ExpenseAccountEdit(ExpenseAccountEditReq) returns (ExpenseAccount);
   //   rpc ExpenseAccountDelete(CommonReq) returns (CommonRes);
   rpc ExpenseAccountList(ExpenseAccountListReq) returns (ExpenseAccountListRes);
   //   history
@@ -84,10 +84,19 @@ message ExpenseAccountGetReq {
 }
 
 message ExpenseAccountCreateReq {
-  uint64 warehouse_id = 1;
-  string number_id = 2;
-  string name = 3;
-  bool is_ops_account = 4;
+  uint64 domain_id = 1;
+  uint64 warehouse_id = 2;
+  string number_id = 3;
+  string name = 4;
+  bool is_ops_account = 5;
+}
+
+message ExpenseAccountEditReq {
+  uint64 domain_id = 1;
+  uint64 account_id = 2;
+  uint64 warehouse_id = 3;
+  string number_id = 4;
+  string name = 5;
 }
 
 message ExpenseAccount {
