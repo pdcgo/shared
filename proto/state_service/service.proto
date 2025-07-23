@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package state_iface;
+
+option go_package = "./state_iface;state_iface";
+
+service StateService {
+  rpc Set(Item) returns (Item);
+  rpc Get(GetReq) returns (ItemResult);
+  rpc SetOrStore(Item) returns (Item);
+}
+
+message GetReq {
+  bytes key = 1;
+}
+
+message Item {
+  bytes key = 1;
+  bytes value = 2;
+  int64 ttl = 3;
+}
+
+message ItemResult {
+  bool stored = 1;
+  Item data = 2;
+}

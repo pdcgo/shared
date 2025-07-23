@@ -82,3 +82,21 @@ type WdOrderNotFound struct {
 
 	Wd *Withdrawal `json:"withdrawal"`
 }
+
+type WDResource struct {
+	ID                 uint         `json:"id" gorm:"primaryKey"`
+	TeamID             uint         `json:"team_id"`
+	MarketplaceID      uint         `json:"marketplace_id"`
+	Filename           string       `json:"filename"`
+	Type               ResourceType `json:"type" gorm:"not null"`
+	BucketType         BucketType   `json:"bucket_type"`
+	BucketName         string       `json:"bucket"`
+	ContentLength      int64        `json:"content_length"`
+	ThumbContentLength int64        `json:"thumb_content_length"`
+	MimeType           string       `json:"mime_type"`
+	Path               string       `json:"path"`
+	CreatedAt          time.Time    `json:"created_at"`
+
+	Team        *Team        `json:"-"`
+	Marketplace *Marketplace `json:"marketplace"`
+}

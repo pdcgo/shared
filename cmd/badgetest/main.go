@@ -24,38 +24,25 @@ func main() {
 	yenstream.
 		NewRunnerContext(ctx).
 		CreatePipeline(func(ctx *yenstream.RunnerContext) yenstream.Pipeline {
-			source := yenstream.NewSliceSource(ctx, []uint{
-				1,
-				2,
-				3,
-				4,
-				5,
+			source := yenstream.NewSliceSource(ctx, [][]uint{
+				{1, 2},
+				{1, 2},
+				{1, 2},
+				{1, 2},
+				{2, 2},
+				{3, 6},
+				{3, 6},
+				{3, 6},
+				{3, 6},
 			})
 
 			return source.
-				Via("sum", yenstream.NewCombiner(ctx, &sumCombiner{}, nil)).
-				Via("debug", yenstream.NewMap(ctx, func(data any) (any, error) {
-					raw, err := json.Marshal(data)
-					log.Println(string(raw))
-					return data, err
-				}))
+				Via("debug", yenstream.NewMap(ctx, debugFunc))
 		})
 }
 
-type UintValue struct {
-	yenstream.Metadata
-	Value uint `json:"value"`
-}
-
-type sumCombiner struct{}
-
-func (*sumCombiner) AddInput(data uint, acc *UintValue) *UintValue {
-	acc.Value += data
-	return acc
-}
-
-func (*sumCombiner) CreateAccumulator() *UintValue {
-	return &UintValue{
-		Value: 0,
-	}
+func debugFunc(data any) (any, error) {
+	raw, err := json.Marshal(data)
+	log.Println(string(raw))
+	return data, err
 }

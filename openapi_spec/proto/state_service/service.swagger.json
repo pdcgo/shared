@@ -1,0 +1,77 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/state_service/service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "StateService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "state_ifaceItem": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "format": "byte"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        },
+        "ttl": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "state_ifaceItemResult": {
+      "type": "object",
+      "properties": {
+        "stored": {
+          "type": "boolean"
+        },
+        "data": {
+          "$ref": "#/definitions/state_ifaceItem"
+        }
+      }
+    }
+  }
+}
