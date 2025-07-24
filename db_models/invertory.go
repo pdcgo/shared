@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/pdcgo/shared/interfaces/identity_iface"
+	"gorm.io/datatypes"
 )
 
 type TransactionType string
@@ -425,6 +426,7 @@ func InvHistorySort(histories []*InvertoryHistory) []*InvertoryHistory {
 type ActionType string
 
 const (
+	ActionEmpty        ActionType = ""
 	ActionEditPrice    ActionType = "edit_price"
 	ActionChangeStatus ActionType = "change_status"
 )
@@ -434,11 +436,11 @@ type InvTimestamp struct {
 	TxID   uint `json:"tx_id"`
 	UserID uint `json:"user_id"`
 
-	ActionType ActionType               `json:"action_type"`
-	Status     InvTxStatus              `json:"status"`
-	Timestamp  time.Time                `json:"timestamp" gorm:"index"`
-	From       identity_iface.AgentType `json:"from"`
-
-	Tx   *InvTransaction `json:"-"`
-	User *User           `json:"-"`
+	ActionType    ActionType               `json:"action_type"`
+	Status        InvTxStatus              `json:"status"`
+	Timestamp     time.Time                `json:"timestamp" gorm:"index"`
+	From          identity_iface.AgentType `json:"from"`
+	BeforeUpdated datatypes.JSONMap        `json:"before_updated"`
+	Tx            *InvTransaction          `json:"-"`
+	User          *User                    `json:"-"`
 }

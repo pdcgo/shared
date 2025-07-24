@@ -12,6 +12,7 @@ const (
 	InvoicePaid     InvoiceStatus = "paid"
 	InvoiceNotPaid  InvoiceStatus = "not_paid"
 	InvoiceNotFinal InvoiceStatus = "not_final"
+	InvoiceCancel   InvoiceStatus = "cancel"
 )
 
 func (InvoiceStatus) EnumList() []string {
