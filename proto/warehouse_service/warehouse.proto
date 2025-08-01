@@ -10,13 +10,14 @@ service WarehouseService {}
 
 service WarehouseFinanceService {
   // balance
-  rpc ExpenseAccountGet(ExpenseAccountGetReq) returns (ExpenseAccount);
-  rpc ExpenseAccountCreate(ExpenseAccountCreateReq) returns (ExpenseAccount);
-  rpc ExpenseAccountEdit(ExpenseAccountEditReq) returns (ExpenseAccount);
+  rpc ExpenseAccountGet(ExpenseAccountGetReq) returns (WarehouseExpenseAccount);
+  rpc ExpenseAccountCreate(ExpenseAccountCreateReq) returns (WarehouseExpenseAccount);
+  rpc ExpenseAccountEdit(ExpenseAccountEditReq) returns (WarehouseExpenseAccount);
   //   rpc ExpenseAccountDelete(CommonReq) returns (CommonRes);
   rpc ExpenseAccountList(ExpenseAccountListReq) returns (ExpenseAccountListRes);
   //   history
   rpc ExpenseHistoryAdd(ExpenseHistoryAddReq) returns (ExpenseHistoryAddRes);
+  rpc ExpenseHistoryEdit(ExpenseHistoryEditReq) returns (ExpenseHistoryEditRes);
   rpc ExpenseHistoryList(ExpenseHistoryListReq) returns (ExpenseHistoryListRes);
   //   report
   rpc ExpenseReportDaily(ExpenseReportDailyReq) returns (ExpenseReportDailyRes);
@@ -53,10 +54,10 @@ message ExpenseHistoryListReq {
 
 message ExpenseHistoryListRes {
   string message = 1;
-  repeated ExpenseHistory data = 2;
+  repeated WarehouseExpenseHistory data = 2;
 }
 
-message ExpenseHistory {
+message WarehouseExpenseHistory {
   uint64 id = 1;
   uint64 account_id = 2;
   uint64 warehouse_id = 3;
@@ -68,12 +69,29 @@ message ExpenseHistory {
 message ExpenseHistoryAddReq {
   uint64 account_id = 1;
   uint64 warehouse_id = 2;
-  bool is_ops_account = 3;
+  uint64 created_by_id = 3;
   string expense_type = 4;
   double amount = 5;
+  string note = 6;
+  google.protobuf.Timestamp at = 7;
 }
 
 message ExpenseHistoryAddRes {
+  string message = 1;
+}
+
+message ExpenseHistoryEditReq {
+  uint64 hist_id = 1;
+  uint64 account_id = 2;
+  uint64 warehouse_id = 3;
+  uint64 created_by_id = 4;
+  string expense_type = 5;
+  double amount = 6;
+  string note = 7;
+  google.protobuf.Timestamp at = 8;
+}
+
+message ExpenseHistoryEditRes {
   string message = 1;
 }
 
@@ -99,7 +117,7 @@ message ExpenseAccountEditReq {
   string name = 5;
 }
 
-message ExpenseAccount {
+message WarehouseExpenseAccount {
   uint64 id = 1;
   uint64 warehouse_id = 2;
   string number_id = 3;
@@ -117,7 +135,7 @@ message ExpenseAccountListReq {
 }
 message ExpenseAccountListRes {
   string message = 1;
-  repeated ExpenseAccount data = 2;
+  repeated WarehouseExpenseAccount data = 2;
 }
 
 message EmptyReq {}

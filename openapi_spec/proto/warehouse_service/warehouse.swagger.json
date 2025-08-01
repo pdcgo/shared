@@ -45,35 +45,6 @@
         }
       }
     },
-    "warehouse_ifaceExpenseAccount": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "warehouseId": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "numberId": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "isOpsAccount": {
-          "type": "boolean"
-        },
-        "disabled": {
-          "type": "boolean"
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time"
-        }
-      }
-    },
     "warehouse_ifaceExpenseAccountListRes": {
       "type": "object",
       "properties": {
@@ -84,39 +55,20 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/warehouse_ifaceExpenseAccount"
+            "$ref": "#/definitions/warehouse_ifaceWarehouseExpenseAccount"
           }
         }
       }
     },
-    "warehouse_ifaceExpenseHistory": {
+    "warehouse_ifaceExpenseHistoryAddRes": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "accountId": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "warehouseId": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "isOpsAccount": {
-          "type": "boolean"
-        },
-        "expenseType": {
+        "message": {
           "type": "string"
-        },
-        "amount": {
-          "type": "number",
-          "format": "double"
         }
       }
     },
-    "warehouse_ifaceExpenseHistoryAddRes": {
+    "warehouse_ifaceExpenseHistoryEditRes": {
       "type": "object",
       "properties": {
         "message": {
@@ -134,7 +86,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/warehouse_ifaceExpenseHistory"
+            "$ref": "#/definitions/warehouse_ifaceWarehouseExpenseHistory"
           }
         }
       }
@@ -182,6 +134,62 @@
           "format": "double"
         },
         "errDiffAmount": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "warehouse_ifaceWarehouseExpenseAccount": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "warehouseId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "numberId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isOpsAccount": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "warehouse_ifaceWarehouseExpenseHistory": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accountId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "warehouseId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "isOpsAccount": {
+          "type": "boolean"
+        },
+        "expenseType": {
+          "type": "string"
+        },
+        "amount": {
           "type": "number",
           "format": "double"
         }
