@@ -104,27 +104,30 @@ message ExpenseAccountGetReq {
 message ExpenseAccountCreateReq {
   uint64 domain_id = 1;
   uint64 warehouse_id = 2;
-  string number_id = 3;
+  uint64 account_type_id = 3;
   string name = 4;
-  bool is_ops_account = 5;
+  string number_id = 5;
+  bool is_ops_account = 6;
 }
 
 message ExpenseAccountEditReq {
   uint64 domain_id = 1;
   uint64 account_id = 2;
   uint64 warehouse_id = 3;
-  string number_id = 4;
+  uint64 account_type_id = 4;
   string name = 5;
+  string number_id = 6;
 }
 
 message WarehouseExpenseAccount {
   uint64 id = 1;
   uint64 warehouse_id = 2;
-  string number_id = 3;
+  uint64 account_type_id = 3;
   string name = 4;
-  bool is_ops_account = 5;
-  bool disabled = 6;
-  google.protobuf.Timestamp created_at = 7;
+  string number_id = 5;
+  bool is_ops_account = 6;
+  bool disabled = 7;
+  google.protobuf.Timestamp created_at = 8;
 }
 
 message ExpenseAccountListReq {

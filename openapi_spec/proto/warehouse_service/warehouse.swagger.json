@@ -150,10 +150,14 @@
           "type": "string",
           "format": "uint64"
         },
-        "numberId": {
-          "type": "string"
+        "accountTypeId": {
+          "type": "string",
+          "format": "uint64"
         },
         "name": {
+          "type": "string"
+        },
+        "numberId": {
           "type": "string"
         },
         "isOpsAccount": {
