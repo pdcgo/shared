@@ -868,8 +868,9 @@ type ExpenseAccountEditReq struct {
 	AccountId     uint64                 `protobuf:"varint,2,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	WarehouseId   uint64                 `protobuf:"varint,3,opt,name=warehouse_id,json=warehouseId,proto3" json:"warehouse_id,omitempty"`
 	AccountTypeId uint64                 `protobuf:"varint,4,opt,name=account_type_id,json=accountTypeId,proto3" json:"account_type_id,omitempty"`
-	Name          string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
-	NumberId      string                 `protobuf:"bytes,6,opt,name=number_id,json=numberId,proto3" json:"number_id,omitempty"`
+	IsOpsAccount  bool                   `protobuf:"varint,5,opt,name=is_ops_account,json=isOpsAccount,proto3" json:"is_ops_account,omitempty"`
+	Name          string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	NumberId      string                 `protobuf:"bytes,7,opt,name=number_id,json=numberId,proto3" json:"number_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -930,6 +931,13 @@ func (x *ExpenseAccountEditReq) GetAccountTypeId() uint64 {
 		return x.AccountTypeId
 	}
 	return 0
+}
+
+func (x *ExpenseAccountEditReq) GetIsOpsAccount() bool {
+	if x != nil {
+		return x.IsOpsAccount
+	}
+	return false
 }
 
 func (x *ExpenseAccountEditReq) GetName() string {
@@ -1320,15 +1328,16 @@ const file_proto_warehouse_service_warehouse_proto_rawDesc = "" +
 	"\x0faccount_type_id\x18\x03 \x01(\x04R\raccountTypeId\x12\x12\n" +
 	"\x04name\x18\x04 \x01(\tR\x04name\x12\x1b\n" +
 	"\tnumber_id\x18\x05 \x01(\tR\bnumberId\x12$\n" +
-	"\x0eis_ops_account\x18\x06 \x01(\bR\fisOpsAccount\"\xcf\x01\n" +
+	"\x0eis_ops_account\x18\x06 \x01(\bR\fisOpsAccount\"\xf5\x01\n" +
 	"\x15ExpenseAccountEditReq\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\x04R\bdomainId\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x02 \x01(\x04R\taccountId\x12!\n" +
 	"\fwarehouse_id\x18\x03 \x01(\x04R\vwarehouseId\x12&\n" +
-	"\x0faccount_type_id\x18\x04 \x01(\x04R\raccountTypeId\x12\x12\n" +
-	"\x04name\x18\x05 \x01(\tR\x04name\x12\x1b\n" +
-	"\tnumber_id\x18\x06 \x01(\tR\bnumberId\"\xa2\x02\n" +
+	"\x0faccount_type_id\x18\x04 \x01(\x04R\raccountTypeId\x12$\n" +
+	"\x0eis_ops_account\x18\x05 \x01(\bR\fisOpsAccount\x12\x12\n" +
+	"\x04name\x18\x06 \x01(\tR\x04name\x12\x1b\n" +
+	"\tnumber_id\x18\a \x01(\tR\bnumberId\"\xa2\x02\n" +
 	"\x17WarehouseExpenseAccount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12!\n" +
 	"\fwarehouse_id\x18\x02 \x01(\x04R\vwarehouseId\x12&\n" +

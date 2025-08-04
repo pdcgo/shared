@@ -115,8 +115,9 @@ message ExpenseAccountEditReq {
   uint64 account_id = 2;
   uint64 warehouse_id = 3;
   uint64 account_type_id = 4;
-  string name = 5;
-  string number_id = 6;
+  bool is_ops_account = 5;
+  string name = 6;
+  string number_id = 7;
 }
 
 message WarehouseExpenseAccount {
