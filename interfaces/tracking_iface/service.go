@@ -50,4 +50,5 @@ type TrackingService interface {
 type TrackingApi interface {
 	Track(service TrackingService) MetaApi
 	TrackOrder() MetaApi
+	TrackRestock() MetaApi
 }
