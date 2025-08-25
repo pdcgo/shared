@@ -444,3 +444,17 @@ type InvTimestamp struct {
 	Tx            *InvTransaction          `json:"-"`
 	User          *User                    `json:"-"`
 }
+
+type InvTxTag struct {
+	ID   uint   `json:"id" gorm:"primarykey"`
+	Name string `json:"name" gorm:"index:inv_tx_tag_unique,unique" binding:"required,lte=100"`
+}
+
+type InvTxTagRelation struct {
+	InvTxID      uint         `json:"inv_tx_id" gorm:"primaryKey"`
+	InvTxTagID   uint         `json:"inv_tx_tag_id" gorm:"primaryKey"`
+	RelationFrom RelationFrom `json:"relation_from"`
+
+	InvTx *InvTransaction `json:"inv_tx,omitempty" gorm:"foreignKey:InvTxID"`
+	Tag   *InvTxTag       `json:"tag,omitempty" gorm:"foreignKey:InvTxTagID"`
+}
