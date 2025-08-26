@@ -1,14 +1,11 @@
-version: v1
+version: v2
 plugins:
-  - plugin: go
+  - local: protoc-gen-go
     out: interfaces
-  - plugin: go-grpc
+  - local: protoc-gen-go-grpc
     out: interfaces
-  - plugin: grpc-gateway
+  - local: protoc-gen-grpc-gateway
     out: interfaces
-  - plugin: openapiv2
+  - local: protoc-gen-openapiv2
     out: openapi_spec
-    opt:
-      # - allow_merge=true
-      - logtostderr=true
-    # path: protoc-gen-openapiv2
+    opt: logtostderr=true

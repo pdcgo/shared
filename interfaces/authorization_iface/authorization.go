@@ -1,8 +1,17 @@
 package authorization_iface
 
+import "net/http"
+
 type Authorization interface {
 	HasPermission(identity Identity, perms CheckPermissionGroup) error
 	ApiQueryCheckPermission(identity Identity, query PermissionQuery) (bool, error)
+	AuthIdentityFromHeader(header http.Header) AuthIdentity
+}
+
+type AuthIdentity interface {
+	Identity() Identity
+	HasPermission(perms CheckPermissionGroup) AuthIdentity
+	Err() error
 }
 
 type UserSystemCreate interface {
