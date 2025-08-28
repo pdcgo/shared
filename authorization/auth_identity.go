@@ -22,6 +22,9 @@ func (a *authIdentityImpl) Err() error {
 // HasPermission implements authorization_iface.AuthIdentity.
 func (a *authIdentityImpl) HasPermission(perms authorization_iface.CheckPermissionGroup) authorization_iface.AuthIdentity {
 	var err error
+	if a.err != nil {
+		return a
+	}
 	err = a.auth.HasPermission(a.identity, perms)
 	return a.setErr(err)
 }
@@ -61,6 +64,7 @@ func (a *authIdentityImpl) setErr(err error) *authIdentityImpl {
 func NewAuthIdentityHttpHeader(auth authorization_iface.Authorization, header http.Header, passphrase string) authorization_iface.AuthIdentity {
 	a := &authIdentityImpl{
 		identity: &JwtIdentity{},
+		auth:     auth,
 	}
 
 	a.parse(header, passphrase)
