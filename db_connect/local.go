@@ -22,7 +22,9 @@ func ConnectLocalDatabase() (*gorm.DB, error) {
 		dbname,
 	)
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		TranslateError: true,
+	})
 	if err != nil {
 		return db, err
 	}
