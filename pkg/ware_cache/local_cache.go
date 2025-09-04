@@ -37,7 +37,7 @@ func (l *localCacheImpl) Add(ctx context.Context, item *CacheItem) error {
 	l.created[item.Key] = time.Now()
 	l.expiration[item.Key] = item.Expiration
 	l.data[item.Key] = raw
-	log.Println("add cache", l.data[item.Key], item.Key)
+	// log.Println("add cache", l.data[item.Key], item.Key)
 
 	return nil
 }

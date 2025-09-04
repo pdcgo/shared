@@ -59,7 +59,8 @@ func (auth *Authorization) AuthIdentityFromHeader(header http.Header) authorizat
 
 // HasPermission implements authorization_iface.Authorization.
 func (auth *Authorization) HasPermission(identity authorization_iface.Identity, perms authorization_iface.CheckPermissionGroup) error {
-	panic("unimplemented")
+	_, err := auth.CheckPermission(identity, perms)
+	return err
 }
 
 func (auth *Authorization) FlushCache() error {

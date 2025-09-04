@@ -25,6 +25,13 @@ func (a *authIdentityImpl) HasPermission(perms authorization_iface.CheckPermissi
 	if a.err != nil {
 		return a
 	}
+
+	// debugtool.LogJson(a.identity)
+
+	if a.identity.IsSuperUser() {
+		return a
+	}
+
 	err = a.auth.HasPermission(a.identity, perms)
 	return a.setErr(err)
 }
