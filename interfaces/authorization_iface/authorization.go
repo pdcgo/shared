@@ -6,6 +6,7 @@ type Authorization interface {
 	HasPermission(identity Identity, perms CheckPermissionGroup) error
 	ApiQueryCheckPermission(identity Identity, query PermissionQuery) (bool, error)
 	AuthIdentityFromHeader(header http.Header) AuthIdentity
+	AuthIdentityFromToken(token string) AuthIdentity
 }
 
 type AuthIdentity interface {

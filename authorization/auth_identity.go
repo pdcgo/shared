@@ -41,9 +41,23 @@ func (a *authIdentityImpl) Identity() authorization_iface.Identity {
 	return a.identity
 }
 
-func (a *authIdentityImpl) parse(header http.Header, passphrase string) *authIdentityImpl {
+func (a *authIdentityImpl) parseHeader(header http.Header, passphrase string) *authIdentityImpl {
 	var err error
 	token := header.Get("Authorization")
+	token, _ = strings.CutPrefix(token, "Bearer ")
+
+	identity := JwtIdentity{}
+	err = identity.Deserialize(passphrase, token)
+	if err != nil {
+		return a.setErr(errors.New("token expired or not authorization empty"))
+	}
+
+	a.identity = &identity
+	return a
+}
+
+func (a *authIdentityImpl) parseToken(token string, passphrase string) *authIdentityImpl {
+	var err error
 	token, _ = strings.CutPrefix(token, "Bearer ")
 
 	identity := JwtIdentity{}
@@ -74,7 +88,18 @@ func NewAuthIdentityHttpHeader(auth authorization_iface.Authorization, header ht
 		auth:     auth,
 	}
 
-	a.parse(header, passphrase)
+	a.parseHeader(header, passphrase)
+
+	return a
+}
+
+func NewAuthIdentityToken(auth authorization_iface.Authorization, token string, passphrase string) authorization_iface.AuthIdentity {
+	a := &authIdentityImpl{
+		identity: &JwtIdentity{},
+		auth:     auth,
+	}
+
+	a.parseToken(token, passphrase)
 
 	return a
 }

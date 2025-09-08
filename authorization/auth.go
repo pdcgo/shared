@@ -52,6 +52,11 @@ type Authorization struct {
 	passphrase string
 }
 
+// AuthIdentityFromToken implements authorization_iface.Authorization.
+func (auth *Authorization) AuthIdentityFromToken(token string) authorization_iface.AuthIdentity {
+	return NewAuthIdentityToken(auth, token, auth.passphrase)
+}
+
 // AuthIdentityFromHeader implements authorization_iface.Authorization.
 func (auth *Authorization) AuthIdentityFromHeader(header http.Header) authorization_iface.AuthIdentity {
 	return NewAuthIdentityHttpHeader(auth, header, auth.passphrase)
