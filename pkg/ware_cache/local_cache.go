@@ -3,7 +3,6 @@ package ware_cache
 import (
 	"context"
 	"encoding/json"
-	"log"
 	"time"
 )
 
@@ -51,7 +50,7 @@ func (l *localCacheImpl) Get(ctx context.Context, key string, data any) error {
 		return ErrCacheMiss
 	}
 
-	log.Println("expiration", l.created[key], l.expiration[key])
+	// log.Println("expiration", l.created[key], l.expiration[key])
 
 	if l.expiration[key] != 0 {
 		dur := time.Since(l.created[key])
