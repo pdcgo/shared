@@ -3,7 +3,6 @@ package ware_cache
 import (
 	"context"
 	"encoding/json"
-	"log"
 	"sync"
 	"time"
 )
