@@ -3,10 +3,13 @@ package ware_cache
 import (
 	"context"
 	"encoding/json"
+	"log"
+	"sync"
 	"time"
 )
 
 type localCacheImpl struct {
+	sync.Mutex
 	data       map[string][]byte
 	created    map[string]time.Time
 	expiration map[string]time.Duration
@@ -28,7 +31,8 @@ func (l *localCacheImpl) Delete(ctx context.Context, key string) error {
 
 // Add implements Cache.
 func (l *localCacheImpl) Add(ctx context.Context, item *CacheItem) error {
-
+	l.Lock()
+	defer l.Unlock()
 	raw, err := item.Serialize()
 	if err != nil {
 		return err

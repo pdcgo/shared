@@ -48,6 +48,7 @@ type Product struct {
 }
 
 func (prod *Product) GetUserCode() (string, error) {
+
 	data, err := prod.RefID.ExtractData()
 	return data.UserCode, err
 }
