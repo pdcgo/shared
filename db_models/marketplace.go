@@ -19,6 +19,7 @@ const (
 	MpTiktok    MarketplaceType = "tiktok"
 	MpMengantar MarketplaceType = "mengantar"
 	MpCustom    MarketplaceType = "custom"
+	MpLazada    MarketplaceType = "lazada"
 )
 
 type Marketplace struct {
