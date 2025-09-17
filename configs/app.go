@@ -11,9 +11,10 @@ type AppConfig struct {
 	JwtSecret string         `yaml:"jwt_secret"`
 	Database  DatabaseConfig `yaml:"database"`
 
-	StatService   StatService                      `yaml:"stat_service"`
-	WalletService wallet_iface.WalletServiceConfig `yaml:"wallet_service"`
-	TrackService  TrackService                     `yaml:"track_service"`
+	StatService       StatService                      `yaml:"stat_service"`
+	WalletService     wallet_iface.WalletServiceConfig `yaml:"wallet_service"`
+	TrackService      TrackService                     `yaml:"track_service"`
+	AccountingService AccountingService                `yaml:"accounting_service"`
 }
 
 type DatabaseConfig struct {
@@ -33,6 +34,10 @@ func (cfg *DatabaseConfig) ToDsn(appName string) string {
 		cfg.DBInstance,
 		appName,
 	)
+}
+
+type AccountingService struct {
+	Endpoint string `yaml:"endpoint"`
 }
 
 type StatService struct {
