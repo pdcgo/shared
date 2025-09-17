@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/pdcgo/shared/interfaces/wallet_iface"
+	"github.com/pdcgo/shared/pkg/secret"
 )
 
 type AppConfig struct {
@@ -40,4 +41,22 @@ type StatService struct {
 
 type TrackService struct {
 	SubID string `yaml:"sub_id"`
+}
+
+func NewProductionConfig() (*AppConfig, error) {
+	var cfg AppConfig
+	var sec *secret.Secret
+	var err error
+
+	// getting configuration
+	sec, err = secret.GetSecret("app_config_prod", "latest")
+	if err != nil {
+		panic(err)
+	}
+
+	err = sec.YamlDecode(&cfg)
+	if err != nil {
+		return &cfg, err
+	}
+	return &cfg, nil
 }
