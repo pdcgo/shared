@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/pdcgo/shared/pkg/ware_cache"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -45,7 +46,7 @@ func TestAddAndGet(t *testing.T) {
 
 	// Adding duplicate should fail
 	err = c.Add(ctx, item)
-	require.Error(t, err)
+	assert.Nil(t, err)
 }
 
 func TestReplace(t *testing.T) {
@@ -58,7 +59,7 @@ func TestReplace(t *testing.T) {
 		Data: "first",
 	}
 	err := c.Replace(ctx, item)
-	require.Error(t, err)
+	assert.Nil(t, err)
 
 	// Add first
 	require.NoError(t, c.Add(ctx, item))

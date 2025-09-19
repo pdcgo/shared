@@ -39,7 +39,7 @@ func (b *BadgerCache) Add(ctx context.Context, item *CacheItem) error {
 	return b.db.Update(func(txn *badger.Txn) error {
 		_, err := txn.Get([]byte(item.Key))
 		if err == nil {
-			return errors.New("key already exists")
+			return nil
 		}
 		e := badger.NewEntry([]byte(item.Key), data)
 		if item.Expiration > 0 {
@@ -78,10 +78,10 @@ func (b *BadgerCache) Replace(ctx context.Context, item *CacheItem) error {
 	return b.db.Update(func(txn *badger.Txn) error {
 		_, err := txn.Get([]byte(item.Key))
 		if err != nil {
-			if errors.Is(err, badger.ErrKeyNotFound) {
-				return ErrCacheMiss
+			if !errors.Is(err, badger.ErrKeyNotFound) {
+				return err
 			}
-			return err
+
 		}
 		e := badger.NewEntry([]byte(item.Key), data)
 		if item.Expiration > 0 {
@@ -96,7 +96,7 @@ func (b *BadgerCache) Delete(ctx context.Context, key string) error {
 		err := txn.Delete([]byte(key))
 		if err != nil {
 			if errors.Is(err, badger.ErrKeyNotFound) {
-				return ErrCacheMiss
+				return nil
 			}
 			return err
 		}
