@@ -3,6 +3,7 @@ package authorization
 import (
 	"context"
 	"errors"
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -266,7 +267,8 @@ func (auth *Authorization) CheckPermission(identity authorization_iface.Identity
 	// })
 
 	if err != nil {
-		hasil.Err = ErrPermission
+		slog.Error(err.Error())
+		hasil.Err = errors.New("cache error, maybe permission")
 		return iscache, &hasil
 	}
 

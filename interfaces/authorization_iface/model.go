@@ -182,11 +182,16 @@ type PermissionError struct {
 }
 
 func (permerr *PermissionError) Error() string {
-	if len(permerr.ActualPermission) == 0 {
-		return "permission kosong"
+	var msg string
+	if permerr.Err != nil {
+		msg = permerr.Err.Error()
 	}
 
-	return "permission restricted"
+	if len(permerr.ActualPermission) == 0 {
+		return "permission kosong " + msg
+	}
+
+	return "permission restricted" + msg
 }
 
 func (err *PermissionError) Unwrap() error {
