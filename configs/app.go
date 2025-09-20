@@ -15,6 +15,7 @@ type AppConfig struct {
 	WalletService     wallet_iface.WalletServiceConfig `yaml:"wallet_service"`
 	TrackService      TrackService                     `yaml:"track_service"`
 	AccountingService AccountingService                `yaml:"accounting_service"`
+	WithdrawalService WithdrawalService                `yaml:"withdrawal_service"`
 }
 
 type DatabaseConfig struct {
@@ -34,6 +35,10 @@ func (cfg *DatabaseConfig) ToDsn(appName string) string {
 		cfg.DBInstance,
 		appName,
 	)
+}
+
+type WithdrawalService struct {
+	Endpoint string `yaml:"endpoint"`
 }
 
 type AccountingService struct {
