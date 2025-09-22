@@ -11,7 +11,9 @@ func NewProductionDatabase(appname string, cfg *configs.DatabaseConfig) (*gorm.D
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DriverName: "cloudsqlpostgres",
 		DSN:        cfg.ToDsn(appname),
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		TranslateError: true,
+	})
 	if err != nil {
 		return db, err
 	}
