@@ -5,6 +5,7 @@ go 1.24
 toolchain go1.24.2
 
 require (
+	connectrpc.com/connect v1.18.1
 	github.com/GoogleCloudPlatform/cloudsql-proxy v1.37.7
 	github.com/gin-gonic/gin v1.10.0
 	github.com/golang-jwt/jwt/v4 v4.5.2

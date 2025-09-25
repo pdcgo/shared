@@ -3,6 +3,7 @@ package db_connect
 import (
 	_ "github.com/GoogleCloudPlatform/cloudsql-proxy/proxy/dialers/postgres"
 	"github.com/pdcgo/shared/configs"
+	"github.com/pdcgo/shared/pkg/gorm_commenter"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -18,5 +19,6 @@ func NewProductionDatabase(appname string, cfg *configs.DatabaseConfig) (*gorm.D
 		return db, err
 	}
 
+	db.Use(gorm_commenter.NewCommentClausePlugin())
 	return db, err
 }
