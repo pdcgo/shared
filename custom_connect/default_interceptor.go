@@ -15,8 +15,8 @@ func NewDefaultInterceptor() (DefaultInterceptor, error) {
 	}
 
 	defaultInterceptor := connect.WithInterceptors(
-		interceptor,
 		&custom_logging.LoggingInterceptor{},
+		interceptor,
 		&custom_logging.DBLoggingInterceptor{},
 	)
 

@@ -2,6 +2,7 @@ package custom_logging
 
 import (
 	"context"
+	"log"
 	"log/slog"
 
 	"connectrpc.com/connect"
@@ -13,14 +14,20 @@ type LoggingInterceptor struct{}
 // WrapUnary satisfies connect.Interceptor
 func (l *LoggingInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
 	return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
+
 		res, err := next(ctx, req)
 		if err != nil {
 			if cErr, ok := err.(*connect.Error); ok {
-				slog.Error("rpc error",
+				slog.Error("rpc_error",
 					"procedure", req.Spec().Procedure,
 					"code", cErr.Code().String(),
 					"msg", cErr.Message(),
 				)
+
+				log.Println(cErr.Code(), "asdasdasdasd")
+
+				return res, connect.NewError(connect.CodeInvalidArgument, cErr.Unwrap())
+
 			} else {
 				slog.Error("request_error",
 					"procedure", req.Spec().Procedure,
