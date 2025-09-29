@@ -16,6 +16,23 @@ type AppConfig struct {
 	TrackService      TrackService                     `yaml:"track_service"`
 	AccountingService AccountingService                `yaml:"accounting_service"`
 	WithdrawalService WithdrawalService                `yaml:"withdrawal_service"`
+
+	DispatcherConfig DispatcherConfig `yaml:"dispatcher_config"`
+}
+
+type DispatcherQueue string
+
+const (
+	SlowQueue DispatcherQueue = "slow-event-task"
+)
+
+type DispatcherConfig struct {
+	ProjectID string `yaml:"project_id"`
+	Location  string `yaml:"location"`
+}
+
+func (c *DispatcherConfig) GetPath(key DispatcherQueue) string {
+	return fmt.Sprintf("projects/%s/locations/%s/queues/%s", c.ProjectID, c.Location, key)
 }
 
 type DatabaseConfig struct {
