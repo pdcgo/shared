@@ -29,7 +29,10 @@ func (l *LoggingInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc
 					"token", req.Header().Get("Authorization"),
 					slog.Any("payload", req.Any()),
 				)
+
+				return res, connect.NewError(connect.CodeInternal, err)
 			}
+
 		}
 		return res, err
 	}
