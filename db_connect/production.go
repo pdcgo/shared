@@ -19,6 +19,6 @@ func NewProductionDatabase(appname string, cfg *configs.DatabaseConfig) (*gorm.D
 		return db, err
 	}
 
-	db.Use(gorm_commenter.NewCommentClausePlugin())
+	err = db.Use(gorm_commenter.NewCommentClausePlugin())
 	return db, err
 }
