@@ -136,6 +136,7 @@ type PaymentSubmission struct {
 	ID            uint                    `json:"id" gorm:"primarykey"`
 	CreatedByID   uint                    `json:"created_by_id"`
 	CompletedByID *uint                   `json:"completed_by_id"`
+	PaymentID     *uint                   `json:"payment_id"`
 	Status        PaymentSubmissionStatus `json:"status"`
 	Receipt       string                  `json:"receipt"`
 	Amount        float64                 `json:"amount"`
