@@ -60,6 +60,7 @@ type TeamFeature struct {
 
 	RestockSubmission bool `json:"restock_submission"`
 	ProductPriority   bool `json:"product_priority"`
+	PreventOrder      bool `json:"prevent_order"`
 }
 
 // GetEntityID implements authorization.Entity.

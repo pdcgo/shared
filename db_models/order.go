@@ -364,3 +364,12 @@ func (in InvoItemList) TotalAmount() float64 {
 
 	return amount
 }
+
+type MarketplaceOrderItem struct {
+	ID            uint   `json:"id" gorm:"primaryKey"`
+	OrderID       uint   `json:"order_id"`
+	MpProductName string `json:"mp_product_name"`
+	Count         int    `json:"count"`
+
+	Order *Order `json:"-" gorm:"foreignKey:OrderID"`
+}
