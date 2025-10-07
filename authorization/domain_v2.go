@@ -34,7 +34,7 @@ func (d *domainImpl) RoleAddPermission(rolekey string, payload authorization_ifa
 			for ent, item := range payload {
 				for _, pol := range item {
 					perm := authorization_iface.Permission{
-						RoleID:   role.DomainID,
+						RoleID:   role.ID,
 						DomainID: d.domainID,
 						EntityID: ent.GetEntityID(),
 						Action:   pol.Action,
@@ -42,7 +42,7 @@ func (d *domainImpl) RoleAddPermission(rolekey string, payload authorization_ifa
 					}
 
 					err := tx.Model(&authorization_iface.Permission{}).Where(&authorization_iface.Permission{
-						RoleID:   role.DomainID,
+						RoleID:   role.ID,
 						DomainID: d.domainID,
 						EntityID: ent.GetEntityID(),
 						Action:   pol.Action,
@@ -66,6 +66,7 @@ func (d *domainImpl) RoleAddPermission(rolekey string, payload authorization_ifa
 
 func NewDomainV2(db *gorm.DB, domainID uint) authorization_iface.DomainV2 {
 	return &domainImpl{
-		db: db,
+		db:       db,
+		domainID: domainID,
 	}
 }
