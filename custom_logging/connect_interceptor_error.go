@@ -2,7 +2,6 @@ package custom_logging
 
 import (
 	"context"
-	"log"
 	"log/slog"
 
 	"connectrpc.com/connect"
@@ -24,7 +23,7 @@ func (l *LoggingInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc
 					"msg", cErr.Message(),
 				)
 
-				log.Println(cErr.Code(), "asdasdasdasd")
+				// log.Println(cErr.Code(), "asdasdasdasd")
 
 				return res, connect.NewError(connect.CodeInvalidArgument, cErr.Unwrap())
 
