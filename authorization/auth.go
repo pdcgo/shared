@@ -201,6 +201,7 @@ func (auth *Authorization) CheckPermission(identity authorization_iface.Identity
 
 	actualpermissions := ListPermissions{}
 	err = query.Find(&actualpermissions).Error
+	// debugtool.LogJson(actualpermissions)
 
 	if err != nil {
 		hasil.Err = err

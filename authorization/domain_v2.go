@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/pdcgo/shared/interfaces/authorization_iface"
+	"github.com/pdcgo/shared/pkg/debugtool"
 	"gorm.io/gorm"
 )
 
@@ -28,38 +29,42 @@ func (d *domainImpl) RoleAddPermission(rolekey string, payload authorization_ifa
 		return errors.New("role not found")
 	}
 
-	err = d.
-		db.
-		Transaction(func(tx *gorm.DB) error {
-			for ent, item := range payload {
-				for _, pol := range item {
-					perm := authorization_iface.Permission{
-						RoleID:   role.ID,
-						DomainID: d.domainID,
-						EntityID: ent.GetEntityID(),
-						Action:   pol.Action,
-						Policy:   pol.Policy,
-					}
+	for ent, item := range payload {
+		for _, pol := range item {
 
-					err := tx.Model(&authorization_iface.Permission{}).Where(&authorization_iface.Permission{
-						RoleID:   role.ID,
-						DomainID: d.domainID,
-						EntityID: ent.GetEntityID(),
-						Action:   pol.Action,
-						Policy:   pol.Policy,
-					}).First(&perm).Error
-					if err == nil {
-						continue
-					}
-
-					err = tx.Save(&perm).Error
-					if err != nil {
-						return err
-					}
-				}
+			perm := authorization_iface.Permission{
+				RoleID:   role.ID,
+				DomainID: d.domainID,
+				EntityID: ent.GetEntityID(),
+				Action:   pol.Action,
+				Policy:   pol.Policy,
 			}
-			return nil
-		})
+
+			err := d.db.
+				Model(&authorization_iface.Permission{}).
+				Where(&authorization_iface.Permission{
+					RoleID:   role.ID,
+					DomainID: d.domainID,
+					EntityID: ent.GetEntityID(),
+					Action:   pol.Action,
+					Policy:   pol.Policy,
+				}).
+				First(&perm).
+				Error
+
+			if err == nil {
+				debugtool.LogJson(perm)
+				continue
+			}
+
+			debugtool.LogJson(perm)
+
+			err = d.db.Save(&perm).Error
+			if err != nil {
+				return err
+			}
+		}
+	}
 
 	return err
 }
