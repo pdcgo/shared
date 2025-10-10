@@ -53,7 +53,7 @@ func (d *domainImpl) RoleAddPermission(rolekey string, payload authorization_ifa
 				Error
 
 			if err == nil {
-				debugtool.LogJson(perm)
+				// debugtool.LogJson(perm)
 				continue
 			}
 

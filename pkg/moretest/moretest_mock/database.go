@@ -13,6 +13,12 @@ import (
 	"gorm.io/gorm"
 )
 
+func MockPostgresDatabase(db *gorm.DB) moretest.SetupFunc {
+	return func(t *testing.T) func() error {
+		return nil
+	}
+}
+
 func MockSqliteDatabase(db *gorm.DB) moretest.SetupFunc {
 	return func(t *testing.T) func() error {
 
