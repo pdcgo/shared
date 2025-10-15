@@ -10,6 +10,21 @@ import (
 
 type memcacheImpl struct{}
 
+// GetRaw implements Cache.
+func (m *memcacheImpl) GetRaw(ctx context.Context, key string) ([]byte, error) {
+
+	item, err := memcache.Get(ctx, key)
+	if err != nil {
+		if errors.Is(err, memcache.ErrCacheMiss) {
+			return []byte{}, ErrCacheMiss
+		}
+
+		return []byte{}, err
+	}
+
+	return item.Value, nil
+}
+
 // Flush implements Cache.
 func (m *memcacheImpl) Flush(ctx context.Context) error {
 	return memcache.Flush(ctx)

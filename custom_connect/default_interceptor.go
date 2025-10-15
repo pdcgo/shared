@@ -9,10 +9,7 @@ import (
 type DefaultInterceptor connect.HandlerOption
 
 func NewDefaultInterceptor() (DefaultInterceptor, error) {
-	interceptor, err := validate.NewInterceptor()
-	if err != nil {
-		return nil, err
-	}
+	interceptor := validate.NewInterceptor()
 
 	defaultInterceptor := connect.WithInterceptors(
 		&custom_logging.LoggingInterceptor{},

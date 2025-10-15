@@ -14,6 +14,11 @@ type localCacheImpl struct {
 	expiration map[string]time.Duration
 }
 
+// GetRaw implements Cache.
+func (l *localCacheImpl) GetRaw(ctx context.Context, key string) ([]byte, error) {
+	return l.data[key], nil
+}
+
 // Flush implements Cache.
 func (l *localCacheImpl) Flush(ctx context.Context) error {
 	l.created = map[string]time.Time{}

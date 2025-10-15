@@ -27,6 +27,7 @@ type Cache interface {
 	Add(ctx context.Context, item *CacheItem) error
 	Replace(ctx context.Context, item *CacheItem) error
 	Get(ctx context.Context, key string, data any) error
+	GetRaw(ctx context.Context, key string) ([]byte, error)
 	Delete(ctx context.Context, key string) error
 	Flush(ctx context.Context) error
 }

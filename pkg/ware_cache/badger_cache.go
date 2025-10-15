@@ -12,6 +12,26 @@ type BadgerCache struct {
 	db *badger.DB
 }
 
+// GetRaw implements Cache.
+func (b *BadgerCache) GetRaw(ctx context.Context, key string) ([]byte, error) {
+	var err error
+	var data []byte
+	err = b.db.View(func(txn *badger.Txn) error {
+		item, err := txn.Get([]byte(key))
+		if err != nil {
+			if errors.Is(err, badger.ErrKeyNotFound) {
+				return ErrCacheMiss
+			}
+			return err
+		}
+		return item.Value(func(val []byte) error {
+			data = val
+			return nil
+		})
+	})
+	return data, err
+}
+
 // NewBadgerCache opens a BadgerDB instance at the given path.
 func NewBadgerCache(path string) (*BadgerCache, error) {
 	opts := badger.DefaultOptions(path).
