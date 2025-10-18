@@ -6,12 +6,6 @@ import (
 	"connectrpc.com/connect"
 )
 
-type dbLogKey string
-
-const (
-	dbLogRoute dbLogKey = "route"
-)
-
 type DBLoggingInterceptor struct{}
 
 // WrapStreamingClient implements connect.Interceptor.
@@ -27,7 +21,7 @@ func (d *DBLoggingInterceptor) WrapStreamingHandler(next connect.StreamingHandle
 // WrapUnary implements connect.Interceptor.
 func (d *DBLoggingInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
 	return func(pctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
-		ctx := context.WithValue(pctx, dbLogRoute, req.Spec().Procedure)
+		ctx := context.WithValue(pctx, "route", req.Spec().Procedure)
 		return next(ctx, req)
 	}
 }
