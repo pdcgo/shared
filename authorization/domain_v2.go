@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/pdcgo/shared/interfaces/authorization_iface"
-	"github.com/pdcgo/shared/pkg/debugtool"
 	"gorm.io/gorm"
 )
 
@@ -73,7 +72,7 @@ func (d *domainImpl) RoleAddPermissionWithDomain(rolekey string, domainID uint, 
 				continue
 			}
 
-			debugtool.LogJson(perm)
+			// debugtool.LogJson(perm)
 
 			err = d.db.Save(&perm).Error
 			if err != nil {
