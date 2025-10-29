@@ -1,8 +1,6 @@
 module github.com/pdcgo/shared
 
-go 1.24.0
-
-toolchain go1.24.2
+go 1.24.2
 
 require (
 	connectrpc.com/connect v1.19.0
@@ -49,6 +47,7 @@ require (
 	github.com/jackc/pgx/v5 v5.5.5 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
+	github.com/pdcgo/schema v1.0.42 // indirect
 	github.com/pierrec/lz4/v4 v4.1.18 // indirect
 	github.com/stoewer/go-strcase v1.3.1 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect

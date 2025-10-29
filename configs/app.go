@@ -16,8 +16,13 @@ type AppConfig struct {
 	TrackService      TrackService                     `yaml:"track_service"`
 	AccountingService AccountingService                `yaml:"accounting_service"`
 	WithdrawalService WithdrawalService                `yaml:"withdrawal_service"`
+	CacheService      CacheService                     `yaml:"cache_service"`
 
 	DispatcherConfig DispatcherConfig `yaml:"dispatcher_config"`
+}
+
+type CacheService struct {
+	Endpoint string `yaml:"endpoint"`
 }
 
 type DispatcherQueue string
