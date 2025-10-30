@@ -58,12 +58,11 @@ func (c *customCacheImpl) Get(ctx context.Context, key string, data any) error {
 		},
 	})
 
-	if res.Msg.Missed {
-		return ErrCacheMiss
-	}
-
 	if err != nil {
 		return err
+	}
+	if res.Msg.Missed {
+		return ErrCacheMiss
 	}
 
 	err = json.Unmarshal(res.Msg.Value, data)
@@ -77,11 +76,12 @@ func (c *customCacheImpl) GetRaw(ctx context.Context, key string) ([]byte, error
 			Key: key,
 		},
 	})
-	if res.Msg.Missed {
-		return []byte{}, ErrCacheMiss
-	}
+
 	if err != nil {
 		return nil, err
+	}
+	if res.Msg.Missed {
+		return []byte{}, ErrCacheMiss
 	}
 
 	return res.Msg.Value, nil
