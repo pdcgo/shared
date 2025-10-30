@@ -12,6 +12,7 @@ require (
 	github.com/gorilla/schema v1.4.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
 	github.com/lib/pq v1.10.9
+	github.com/pdcgo/schema v1.0.43
 	github.com/pdcgo/v2_gots_sdk v1.3.10
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/exp v0.0.0-20250911091902-df9299821621
@@ -47,7 +48,6 @@ require (
 	github.com/jackc/pgx/v5 v5.5.5 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
-	github.com/pdcgo/schema v1.0.42 // indirect
 	github.com/pierrec/lz4/v4 v4.1.18 // indirect
 	github.com/stoewer/go-strcase v1.3.1 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
