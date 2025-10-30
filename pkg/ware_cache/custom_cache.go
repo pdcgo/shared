@@ -18,7 +18,7 @@ type customCacheImpl struct {
 
 // Add implements Cache.
 func (c *customCacheImpl) Add(ctx context.Context, item *CacheItem) error {
-	val, err := item.Serialize()
+	val, err := json.Marshal(item.Data)
 	if err != nil {
 		return err
 	}
