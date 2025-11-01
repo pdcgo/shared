@@ -75,3 +75,20 @@ func (r *RequestSourceIntercept) WrapUnary(handler connect.UnaryFunc) connect.Un
 func GetRequestSource(ctx context.Context) *access_iface.RequestSource {
 	return ctx.Value(SourceKey).(*access_iface.RequestSource)
 }
+
+type RequestSourceClientIntercept struct {
+	// source *access_iface.RequestSource
+}
+
+func RequestSourceSerialize(msg *access_iface.RequestSource) (string, error) {
+
+	raw, err := proto.Marshal(msg)
+	if err != nil {
+		return "", err
+	}
+
+	var encode []byte = make([]byte, base64.StdEncoding.EncodedLen(len(raw)))
+	base64.StdEncoding.Encode(encode, raw)
+
+	return string(encode), err
+}
