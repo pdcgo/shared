@@ -166,6 +166,7 @@ func (auth *Authorization) CheckPermission(identity authorization_iface.Identity
 	cacheID, err := needPerms.GetID(identity.GetUserID())
 	if err != nil {
 		hasil.Err = err
+		slog.Error("auth_error", slog.Any("auth", hasil))
 		return iscache, &hasil
 	}
 
@@ -182,6 +183,7 @@ func (auth *Authorization) CheckPermission(identity authorization_iface.Identity
 			return iscache, nil
 		}
 		hasil.Err = ErrPermission
+		slog.Error("auth_error", slog.Any("auth", hasil))
 		return iscache, &hasil
 	}
 
@@ -205,6 +207,7 @@ func (auth *Authorization) CheckPermission(identity authorization_iface.Identity
 
 	if err != nil {
 		hasil.Err = err
+		slog.Error("auth_error", slog.Any("auth", hasil))
 		return iscache, &hasil
 	}
 
@@ -268,12 +271,13 @@ func (auth *Authorization) CheckPermission(identity authorization_iface.Identity
 	// })
 
 	if err != nil {
-		slog.Error(err.Error())
+		slog.Error("auth_error", slog.Any("auth", hasil))
 		hasil.Err = errors.New("cache error, maybe permission")
 		return iscache, &hasil
 	}
 
 	if hasil.Err != nil {
+		slog.Error("auth_error", slog.Any("auth", hasil))
 		return iscache, &hasil
 	}
 

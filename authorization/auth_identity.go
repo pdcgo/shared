@@ -33,6 +33,7 @@ func (a *authIdentityImpl) HasPermission(perms authorization_iface.CheckPermissi
 	}
 
 	err = a.auth.HasPermission(a.identity, perms)
+
 	return a.setErr(err)
 }
 
