@@ -41,7 +41,7 @@ func (r *RequestSourceIntercept) WrapUnary(handler connect.UnaryFunc) connect.Un
 		if raw == "" {
 			return connect.NewResponse(&access_iface.RequestSourceError{
 				Message: "invalid base64 source",
-			}), errors.New("empty source")
+			}), connect.NewError(connect.CodeInvalidArgument, errors.New("empty source"))
 		}
 
 		data, err := base64.StdEncoding.DecodeString(raw)
@@ -49,7 +49,7 @@ func (r *RequestSourceIntercept) WrapUnary(handler connect.UnaryFunc) connect.Un
 		if err != nil {
 			return connect.NewResponse(&access_iface.RequestSourceError{
 				Message: "invalid base64 source",
-			}), err
+			}), connect.NewError(connect.CodeInvalidArgument, err)
 		}
 
 		source := &access_iface.RequestSource{}
@@ -57,14 +57,14 @@ func (r *RequestSourceIntercept) WrapUnary(handler connect.UnaryFunc) connect.Un
 		if err != nil {
 			return connect.NewResponse(&access_iface.RequestSourceError{
 				Message: "proto cannot decode source",
-			}), err
+			}), connect.NewError(connect.CodeInvalidArgument, err)
 		}
 
 		err = validator.Validate(source)
 		if err != nil {
 			return connect.NewResponse(&access_iface.RequestSourceError{
 				Message: "incomplete source",
-			}), err
+			}), connect.NewError(connect.CodeInvalidArgument, err)
 		}
 
 		cctx := context.WithValue(ctx, SourceKey, source)
