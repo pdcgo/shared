@@ -76,10 +76,6 @@ func GetRequestSource(ctx context.Context) *access_iface.RequestSource {
 	return ctx.Value(SourceKey).(*access_iface.RequestSource)
 }
 
-type RequestSourceClientIntercept struct {
-	// source *access_iface.RequestSource
-}
-
 func RequestSourceSerialize(msg *access_iface.RequestSource) (string, error) {
 
 	raw, err := proto.Marshal(msg)
@@ -91,4 +87,30 @@ func RequestSourceSerialize(msg *access_iface.RequestSource) (string, error) {
 	base64.StdEncoding.Encode(encode, raw)
 
 	return string(encode), err
+}
+
+type RequestSourceClientIntercept struct {
+	Source *access_iface.RequestSource
+}
+
+// WrapStreamingClient implements connect.Interceptor.
+func (r *RequestSourceClientIntercept) WrapStreamingClient(handler connect.StreamingClientFunc) connect.StreamingClientFunc {
+	return handler
+}
+
+// WrapStreamingHandler implements connect.Interceptor.
+func (r *RequestSourceClientIntercept) WrapStreamingHandler(handler connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
+	return handler
+}
+
+// WrapUnary implements connect.Interceptor.
+func (r *RequestSourceClientIntercept) WrapUnary(handler connect.UnaryFunc) connect.UnaryFunc {
+	return func(ctx context.Context, ar connect.AnyRequest) (connect.AnyResponse, error) {
+		source, err := RequestSourceSerialize(r.Source)
+		if err != nil {
+			return nil, err
+		}
+		ar.Header().Set("X-Pdc-source", source)
+		return handler(ctx, ar)
+	}
 }

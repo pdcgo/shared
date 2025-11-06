@@ -2,7 +2,6 @@ package custom_connect
 
 import (
 	"context"
-	"log"
 
 	"connectrpc.com/connect"
 )
@@ -24,9 +23,9 @@ func (s *ScopeIntercept) WrapStreamingHandler(handler connect.StreamingHandlerFu
 // WrapUnary implements connect.Interceptor.
 func (s *ScopeIntercept) WrapUnary(handler connect.UnaryFunc) connect.UnaryFunc {
 	return func(ctx context.Context, ar connect.AnyRequest) (connect.AnyResponse, error) {
-		scope := ar.Peer().Query.Get("resource_scope_id")
+		// scope := ar.Peer().Query.Get("resource_scope_id")
 
-		log.Println(scope)
+		// log.Println(scope)
 		return handler(ctx, ar)
 	}
 }
