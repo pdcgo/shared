@@ -143,6 +143,33 @@ func local_request_InvoiceService_LimitInvoiceList_0(ctx context.Context, marsha
 	return msg, metadata, err
 }
 
+func request_InvoiceService_DeterminedLimitInvoice_0(ctx context.Context, marshaler runtime.Marshaler, client InvoiceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq DeterminedConfigListReq
+		metadata runtime.ServerMetadata
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	msg, err := client.DeterminedLimitInvoice(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_InvoiceService_DeterminedLimitInvoice_0(ctx context.Context, marshaler runtime.Marshaler, server InvoiceServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq DeterminedConfigListReq
+		metadata runtime.ServerMetadata
+	)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	msg, err := server.DeterminedLimitInvoice(ctx, &protoReq)
+	return msg, metadata, err
+}
+
 // RegisterInvoiceServiceHandlerServer registers the http handlers for service InvoiceService to "mux".
 // UnaryRPC     :call InvoiceServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -228,6 +255,26 @@ func RegisterInvoiceServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			return
 		}
 		forward_InvoiceService_LimitInvoiceList_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_InvoiceService_DeterminedLimitInvoice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/invoice_iface.InvoiceService/DeterminedLimitInvoice", runtime.WithHTTPPathPattern("/v1/determined_limit_invoice"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_InvoiceService_DeterminedLimitInvoice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_InvoiceService_DeterminedLimitInvoice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 
 	return nil
@@ -337,19 +384,38 @@ func RegisterInvoiceServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		}
 		forward_InvoiceService_LimitInvoiceList_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
+	mux.Handle(http.MethodPost, pattern_InvoiceService_DeterminedLimitInvoice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/invoice_iface.InvoiceService/DeterminedLimitInvoice", runtime.WithHTTPPathPattern("/v1/determined_limit_invoice"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_InvoiceService_DeterminedLimitInvoice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_InvoiceService_DeterminedLimitInvoice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
 	return nil
 }
 
 var (
-	pattern_InvoiceService_GetLimitInvoice_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "get_limit_invoice"}, ""))
-	pattern_InvoiceService_SetLimitInvoice_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "set_limit_invoice"}, ""))
-	pattern_InvoiceService_LimitInvoiceDelete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "limit_invoice", "delete"}, ""))
-	pattern_InvoiceService_LimitInvoiceList_0   = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "limit_invoice_list"}, ""))
+	pattern_InvoiceService_GetLimitInvoice_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "get_limit_invoice"}, ""))
+	pattern_InvoiceService_SetLimitInvoice_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "set_limit_invoice"}, ""))
+	pattern_InvoiceService_LimitInvoiceDelete_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "limit_invoice", "delete"}, ""))
+	pattern_InvoiceService_LimitInvoiceList_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "limit_invoice_list"}, ""))
+	pattern_InvoiceService_DeterminedLimitInvoice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "determined_limit_invoice"}, ""))
 )
 
 var (
-	forward_InvoiceService_GetLimitInvoice_0    = runtime.ForwardResponseMessage
-	forward_InvoiceService_SetLimitInvoice_0    = runtime.ForwardResponseMessage
-	forward_InvoiceService_LimitInvoiceDelete_0 = runtime.ForwardResponseMessage
-	forward_InvoiceService_LimitInvoiceList_0   = runtime.ForwardResponseMessage
+	forward_InvoiceService_GetLimitInvoice_0        = runtime.ForwardResponseMessage
+	forward_InvoiceService_SetLimitInvoice_0        = runtime.ForwardResponseMessage
+	forward_InvoiceService_LimitInvoiceDelete_0     = runtime.ForwardResponseMessage
+	forward_InvoiceService_LimitInvoiceList_0       = runtime.ForwardResponseMessage
+	forward_InvoiceService_DeterminedLimitInvoice_0 = runtime.ForwardResponseMessage
 )

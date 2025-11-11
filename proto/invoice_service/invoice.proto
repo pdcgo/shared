@@ -31,6 +31,12 @@ service InvoiceService {
       body: "*"
     };
   }
+  rpc DeterminedLimitInvoice(DeterminedConfigListReq) returns(DeterminedConfigListRes) {
+    option (google.api.http) = {
+      post: "/v1/determined_limit_invoice"
+      body: "*"
+    };
+  }
 }
 
 enum LimitType {
@@ -96,4 +102,32 @@ message ConfigListReq {
 
 message ConfigListRes {
   repeated ConfigItem data = 1;
+}
+
+message TeamInvoiceStatus {
+  int64 to_team_id = 1;
+  double unpaid_amount = 2;
+  double submission_amount = 3;
+  double total = 4;
+}
+
+message DetermineConfigItem {
+  int64 id = 1;
+  LimitType limit_type = 2;
+  int64 team_id = 3;
+  optional int64 for_team_id = 4;
+  double threshold = 5;
+
+  TeamInfo team = 6;
+  optional TeamInfo for_team = 7;
+  TeamInvoiceStatus invoice_status = 8;
+}
+
+message DeterminedConfigListReq {
+  int64 team_id = 1; 
+  repeated int64 from_team_ids = 2;
+}
+
+message DeterminedConfigListRes {
+  repeated DetermineConfigItem data = 1;
 }
