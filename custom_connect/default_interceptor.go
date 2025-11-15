@@ -11,7 +11,10 @@ type DefaultInterceptor connect.HandlerOption
 
 func NewDefaultInterceptor() (DefaultInterceptor, error) {
 	interceptor := validate.NewInterceptor()
-	telemetryInterceptor, err := otelconnect.NewInterceptor()
+
+	telemetryInterceptor, err := otelconnect.NewInterceptor(
+	// otelconnect.WithTracerProvider(otel.GetTracerProvider()),
+	)
 
 	if err != nil {
 		return nil, err
