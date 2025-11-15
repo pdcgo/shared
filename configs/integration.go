@@ -1,9 +1,5 @@
 package configs
 
-type LegacyService struct {
-	Endpoint string `yaml:"endpoint"`
-}
-
 func (s *LegacyService) JoinPath(path string) string {
 
 	return s.Endpoint + path

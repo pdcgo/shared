@@ -17,8 +17,8 @@ type AppConfig struct {
 	AccountingService AccountingService                `yaml:"accounting_service"`
 	WithdrawalService WithdrawalService                `yaml:"withdrawal_service"`
 	CacheService      CacheService                     `yaml:"cache_service"`
-
-	DispatcherConfig DispatcherConfig `yaml:"dispatcher_config"`
+	LegacyService     LegacyService                    `yaml:"legacy_service"`
+	DispatcherConfig  DispatcherConfig                 `yaml:"dispatcher_config"`
 }
 
 type CacheService struct {
@@ -64,6 +64,11 @@ type WithdrawalService struct {
 }
 
 type AccountingService struct {
+	Endpoint string `yaml:"endpoint"`
+}
+
+type LegacyService struct {
+	Host     string `yaml:"host"`
 	Endpoint string `yaml:"endpoint"`
 }
 
