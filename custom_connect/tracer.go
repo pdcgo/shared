@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.20.0"
@@ -40,6 +41,13 @@ func InitTracer(serviceName string) (func(context.Context) error, error) {
 	// Register the TracerProvider globally. This allows you to get a Tracer
 	// using `otel.Tracer()` anywhere in your application.
 	otel.SetTracerProvider(tp)
+
+	otel.SetTextMapPropagator(
+		propagation.NewCompositeTextMapPropagator(
+			propagation.TraceContext{}, // uses W3C traceparent header
+			propagation.Baggage{},
+		),
+	)
 
 	return tp.Shutdown, nil
 }

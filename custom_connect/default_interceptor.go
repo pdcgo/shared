@@ -13,7 +13,8 @@ func NewDefaultInterceptor() (DefaultInterceptor, error) {
 	interceptor := validate.NewInterceptor()
 
 	telemetryInterceptor, err := otelconnect.NewInterceptor(
-	// otelconnect.WithTracerProvider(otel.GetTracerProvider()),
+		otelconnect.WithTrustRemote(),
+		otelconnect.WithPropagateResponseHeader(),
 	)
 
 	if err != nil {
@@ -28,4 +29,24 @@ func NewDefaultInterceptor() (DefaultInterceptor, error) {
 	)
 
 	return defaultInterceptor, nil
+}
+
+type DefaultClientInterceptor connect.ClientOption
+
+func NewDefaultClientInterceptor() (DefaultClientInterceptor, error) {
+	validator := validate.NewInterceptor()
+
+	telemetryInterceptor, err := otelconnect.NewInterceptor(
+		otelconnect.WithTrustRemote(),
+		otelconnect.WithPropagateResponseHeader(),
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return connect.WithInterceptors(
+		validator,
+		telemetryInterceptor,
+	), nil
 }
