@@ -1,9 +1,12 @@
 package custom_connect
 
 import (
+	"context"
+
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
 	"connectrpc.com/validate"
+	"github.com/gin-gonic/gin"
 	"github.com/pdcgo/shared/custom_logging"
 )
 
@@ -46,7 +49,58 @@ func NewDefaultClientInterceptor() (DefaultClientInterceptor, error) {
 	}
 
 	return connect.WithInterceptors(
+		&ginInterceptor{},
 		validator,
 		telemetryInterceptor,
 	), nil
+}
+
+type ginInterceptor struct{}
+
+// WrapStreamingClient implements connect.Interceptor.
+func (g *ginInterceptor) WrapStreamingClient(handler connect.StreamingClientFunc) connect.StreamingClientFunc {
+	// return func(ctx context.Context, s connect.Spec) connect.StreamingClientConn {
+	// 	if !s.IsClient {
+	// 		return handler(ctx, s)
+	// 	}
+
+	// 	return handler(ctx, s)
+	// }
+
+	return handler
+}
+
+// WrapStreamingHandler implements connect.Interceptor.
+func (g *ginInterceptor) WrapStreamingHandler(handler connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
+
+	// return func(ctx context.Context, shc connect.StreamingHandlerConn) error {
+	// 	if !shc.Spec().IsClient {
+	// 		return handler(ctx, shc)
+	// 	}
+
+	// 	return handler(ctx, shc)
+	// }
+	return handler
+}
+
+// WrapUnary implements connect.Interceptor.
+func (g *ginInterceptor) WrapUnary(handler connect.UnaryFunc) connect.UnaryFunc {
+	return func(ctx context.Context, ar connect.AnyRequest) (connect.AnyResponse, error) {
+		if !ar.Spec().IsClient {
+			return handler(ctx, ar)
+		}
+
+		ginCtx, ok := ctx.(*gin.Context)
+		if !ok {
+			return handler(ctx, ar)
+		}
+
+		token := ginCtx.Request.Header.Get("Authorization")
+		if token == "" {
+			return handler(ctx, ar)
+		}
+
+		ar.Header().Set("Authorization", token)
+		return handler(ctx, ar)
+	}
 }
