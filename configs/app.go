@@ -11,6 +11,7 @@ type AppConfig struct {
 	JwtSecret string         `yaml:"jwt_secret"`
 	Database  DatabaseConfig `yaml:"database"`
 
+	SharedService     SharedService                    `yaml:"shared_service"`
 	StatService       StatService                      `yaml:"stat_service"`
 	WalletService     wallet_iface.WalletServiceConfig `yaml:"wallet_service"`
 	TrackService      TrackService                     `yaml:"track_service"`
@@ -19,6 +20,10 @@ type AppConfig struct {
 	CacheService      CacheService                     `yaml:"cache_service"`
 	LegacyService     LegacyService                    `yaml:"legacy_service"`
 	DispatcherConfig  DispatcherConfig                 `yaml:"dispatcher_config"`
+}
+
+type SharedService struct {
+	Endpoint string `yaml:"endpoint"`
 }
 
 type CacheService struct {
