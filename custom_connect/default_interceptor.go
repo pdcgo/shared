@@ -26,6 +26,7 @@ func NewDefaultInterceptor() (DefaultInterceptor, error) {
 
 	defaultInterceptor := connect.WithInterceptors(
 		telemetryInterceptor,
+		&errInterceptor{},
 		&custom_logging.LoggingInterceptor{},
 		interceptor,
 		&custom_logging.DBLoggingInterceptor{},
@@ -52,6 +53,7 @@ func NewDefaultClientInterceptor() (DefaultClientInterceptor, error) {
 		&ginInterceptor{},
 		validator,
 		telemetryInterceptor,
+		&errInterceptor{},
 	), nil
 }
 
