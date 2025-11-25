@@ -15,12 +15,12 @@ import (
 
 type errInterceptor struct{} // WrapStreamingClient implements connect.Interceptor.
 func (*errInterceptor) WrapStreamingClient(handler connect.StreamingClientFunc) connect.StreamingClientFunc {
-	return nil
+	return handler
 }
 
 // WrapStreamingHandler implements connect.Interceptor.
 func (*errInterceptor) WrapStreamingHandler(handler connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
-	return nil
+	return handler
 }
 
 // WrapUnary implements connect.Interceptor.
