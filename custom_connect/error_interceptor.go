@@ -20,7 +20,20 @@ func (*errInterceptor) WrapStreamingClient(handler connect.StreamingClientFunc) 
 
 // WrapStreamingHandler implements connect.Interceptor.
 func (*errInterceptor) WrapStreamingHandler(handler connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
-	return handler
+	return func(ctx context.Context, shc connect.StreamingHandlerConn) error {
+		err := handler(ctx, shc)
+		if err == nil {
+			return err
+		}
+
+		span := trace.SpanFromContext(ctx)
+		span.SetAttributes(attribute.String("rpc.error.message", err.Error()))
+		for key, value := range shc.RequestHeader() {
+			span.SetAttributes(attribute.String(fmt.Sprintf("rpc.headers.%s", key), strings.Join(value, ",")))
+		}
+
+		return err
+	}
 }
 
 // WrapUnary implements connect.Interceptor.
