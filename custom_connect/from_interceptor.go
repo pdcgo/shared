@@ -165,7 +165,7 @@ func (r *RequestSourceInterceptor) WrapUnary(handler connect.UnaryFunc) connect.
 				return nil, err
 			}
 
-			req.Peer().Query.Set("x-pdc-source", sourceString)
+			// req.Peer().Query.Set("x-pdc-source", sourceString)
 			req.Header().Set("X-Pdc-Source", sourceString)
 
 			return handler(ctx, req)
