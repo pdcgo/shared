@@ -168,6 +168,13 @@ func (r *RequestSourceInterceptor) WrapUnary(handler connect.UnaryFunc) connect.
 			// req.Peer().Query.Set("x-pdc-source", sourceString)
 			req.Header().Set("X-Pdc-Source", sourceString)
 
+			if req.Header().Get("Authorization") == "" {
+				token, _ := GetAuthToken(ctx)
+				if token != "" {
+					req.Header().Set("Authorization", token)
+				}
+			}
+
 			return handler(ctx, req)
 
 		}
