@@ -39,7 +39,7 @@ func NewDefaultInterceptor() (DefaultInterceptor, error) {
 type DefaultClientInterceptor connect.ClientOption
 
 func NewDefaultClientInterceptor() (DefaultClientInterceptor, error) {
-	validator := validate.NewInterceptor()
+	// validator := validate.NewInterceptor()
 
 	telemetryInterceptor, err := otelconnect.NewInterceptor(
 		otelconnect.WithTrustRemote(),
@@ -53,7 +53,7 @@ func NewDefaultClientInterceptor() (DefaultClientInterceptor, error) {
 	return connect.WithInterceptors(
 		&ginInterceptor{},
 		&RequestSourceInterceptor{},
-		validator,
+		// validator,
 		telemetryInterceptor,
 		&errInterceptor{},
 	), nil
