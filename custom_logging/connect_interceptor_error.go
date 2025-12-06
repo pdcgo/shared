@@ -21,6 +21,7 @@ func (l *LoggingInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc
 					"procedure", req.Spec().Procedure,
 					"code", cErr.Code().String(),
 					"msg", cErr.Message(),
+					slog.Any("payload", req.Any()),
 				)
 
 				// log.Println(cErr.Code(), "asdasdasdasd")
