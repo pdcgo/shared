@@ -336,9 +336,9 @@ const (
 )
 
 type OrderTagRelation struct {
-	OrderID      uint         `json:"order_id" gorm:"primaryKey"`
-	OrderTagID   uint         `json:"order_tag_id" gorm:"primaryKey"`
-	RelationFrom RelationFrom `json:"relation_from"`
+	OrderID      uint   `json:"order_id" gorm:"primaryKey"`
+	OrderTagID   uint   `json:"order_tag_id" gorm:"primaryKey"`
+	RelationFrom string `json:"relation_from"`
 
 	Order    *Order    `json:"product"`
 	OrderTag *OrderTag `json:"tag"`
