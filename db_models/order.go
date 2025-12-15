@@ -26,6 +26,7 @@ const (
 	// [Penambahan Wallet] Penggantian Dana Sebagian Barang Hilang 241214SG9CB1JB
 	AdjLostCompensation AdjustmentType = "lost_compensation"
 	AdjUnknown          AdjustmentType = "unknown"
+	AdsPayment          AdjustmentType = "ads_payment"
 
 	AdjFund       AdjustmentType = "fund" // jarang digunakan, untuk wd
 	AdjOrderFund  AdjustmentType = "order_fund"
