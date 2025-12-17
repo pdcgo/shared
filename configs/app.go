@@ -20,7 +20,12 @@ type AppConfig struct {
 	WithdrawalService WithdrawalService                `yaml:"withdrawal_service"`
 	CacheService      CacheService                     `yaml:"cache_service"`
 	LegacyService     LegacyService                    `yaml:"legacy_service"`
+	SellingService    SellingService                   `yaml:"selling_service"`
 	DispatcherConfig  DispatcherConfig                 `yaml:"dispatcher_config"`
+}
+
+type SellingService struct {
+	Endpoint string `yaml:"endpoint"`
 }
 
 type OrderService struct {
