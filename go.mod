@@ -80,6 +80,7 @@ require (
 	cloud.google.com/go/iam v1.5.2 // indirect
 	cloud.google.com/go/pubsub v1.50.1
 	cloud.google.com/go/secretmanager v1.15.0
+	connectrpc.com/grpcreflect v1.3.0
 	connectrpc.com/otelconnect v0.8.0
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v1.30.0
 	github.com/bytedance/sonic v1.11.6 // indirect
