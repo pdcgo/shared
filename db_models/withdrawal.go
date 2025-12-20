@@ -3,6 +3,7 @@ package db_models
 import (
 	"time"
 
+	"github.com/pdcgo/schema/services/order_iface/v1"
 	"github.com/pdcgo/shared/interfaces/identity_iface"
 	"gorm.io/datatypes"
 )
@@ -29,12 +30,13 @@ type OrderAdjustment struct {
 	OrderID uint `json:"order_id"`
 	MpID    uint `json:"mp_id"`
 
-	At      time.Time      `json:"at" gorm:"index"`
-	FundAt  time.Time      `json:"fund_at" gorm:"index"`
-	Type    AdjustmentType `json:"type"`
-	Amount  float64        `json:"amount"`
-	Desc    string         `json:"desc"`
-	Deleted bool           `json:"deleted" gorm:"index"`
+	At      time.Time                   `json:"at" gorm:"index"`
+	FundAt  time.Time                   `json:"fund_at" gorm:"index"`
+	Type    AdjustmentType              `json:"type"`
+	Amount  float64                     `json:"amount"`
+	Desc    string                      `json:"desc"`
+	Source  order_iface.MpPaymentSource `json:"source"`
+	Deleted bool                        `json:"deleted" gorm:"index"`
 
 	Order *Order       `json:"order"`
 	Mp    *Marketplace `json:"mp"`

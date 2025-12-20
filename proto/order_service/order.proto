@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package order_iface;
-
-option go_package = "./order_iface;order_iface";
-
-service OrderService {}
