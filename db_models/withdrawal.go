@@ -30,13 +30,15 @@ type OrderAdjustment struct {
 	OrderID uint `json:"order_id"`
 	MpID    uint `json:"mp_id"`
 
-	At      time.Time                   `json:"at" gorm:"index"`
-	FundAt  time.Time                   `json:"fund_at" gorm:"index"`
-	Type    AdjustmentType              `json:"type"`
-	Amount  float64                     `json:"amount"`
-	Desc    string                      `json:"desc"`
-	Source  order_iface.MpPaymentSource `json:"source"`
-	Deleted bool                        `json:"deleted" gorm:"index"`
+	At            time.Time                   `json:"at" gorm:"index"`
+	FundAt        time.Time                   `json:"fund_at" gorm:"index"`
+	Type          AdjustmentType              `json:"type"`
+	Amount        float64                     `json:"amount"`
+	Desc          string                      `json:"desc"`
+	Source        order_iface.MpPaymentSource `json:"source"`
+	IsMultiRegion bool                        `json:"is_multi_region"`
+
+	Deleted bool `json:"deleted" gorm:"index"`
 
 	Order *Order       `json:"order"`
 	Mp    *Marketplace `json:"mp"`
