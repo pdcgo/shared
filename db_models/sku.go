@@ -13,7 +13,8 @@ type Sku struct {
 	StockPending int `json:"stock_pending"`
 	StockTotal   int `json:"stock_total"` // deprecated stock total
 
-	NextPrice float64 `json:"next_price"`
+	NextPrice     float64 `json:"next_price"`
+	IsBlacklisted bool    `json:"is_blacklisted"`
 
 	// LastRestock  time.Time `json:"last_restock" gorm:"index"`
 	// statistik
