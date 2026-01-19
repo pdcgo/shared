@@ -22,6 +22,7 @@ func WithCORS(next http.Handler) http.Handler {
 			"X-Pdc-Source",
 			"X-Pdc-Stack",
 			"X-User-Agent",
+			"Grpc-Accept-Encoding",
 		}
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
