@@ -13,7 +13,7 @@ require (
 	github.com/gorilla/schema v1.4.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2
 	github.com/lib/pq v1.10.9
-	github.com/pdcgo/schema v1.0.46
+	github.com/pdcgo/schema v1.0.93
 	github.com/pdcgo/v2_gots_sdk v1.3.10
 	github.com/stretchr/testify v1.11.1
 	go.opentelemetry.io/otel v1.38.0
