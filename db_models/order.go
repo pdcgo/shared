@@ -220,9 +220,15 @@ type Order struct {
 
 	Adjustment float64 `json:"adjustment"`
 
-	OrderTime time.Time `json:"order_time" gorm:"index"`
-	OrderMpID uint      `json:"order_mp_id"`
+	OrderTime     time.Time `json:"order_time" gorm:"index"`
+	OrderDeadline time.Time `json:"order_deadline"`
 
+	OrderMpID uint `json:"order_mp_id"`
+
+	// perkara buyer
+	BuyerUsername string `json:"buyer_username"`
+
+	// perkara resi
 	Receipt           string `json:"receipt"`
 	ReceiptFile       string `json:"receipt_file"`
 	ReceiptReturn     string `json:"receipt_return"`
