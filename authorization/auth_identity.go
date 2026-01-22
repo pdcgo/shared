@@ -47,6 +47,10 @@ func (a *authIdentityImpl) parseHeader(header http.Header, passphrase string) *a
 	token := header.Get("Authorization")
 	token, _ = strings.CutPrefix(token, "Bearer ")
 
+	if token == "" {
+		return a.setErr(errors.New("token not found in header"))
+	}
+
 	identity := JwtIdentity{}
 	err = identity.Deserialize(passphrase, token)
 	if err != nil {
@@ -60,6 +64,10 @@ func (a *authIdentityImpl) parseHeader(header http.Header, passphrase string) *a
 func (a *authIdentityImpl) parseToken(token string, passphrase string) *authIdentityImpl {
 	var err error
 	token, _ = strings.CutPrefix(token, "Bearer ")
+
+	if token == "" {
+		return a.setErr(errors.New("token empty"))
+	}
 
 	identity := JwtIdentity{}
 	err = identity.Deserialize(passphrase, token)
