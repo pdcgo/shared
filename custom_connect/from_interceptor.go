@@ -156,17 +156,14 @@ func (r *RequestSourceInterceptor) WrapUnary(handler connect.UnaryFunc) connect.
 		var err error
 		if req.Spec().IsClient {
 			source, _ := GetRequestSource(ctx)
-			if source == nil {
-				return handler(ctx, req)
-			}
+			if source != nil {
+				sourceString, err := RequestSourceSerialize(source)
+				if err != nil {
+					return nil, err
+				}
 
-			sourceString, err := RequestSourceSerialize(source)
-			if err != nil {
-				return nil, err
+				req.Header().Set("X-Pdc-Source", sourceString)
 			}
-
-			// req.Peer().Query.Set("x-pdc-source", sourceString)
-			req.Header().Set("X-Pdc-Source", sourceString)
 
 			if req.Header().Get("Authorization") == "" {
 				token, _ := GetAuthToken(ctx)
