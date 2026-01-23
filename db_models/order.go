@@ -31,6 +31,9 @@ const (
 	AdjFund       AdjustmentType = "fund" // jarang digunakan, untuk wd
 	AdjOrderFund  AdjustmentType = "order_fund"
 	AdjUnknownAdj AdjustmentType = "unknown_adj"
+
+	// internal system jika error
+	InternalWdError AdjustmentType = "internal_wd_error"
 )
 
 func (AdjustmentType) EnumList() []string {

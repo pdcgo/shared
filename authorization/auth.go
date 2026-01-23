@@ -166,7 +166,7 @@ func (auth *Authorization) CheckPermission(identity authorization_iface.Identity
 	cacheID, err := needPerms.GetID(identity.GetUserID())
 	if err != nil {
 		hasil.Err = err
-		slog.Error("auth_error", slog.Any("auth", hasil))
+		slog.Error("auth_error_cache", slog.Any("auth", hasil))
 		return iscache, &hasil
 	}
 
