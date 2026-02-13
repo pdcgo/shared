@@ -8,8 +8,9 @@ import (
 )
 
 type AppConfig struct {
-	JwtSecret string         `yaml:"jwt_secret"`
-	Database  DatabaseConfig `yaml:"database"`
+	JwtSecret   string         `yaml:"jwt_secret"`
+	GithubToken string         `yaml:"github_token"`
+	Database    DatabaseConfig `yaml:"database"`
 
 	SharedService     SharedService                    `yaml:"shared_service"`
 	OrderService      OrderService                     `yaml:"order_service"`
