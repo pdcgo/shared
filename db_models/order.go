@@ -87,6 +87,16 @@ func (o OrdStatus) String() string {
 	return string(o)
 }
 
+func (o OrdStatus) IsIn(checks []OrdStatus) bool {
+	for _, check := range checks {
+		if o == check {
+			return true
+		}
+	}
+
+	return false
+}
+
 const (
 	OrdCreated         OrdStatus = "created" // order ketika di request tapi belum diproses sama kang paket gudang
 	OrdProcess         OrdStatus = "process" // order ketika di request tapi sudah diproses sama kang paket gudang
