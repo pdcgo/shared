@@ -22,7 +22,14 @@ type AppConfig struct {
 	CacheService      CacheService                     `yaml:"cache_service"`
 	LegacyService     LegacyService                    `yaml:"legacy_service"`
 	SellingService    SellingService                   `yaml:"selling_service"`
+	TrackingService   TrackingService                  `yaml:"tracking_service"`
 	DispatcherConfig  DispatcherConfig                 `yaml:"dispatcher_config"`
+}
+
+type TrackingService struct {
+	Endpoint               string   `yaml:"endpoint"`
+	ToniUndergroundEnpoint string   `yaml:"toni_underground_endpoint"`
+	RajaOngkirKey          []string `yaml:"raja_ongkir_key"`
 }
 
 type SellingService struct {
