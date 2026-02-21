@@ -374,6 +374,7 @@ type InvoItem struct {
 	BalanceAfter    float64
 	Region          string
 	IsOtherRegion   bool
+	Failed          bool
 }
 
 type InvoItemList []*InvoItem
