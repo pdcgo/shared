@@ -53,6 +53,20 @@ func (AdjustmentType) EnumList() []string {
 
 type OrdStatus string
 
+func (o OrdStatus) FinalStatus() []OrdStatus {
+	return []OrdStatus{
+		"cancel",
+		"completed",
+		"return_completed",
+		"return_problem",
+	}
+}
+
+func (o OrdStatus) IsInWarehouse() bool {
+
+	return false
+}
+
 // DefaultField implements api_model.SortingField.
 func (o OrdStatus) DefaultField() string {
 	return "created"

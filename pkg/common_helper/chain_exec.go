@@ -17,13 +17,13 @@ func NewChain(chains ...NextHandler) error {
 	return next()
 }
 
-type NextFuncParam[T any] func(data T) error
+type NextFuncParam[T any] func(data T) (T, error)
 type NextHandlerParam[T any] func(next NextFuncParam[T]) NextFuncParam[T]
 
 func NewChainParam[T any](chains ...NextHandlerParam[T]) NextFuncParam[T] {
 
-	var next NextFuncParam[T] = func(data T) error {
-		return nil
+	var next NextFuncParam[T] = func(data T) (T, error) {
+		return data, nil
 	}
 
 	reverse(chains)
