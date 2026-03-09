@@ -378,6 +378,7 @@ type OrderTagRelation struct {
 	OrderTag *OrderTag `json:"tag"`
 }
 
+//go:generate go run github.com/wargasipil/data_processing
 type InvoItem struct {
 	MpFrom          OrderMpType
 	ExternalOrderID string
