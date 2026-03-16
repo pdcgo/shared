@@ -89,10 +89,10 @@ type RestockItem struct {
 }
 
 type RestockSuppplierTemp struct {
-	ID        uint   `json:"id" gorm:"primarykey"`
-	RestockID uint   `json:"restock_id"`
-	VariantID uint   `json:"variant_id" binding:"required"`
-	Link      string `json:"link" binding:"required,lte=500"`
+	ID         uint `json:"id" gorm:"primarykey"`
+	RestockID  uint `json:"restock_id"`
+	VariantID  uint `json:"variant_id" binding:"required"`
+	SupplierID uint `json:"supplier_id" binding:"required"`
 
 	Restock *Restock
 }
