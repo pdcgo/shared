@@ -88,7 +88,7 @@ type RestockItem struct {
 	Variant *VariationValue `json:"variant"`
 }
 
-type RestockSuppplierTemp struct {
+type RestockSupplierTemp struct {
 	ID         uint `json:"id" gorm:"primarykey"`
 	RestockID  uint `json:"restock_id"`
 	VariantID  uint `json:"variant_id" binding:"required"`
