@@ -11,6 +11,7 @@ type AppConfig struct {
 	JwtSecret   string         `yaml:"jwt_secret"`
 	GithubToken string         `yaml:"github_token"`
 	Database    DatabaseConfig `yaml:"database"`
+	RedisConfig RedisConfig    `yaml:"redis_config"`
 
 	SharedService     SharedService                    `yaml:"shared_service"`
 	OrderService      OrderService                     `yaml:"order_service"`
@@ -24,6 +25,13 @@ type AppConfig struct {
 	SellingService    SellingService                   `yaml:"selling_service"`
 	TrackingService   TrackingService                  `yaml:"tracking_service"`
 	DispatcherConfig  DispatcherConfig                 `yaml:"dispatcher_config"`
+}
+
+type RedisConfig struct {
+	Addr     string `yaml:"addr"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
 }
 
 type TrackingService struct {

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/pdcgo/schema/services/common/v1"
 	"github.com/pdcgo/shared/interfaces/identity_iface"
 	"gorm.io/datatypes"
 )
@@ -139,6 +140,26 @@ func (OrderMpType) EnumList() []string {
 		"lazada",
 		"custom",
 		"mengantar",
+	}
+}
+
+func (t OrderMpType) ToProto() common.MarketplaceType {
+
+	switch t {
+	case "tokopedia":
+		return common.MarketplaceType_MARKETPLACE_TYPE_TOKOPEDIA
+	case "shopee":
+		return common.MarketplaceType_MARKETPLACE_TYPE_SHOPEE
+	case "tiktok":
+		return common.MarketplaceType_MARKETPLACE_TYPE_TIKTOK
+	case "lazada":
+		return common.MarketplaceType_MARKETPLACE_TYPE_LAZADA
+	case "custom":
+		return common.MarketplaceType_MARKETPLACE_TYPE_CUSTOM
+	case "mengantar":
+		return common.MarketplaceType_MARKETPLACE_TYPE_MENGANTAR
+	default:
+		return common.MarketplaceType_MARKETPLACE_TYPE_UNSPECIFIED
 	}
 }
 
