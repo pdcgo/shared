@@ -2,7 +2,7 @@ package db_models
 
 import "gorm.io/gorm"
 
-type SupplierV2 struct {
+type V2Supplier struct {
 	ID          uint64         `json:"id" gorm:"primaryKey;autoIncrement"`
 	TeamID      uint64         `json:"team_id" gorm:"not null;index"`
 	Code        string         `json:"code" gorm:"uniqueIndex:uidx_code_active,where:deleted_at IS NULL"`
@@ -15,11 +15,7 @@ type SupplierV2 struct {
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 }
 
-func (SupplierV2) TableName() string {
-	return "v2_suppliers"
-}
-
-type SupplierMarketplaceV2 struct {
+type V2SupplierMarketplace struct {
 	SupplierID  uint64         `gorm:"not null"`
 	ID          uint64         `json:"id" gorm:"primaryKey;autoIncrement"`
 	MpType      int32          `gorm:"not null"`
@@ -30,19 +26,11 @@ type SupplierMarketplaceV2 struct {
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 }
 
-func (SupplierMarketplaceV2) TableName() string {
-	return "v2_supplier_marketplaces"
-}
-
-type SupplierV2InvTxItem struct {
+type V2SupplierInvTxItem struct {
 	ID          uint `json:"id" gorm:"primarykey"`
 	InvTxItemID uint `json:"inv_tx_item_id"`
 	SupplierID  uint `json:"supplier_id"`
 
-	Supplier  *SupplierMarketplaceV2 `json:"supplier"`
+	Supplier  *V2SupplierMarketplace `json:"supplier"`
 	InvTxItem *InvTxItem             `json:"inv_tx_item"`
-}
-
-func (SupplierV2InvTxItem) TableName() string {
-	return "v2_supplier_inv_tx_items"
 }
