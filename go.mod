@@ -15,7 +15,9 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/pdcgo/schema v1.0.93
 	github.com/pdcgo/v2_gots_sdk v1.3.10
+	github.com/redis/go-redis/v9 v9.18.0
 	github.com/stretchr/testify v1.11.1
+	github.com/wargasipil/data_processing v0.0.0-20260420085126-0b978af04e6f
 	go.opentelemetry.io/otel v1.38.0
 	go.opentelemetry.io/otel/sdk v1.38.0
 	go.opentelemetry.io/otel/trace v1.38.0
@@ -31,11 +33,13 @@ require (
 require (
 	cloud.google.com/go/storage v1.57.2 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/goccy/go-yaml v1.18.0 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/quic-go/quic-go v0.54.0 // indirect
 	github.com/zeebo/assert v1.3.1 // indirect
+	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/mock v0.5.0 // indirect
 )
 

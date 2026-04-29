@@ -1,11 +1,13 @@
 package moretest_mock
 
 import (
+	"log"
 	"os"
 	"sync"
 	"testing"
 
 	"github.com/google/uuid"
+	"github.com/pdcgo/shared/db_connect"
 	"github.com/pdcgo/shared/pkg/moretest"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/bigquery"
@@ -15,7 +17,21 @@ import (
 
 func MockPostgresDatabase(db *gorm.DB) moretest.SetupFunc {
 	return func(t *testing.T) func() error {
-		return nil
+		tempDb, err := db_connect.ConnectLocalDatabaseTest()
+		if err != nil {
+			log.Fatalf("database: failed to connect: %v", err)
+		}
+
+		tx := tempDb.Begin()
+		*db = *tx
+
+		return func() error {
+			err := tx.Rollback().Error
+			if err != nil {
+				t.Error(err)
+			}
+			return err
+		}
 	}
 }
 

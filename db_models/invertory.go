@@ -173,7 +173,8 @@ type InvTxItem struct {
 	Owned            bool    `json:"owned"`
 	Count            int     `json:"count"`
 	Price            float64 `json:"price"`
-	Total            float64 `json:"total"`
+
+	Total float64 `json:"total"`
 
 	Sku            *Sku            `json:"sku"`
 	InvTransaction *InvTransaction `json:"-"`
