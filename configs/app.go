@@ -24,6 +24,7 @@ type AppConfig struct {
 	LegacyService     LegacyService                    `yaml:"legacy_service"`
 	SellingService    SellingService                   `yaml:"selling_service"`
 	TrackingService   TrackingService                  `yaml:"tracking_service"`
+	InventoryService  InventoryService                 `yaml:"inventory_service"`
 	DispatcherConfig  DispatcherConfig                 `yaml:"dispatcher_config"`
 }
 
@@ -39,7 +40,9 @@ type TrackingService struct {
 	ToniUndergroundEnpoint string   `yaml:"toni_underground_endpoint"`
 	RajaOngkirKey          []string `yaml:"raja_ongkir_key"`
 }
-
+type InventoryService struct {
+	Endpoint string `yaml:"endpoint"`
+}
 type SellingService struct {
 	Endpoint string `yaml:"endpoint"`
 }
