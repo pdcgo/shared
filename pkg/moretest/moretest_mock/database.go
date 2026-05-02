@@ -1,6 +1,7 @@
 package moretest_mock
 
 import (
+	"errors"
 	"log"
 	"os"
 	"sync"
@@ -15,23 +16,24 @@ import (
 	"gorm.io/gorm"
 )
 
-func MockPostgresDatabase(db *gorm.DB) moretest.SetupFunc {
+type DbScenario func(t *testing.T, handler func(tx *gorm.DB))
+
+func MockPostgresDatabase(scenario *DbScenario) moretest.SetupFunc {
 	return func(t *testing.T) func() error {
 		tempDb, err := db_connect.ConnectLocalDatabaseTest()
 		if err != nil {
 			log.Fatalf("database: failed to connect: %v", err)
 		}
 
-		tx := tempDb.Begin()
-		*db = *tx
-
-		return func() error {
-			err := tx.Rollback().Error
-			if err != nil {
-				t.Error(err)
-			}
-			return err
+		*scenario = func(t *testing.T, handler func(tx *gorm.DB)) {
+			t.Helper()
+			tempDb.Transaction(func(tx *gorm.DB) error {
+				handler(tx)
+				return errors.New("rollback") // for keep database test clean up
+			})
 		}
+
+		return nil
 	}
 }
 
