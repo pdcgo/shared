@@ -1,10 +1,10 @@
 module github.com/pdcgo/shared
 
-go 1.24.2
+go 1.25.0
 
 require (
 	buf.build/go/protovalidate v1.0.1
-	connectrpc.com/connect v1.19.1
+	connectrpc.com/connect v1.19.2
 	connectrpc.com/validate v0.6.0
 	github.com/GoogleCloudPlatform/cloudsql-proxy v1.37.10
 	github.com/gin-gonic/gin v1.11.0
@@ -13,7 +13,8 @@ require (
 	github.com/gorilla/schema v1.4.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2
 	github.com/lib/pq v1.10.9
-	github.com/pdcgo/schema v1.0.93
+	github.com/pdcgo/san_collection v1.0.5
+	github.com/pdcgo/schema v1.0.134
 	github.com/pdcgo/v2_gots_sdk v1.3.10
 	github.com/redis/go-redis/v9 v9.18.0
 	github.com/stretchr/testify v1.11.1
@@ -35,9 +36,13 @@ require (
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/goccy/go-yaml v1.18.0 // indirect
+	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
+	github.com/golang/mock v1.7.0-rc.1 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/quic-go/quic-go v0.54.0 // indirect
+	github.com/twilio/twilio-go v1.30.9 // indirect
 	github.com/zeebo/assert v1.3.1 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/mock v0.5.0 // indirect
@@ -78,11 +83,11 @@ require (
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.1 // indirect
-	golang.org/x/mod v0.30.0 // indirect
-	golang.org/x/sync v0.18.0 // indirect
-	golang.org/x/telemetry v0.0.0-20251128220624-abf20d0e57ec // indirect
+	golang.org/x/mod v0.34.0 // indirect
+	golang.org/x/sync v0.20.0 // indirect
+	golang.org/x/telemetry v0.0.0-20260311193753-579e4da9a98c // indirect
 	golang.org/x/time v0.14.0 // indirect
-	golang.org/x/tools v0.39.0 // indirect
+	golang.org/x/tools v0.43.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251124214823-79d6a2a48846 // indirect
 	gorm.io/driver/mysql v1.6.0
 )
@@ -132,11 +137,11 @@ require (
 	github.com/ugorji/go/codec v1.3.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/arch v0.23.0 // indirect
-	golang.org/x/crypto v0.45.0 // indirect
-	golang.org/x/net v0.47.0
-	golang.org/x/oauth2 v0.33.0 // indirect
-	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
+	golang.org/x/crypto v0.50.0 // indirect
+	golang.org/x/net v0.53.0
+	golang.org/x/oauth2 v0.35.0 // indirect
+	golang.org/x/sys v0.43.0 // indirect
+	golang.org/x/text v0.36.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	google.golang.org/api v0.256.0
 	google.golang.org/appengine v1.6.8
