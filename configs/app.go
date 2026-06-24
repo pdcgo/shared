@@ -3,15 +3,17 @@ package configs
 import (
 	"fmt"
 
+	"github.com/pdcgo/san_collection/san_verification"
 	"github.com/pdcgo/shared/interfaces/wallet_iface"
 	"github.com/pdcgo/shared/pkg/secret"
 )
 
 type AppConfig struct {
-	JwtSecret   string         `yaml:"jwt_secret"`
-	GithubToken string         `yaml:"github_token"`
-	Database    DatabaseConfig `yaml:"database"`
-	RedisConfig RedisConfig    `yaml:"redis_config"`
+	JwtSecret    string                               `yaml:"jwt_secret"`
+	GithubToken  string                               `yaml:"github_token"`
+	Database     DatabaseConfig                       `yaml:"database"`
+	RedisConfig  RedisConfig                          `yaml:"redis_config"`
+	TwilioConfig san_verification.TwilioConfiguration `yaml:"twilio_config"`
 
 	SharedService     SharedService                    `yaml:"shared_service"`
 	OrderService      OrderService                     `yaml:"order_service"`
